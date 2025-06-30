@@ -1,0 +1,126 @@
+<?php
+
+require_once("include/model/proxy/ProductorProxy.php");
+
+
+class ProductorDAO extends DAO {
+
+    // Prepared Statement
+    private PDOStatement $stmtGetProductorById;
+    private PDOStatement $stmtGetAllProductores;
+    private PDOStatement $stmtGetProductorByName;
+    private PDOStatement $stmtInsertProductor;
+    private PDOStatement $stmtUpdateProductor;
+    private PDOStatement $stmtDeleteProductor;
+
+   
+
+
+    // Costruttore
+    public function __construct(?DataLayer $dataLayer) {
+        parent::__construct($dataLayer);
+        $this->init();
+    }
+
+    public function init(): void {
+        $this->stmtGetProductorById = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE ID = ?;");
+        $this->stmtGetAllProductores = $this->conn->prepare("SELECT * FROM PRODUTTORE;");
+        $this->stmtGetProductorByName = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NAME LIKE ?;");
+        $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME) VALUES (?);");
+        $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ? WHERE ID = ?;");
+        $this->stmtDeleteProductor = $this->conn->prepare("DELETE FROM PRODUTTORE WHERE ID = ?;");
+    }
+
+
+    // Inizializzazione degli statement
+
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getProductorById(int $id){
+        $this->stmtGetProductorById->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetProductorById->execute();
+
+        $rs = $this->stmtGetProductorById->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createProductor($rs) : null;
+    }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllProductores(): array {
+        $this->stmtGetAllProductores->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllProductores->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createProductor($rs);
+        }
+        return $result;
+    }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getProductorByName(string $name): ?Productor {
+        $this->stmtGetProductorByName->bindValue(1, $name, PDO::PARAM_STR);
+        $this->stmtGetProductorByName->execute();
+        $rs = $this->stmtGetProductorByName->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createProductor($rs) : null;
+    }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function storeProductor(Productor $productor): bool {
+        if ($productor->getId() !== null) { // Aggiorno il produttore
+            $this->stmtUpdateProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
+            $this->stmtUpdateProductor->bindValue(5, $productor->getId(), PDO::PARAM_INT);
+            
+            return $this->stmtUpdateProductor->execute();
+        } else {   // Inserisco il produttore
+            $this->stmtInsertProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
+
+            return $this->stmtInsertProductor->execute();
+        }
+    }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteProductor(Productor $productor): bool {
+        $this->stmtDeleteProductor->bindValue(1, $productor->getId(), PDO::PARAM_INT);
+        return $this->stmtDeleteProductor->execute();
+    }
+
+
+    // Metodi privati
+    private function createProductor(array $rs): Productor {
+        $productor = new ProductorProxy($this->dataLayer);
+        $productor->setId($rs['ID']);
+        $productor->setName($rs['NOME']);
+        return $productor;
+    }
+
+
+
+}
+
+?>

@@ -1,0 +1,27 @@
+<?php
+
+require_once("article.php");
+
+class Cart{
+
+    protected ?int $id;
+    protected ?User $user;
+    protected ?array $cartItem;
+
+    public function __construct()    {
+        $this->id = null;
+        $this->user = null;
+        $this->cartItem = null;
+    }
+
+    // Getter
+    public function getId(): ?int{return $this->id;}
+    public function getUser(): ?User {return $this->user;}
+    public function getCartItem(): ?array{return $this->cartItem;}
+
+    // Setter
+    public function setId(int $id){$this->id = $id;}
+    public function setUser(?User $user){$this->user = $user;}
+    public function setCartItem(?array $cartItem){$this->cartItem = $cartItem;}
+
+} 
