@@ -1,0 +1,15 @@
+<?php 
+
+// Templating
+require_once("include/template2.inc.php");
+
+// Database
+require_once("include/db/DB_Connection.php");
+require_once("include/db/DataLayer.php");
+
+// Page
+$login = new Template("skin/login/login.html");
+
+$login->close();
+
+?>

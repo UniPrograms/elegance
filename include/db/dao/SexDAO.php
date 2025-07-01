@@ -8,6 +8,7 @@ class SexDAO extends DAO {
 
     private PDOStatement $stmtGetSexById;
     private PDOStatement $stmtGetAllSexs;
+    private PDOStatement $stmtGetSexByName;
 
 
 
@@ -23,6 +24,7 @@ class SexDAO extends DAO {
     public function init(): void {
         $this->stmtGetSexById = $this->conn->prepare("SELECT * FROM SESSO WHERE ID = ?;");
         $this->stmtGetAllSexs = $this->conn->prepare("SELECT * FROM SESSO;");
+        $this->stmtGetSexByName = $this->conn->prepare("SELECT * FROM SESSO WHERE SESSO = ?;");
     }
 
 
@@ -40,6 +42,21 @@ class SexDAO extends DAO {
         $this->stmtGetSexById->execute();
 
         $rs = $this->stmtGetSexById->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createSex($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+     public function getSexByName(string $name){
+        $this->stmtGetSexByName->bindValue(1, $name, PDO::PARAM_STR);
+        $this->stmtGetSexByName->execute();
+
+        $rs = $this->stmtGetSexByName->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createSex($rs) : null;
     }

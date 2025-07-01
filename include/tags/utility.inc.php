@@ -6,4 +6,30 @@ class utility extends TagLibrary
 
 
     public function injectStyle() {}
+
+    // Name indica il nome del placeholder
+    // Data indica il dato inserito
+    // Pars indica eventuali parametri (è un array)
+
+    public function strformatter($name, $data, $pars) {
+
+        switch($pars["type"]){
+            case "upper":
+                $result = strtoupper($data);
+                break;
+            case "lower":
+                $result = strtolower($data);
+                break;
+            case "capitalize":
+                $result = ucfirst(strtolower($data));
+                break;
+            case "title":
+                $result = ucwords(strtolower($data));
+                break;
+            default:
+                $result = $data;
+                break;
+        }
+        return $result;
+    }
 }

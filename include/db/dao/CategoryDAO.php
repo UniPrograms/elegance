@@ -7,7 +7,7 @@ class CategoryDAO extends DAO{
 
 
     private PDOStatement $stmtGetCategoryById;
-    private PDOStatement $stmtGetAllCategorys;
+    private PDOStatement $stmtGetAllCategories;
     private PDOStatement $stmtGetCategoryByName;
     private PDOStatement $stmtInsertCategory;
     private PDOStatement $stmtUpdateCategory;
@@ -25,7 +25,7 @@ class CategoryDAO extends DAO{
     // Inizializzazione degli statement
     public function init(): void {
         $this->stmtGetCategoryById = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE ID = ?;");
-        $this->stmtGetAllCategorys = $this->conn->prepare("SELECT * FROM CATEGORIA;");
+        $this->stmtGetAllCategories = $this->conn->prepare("SELECT * FROM CATEGORIA;");
         $this->stmtGetCategoryByName = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE NAME LIKE ?;");
         $this->stmtInsertCategory = $this->conn->prepare("INSERT INTO CATEGORIA (NOME) VALUES (?);");
         $this->stmtUpdateCategory = $this->conn->prepare("UPDATE CATEGORIA SET NOME = ? WHERE ID = ?;");
@@ -57,11 +57,11 @@ class CategoryDAO extends DAO{
      * 
      * 
      */
-    public function getAllCategorys(): array {
-        $this->stmtGetAllCategorys->execute();
+    public function getAllCategories(): array {
+        $this->stmtGetAllCategories->execute();
         $result = [];
 
-        while ($rs = $this->stmtGetAllCategorys->fetch(PDO::FETCH_ASSOC)) {
+        while ($rs = $this->stmtGetAllCategories->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createCategory($rs);
         }
         return $result;

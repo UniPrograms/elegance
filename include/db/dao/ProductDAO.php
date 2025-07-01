@@ -15,6 +15,7 @@ class ProductDAO extends DAO{
     private PDOStatement $stmtGetProductByCategoryInRange;
     private PDOStatement $stmtGetProductByProductor;
     private PDOStatement $stmtGetProductByProductorInRange;
+    private PDOStatement $stmtGetPopularProduct;
     private PDOStatement $stmtInsertProduct;
     private PDOStatement $stmtUpdateProduct;
     private PDOStatement $stmtDeleteProduct;
@@ -40,7 +41,18 @@ class ProductDAO extends DAO{
         $this->stmtInsertProduct = $this->conn->prepare("INSERT INTO PRODOTTO (NOME, PREZZO, DESCRIZIONE, ID_PRODUTTORE, ID_CATEGORIA) VALUES (?, ?, ?, ?, ?);");
         $this->stmtUpdateProduct = $this->conn->prepare("UPDATE PRODOTTO SET NOME = ?, PREZZO = ?, DESCRIZIONE = ?, ID_PRODUTTORE = ?, ID_CATEGORIA = ? WHERE ID = ?;");
         $this->stmtDeleteProduct = $this->conn->prepare("DELETE FROM PRODOTTO WHERE ID = ?;");
+        $this->stmtGetPopularProduct = $this->conn->prepare("");
     }
+
+
+    /*
+        -- Query per prendere i prodotti più popolari in base al sesso
+        SELECT P.*, A.ID AS ID_ARTICOLO, SUM(OA.QUANTITA) AS QUANTITA FROM ORDINE_ARTICOLO AS OA 
+        JOIN ARTICOLO AS A ON A.ID = OA.ID_ARTICOLO
+        JOIN PRODOTTO AS P ON P.ID = A.ID_PRODOTTO
+        WHERE P.ID_SESSO = 3
+        GROUP BY ID_ARTICOLO ORDER BY QUANTITA DESC LIMIT 4;
+    */ 
 
 
 

@@ -81,10 +81,11 @@ class OrderItemDAO extends DAO{
     // Metodi privati
 
     private function createOrderItem(array $rs): OrderItem {
-        $OrderItem = new OrderItemProxy($this->dataLayer);
-        $OrderItem->setId($rs['ID']);
-        $OrderItem->setArticleId($rs["ID_ARTICOLO"]);
-        return $OrderItem;
+        $orderItem = new OrderItemProxy($this->dataLayer);
+        $orderItem->setId($rs['ID']);
+        $orderItem->setArticleId($rs["ID_ARTICOLO"]);
+        $orderItem->setQuantity($rs["QUANTITA"]);
+        return $orderItem;
     }
 
 
