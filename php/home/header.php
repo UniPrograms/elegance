@@ -22,8 +22,8 @@ foreach ($categorie as $categoria) {
     
     // Costruisco la query string
     $query_string_builder = new QueryStringBuilder();
-    $query_string_builder->add("category_id_woman",$categoria->getId());
-    $query_string_builder->add("sex_id_woman",$sex->getSexByName("WOMAN")->getId());
+    $query_string_builder->add("category_id",$categoria->getId());
+    $query_string_builder->add("sex_id",$sex->getSexByName("WOMAN")->getId());
     
     $header->setContent("shop_link_woman","shop.php" . $query_string_builder->build());
 }
@@ -38,8 +38,8 @@ foreach ($categorie as $categoria) {
     
     // Costruisco la query string
     $query_string_builder = new QueryStringBuilder();
-    $query_string_builder->add("category_id_man",$categoria->getId());
-    $query_string_builder->add("sex_id_man",$sex->getSexByName("MAN")->getId());
+    $query_string_builder->add("category_id",$categoria->getId());
+    $query_string_builder->add("sex_id",$sex->getSexByName("MAN")->getId());
     
     $header->setContent("shop_link_man","shop.php" . $query_string_builder->build());
 }
@@ -52,8 +52,8 @@ foreach ($categorie as $categoria) {
     
     // Costruisco la query string
     $query_string_builder = new QueryStringBuilder();
-    $query_string_builder->add("category_id_kid",$categoria->getId());
-    $query_string_builder->add("sex_id_kid",$sex->getSexByName("KID")->getId());
+    $query_string_builder->add("category_id",$categoria->getId());
+    $query_string_builder->add("sex_id",$sex->getSexByName("KID")->getId());
     
     $header->setContent("shop_link_kid","shop.php" . $query_string_builder->build());
 }
