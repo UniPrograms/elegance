@@ -209,6 +209,8 @@ class ProductDAO extends DAO{
         $product->setSexId($rs["ID_SESSO"]);
         $product->setCategoryId($rs["ID_CATEGORIA"]);
         $product->setProductorId($rs["ID_PRODUTTORE"]);
+        $product->setDescription($rs["DESCRIZIONE"]);
+        $product->setCopertina($rs["COPERTINA"]);
         return $product;
 
 

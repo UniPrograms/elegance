@@ -76,6 +76,21 @@ class CartDAO extends DAO{
 
         return $rs ? $this->createCart($rs) : null;
     }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getCartByUserId(int $id): ?Cart {
+        $this->stmtGetCartByUser->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetCartByUser->execute();
+
+        $rs = $this->stmtGetCartByUser->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createCart($rs) : null;
+    }
 
 
     // Metodi privati

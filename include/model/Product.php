@@ -14,6 +14,7 @@ class Product {
     protected ?Sex $sex;
     protected ?array $images;
     protected ?array $features; 
+    protected ?string $copertina;
 
     public function __construct() {
         $this->id = null;
@@ -24,6 +25,8 @@ class Product {
         $this->sex = null;
         $this->images = null;
         $this->features = null;
+        $this->description = "";
+        $this->copertina = "";
     }
 
     // Getter
@@ -36,7 +39,7 @@ class Product {
     public function getSex(): ?Sex { return $this->sex; } 
     public function getImages(): ?array { return $this->images; } 
     public function getFeatures(): ?array { return $this->features; } 
-
+    public function getCopertina(): string { return $this->copertina; }
     // Setter
     public function setId(?int $id) { $this->id = $id; }
     public function setName(string $name) { $this->name = $name; }
@@ -47,4 +50,5 @@ class Product {
     public function setSex(?Sex $sex) {$this->sex = $sex;}
     public function setImages(?array $images) {$this->images = $images;}
     public function setFeatures(?array $features) {$this->features = $features;}
+    public function setCopertina(string $copertina) { $this->copertina = $copertina; }
 }

@@ -20,7 +20,7 @@ $homepage = new Template("skin/index.html");
 $homepage->setContent("header",$header->get());
 $homepage->setContent("cart_popup",$cart_popup->get());
 $homepage->setContent("footer", $footer->get());
-$homepage->setContent("body",$product->get());
+$homepage->setContent("body",$product_page->get());
 
 
 $homepage->close();
