@@ -26,7 +26,7 @@ class CategoryDAO extends DAO{
     public function init(): void {
         $this->stmtGetCategoryById = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE ID = ?;");
         $this->stmtGetAllCategories = $this->conn->prepare("SELECT * FROM CATEGORIA;");
-        $this->stmtGetCategoryByName = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE NAME LIKE ?;");
+        $this->stmtGetCategoryByName = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE NOME LIKE ?;");
         $this->stmtInsertCategory = $this->conn->prepare("INSERT INTO CATEGORIA (NOME) VALUES (?);");
         $this->stmtUpdateCategory = $this->conn->prepare("UPDATE CATEGORIA SET NOME = ? WHERE ID = ?;");
         $this->stmtDeleteCategory = $this->conn->prepare("DELETE FROM CATEGORIA WHERE ID = ?;");

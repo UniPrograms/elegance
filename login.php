@@ -7,9 +7,10 @@ require_once("include/template2.inc.php");
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 
-// Page
-$login = new Template("skin/login/login.html");
 
-$login->close();
+require_once("php/login/login.php");
+
+// Page
+$login_page->close();
 
 ?>

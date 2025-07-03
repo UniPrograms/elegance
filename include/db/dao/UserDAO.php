@@ -87,7 +87,7 @@ class UserDAO extends DAO{
      * 
      * 
      */
-    public function storeUser(User $user): bool {
+    public function storeUser(User $user): ?User {
         if ($user->getId() !== null) { // Aggiorno l'utente
             $this->stmtUpdateUser->bindValue(1, $user->getName(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(2, $user->getSurname(), PDO::PARAM_STR);
@@ -95,7 +95,10 @@ class UserDAO extends DAO{
             $this->stmtUpdateUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(5, $user->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateUser->execute();
+            if($this->stmtUpdateUser->execute()){
+                return $user;
+            }
+
         } else {   // Inserisco l'utente
             $this->stmtInsertUser->bindValue(1, $user->getName(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(2, $user->getSurname(), PDO::PARAM_STR);
@@ -103,8 +106,12 @@ class UserDAO extends DAO{
             $this->stmtInsertUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(5, $user->getRole(), PDO::PARAM_STR);
             
-            return $this->stmtInsertUser->execute();
+            if($this->stmtInsertUser->execute()){
+                $user->setId($this->conn->lastInsertId());
+                return $user;
+            }
         }
+        return null;
     }
      /**
      * 

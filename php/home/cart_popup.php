@@ -18,11 +18,11 @@ $articleDAO = $factory->getArticleDAO();
 
 // Cart dell'utente 
 $user_cart = $cartDAO->getCartByUserId(1);
-$cart_item = $cartItemDAO->getCartItemByCart($user_cart);
-
+$cart_items = $cartItemDAO->getCartItemByCart($user_cart);
+$cart_price_sum = 0;
 
 // Scorro tutti quanti gli articoli all'interno del carrello
-foreach($cart_item as $single_item){
+foreach($cart_items as $single_item){
     $article = $single_item->getArticle();
     $product = $article->getProduct();
 
@@ -32,9 +32,13 @@ foreach($cart_item as $single_item){
     $cart_popup->setContent("product_price", $product->getPrice());
     $cart_popup->setContent("size",$article->getSize()->getSize());
     $cart_popup->setContent("color",$article->getColor()->getColor());
+
+    $cart_price_sum = $cart_price_sum + $product->getPrice();
 }
 
-
+// Prezzo totale del carrello
+$cart_popup->setContent("cart_total_price",$cart_price_sum);
+$cart_popup->setContent("cart_total_items",count($cart_items));
 
 
 
