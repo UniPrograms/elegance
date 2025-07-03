@@ -22,32 +22,29 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 
     $user = $userDAO->getUserByEmail($email);
 
-    if ($user->getPassword() == $password) {
+    if (strtolower($user->getPassword()) == strtolower($password)) {
         $_SESSION["auth"] = true;
-        $_SESSION["id"] = $row["ID"];
-        $_SESSION["nome"] = $row["NOME"];
-        $_SESSION["cognome"] = $row["COGNOME"];
-        $_SESSION["email"] = $row["EMAIL"];        
-        $_SESSION["ruolo"] = $row["RUOLO"];
+        $_SESSION["id"] = $user->getId();
+        $_SESSION["nome"] = $user->getName();
+        $_SESSION["cognome"] = $user->getSurname();
+        $_SESSION["email"] = $user->getEmail();        
+        $_SESSION["ruolo"] = $user->getRole();
             
             
-        if($row["RUOLO"] == 'USER') { header("Location: index.php"); }
-        if($row["RUOLO"] == "ADMIN")  { header("Location: admin_home.php"); }
-        
-        
+        if(strtoupper($user->getRole()) == 'UTENTE') { header("Location: index.php"); }
+        if(strtoupper($user->getRole()) == "AMMINISTRATORE")  { header("Location: admin_home.php"); }
         
     }
     // Login non effettuato con successo
     else{
         header("Location: login.php?error=on");
     }
-    
     exit;
 }
 
-$login_page = new Template("skins/login/login.html");
+$login_page = new Template("skin/login/login.html");
 
 if(isset($_GET["error"])){
-    $login_page->setContent("error","Username/Password errati.");
+    $login_page->setContent("error","Invalid username or password.");
 }
 ?>

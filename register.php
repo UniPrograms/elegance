@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 // Templating
 require_once("include/template2.inc.php");
@@ -7,9 +8,10 @@ require_once("include/template2.inc.php");
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 
-// Page
-$register = new Template("skin/login/register.html");
+require "php/login/register.php";
 
-$register->close();
+
+
+$register_page->close();
 
 ?>

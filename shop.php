@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 // Templating
 require_once("include/template2.inc.php");

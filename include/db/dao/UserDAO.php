@@ -139,6 +139,11 @@ class UserDAO extends DAO{
         return $user;
     }
 
+    public function createEntity(): User{
+        $user = new UserProxy($this->dataLayer);
+        return $user;
+    }
+
 }
 
 ?>
