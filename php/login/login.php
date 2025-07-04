@@ -22,7 +22,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 
     $user = $userDAO->getUserByEmail($email);
 
-    if (strtolower($user->getPassword()) == strtolower($password)) {
+    if ($user != null && (strtolower($user->getPassword()) == strtolower($password))) {
         $_SESSION["auth"] = true;
         $_SESSION["id"] = $user->getId();
         $_SESSION["nome"] = $user->getName();
