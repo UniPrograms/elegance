@@ -1,183 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profilo Utente - Essence</title>
-    <link rel="icon" href="../../img/core-img/favicon.ico">
-    <link rel="stylesheet" href="../../css/core-style.css">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/profile/profile.css">
-</head>
-<body>
-    <!-- ##### Header Area Start ##### -->
-    <header class="header_area">
-        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
-            <nav class="classy-navbar" id="essenceNav">
-                <a class="nav-brand" href="../../index.php"><img src="../../img/core-img/logo.png" alt=""></a>
-                <!-- ...menu... -->
-            </nav>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
+<!-- ##### Header Area End ##### -->
 
-    <div class="container" style="margin-top: 40px; margin-bottom: 40px;">
-        <div class="profile-header">
-            <div class="profile-header-flex">
-                <div class="profile-img-col">
-                    <img id="profile-img" src="../../img/core-img/user.svg" alt="Immagine profilo">
-                    <form id="upload-form">
-                        <input type="file" id="profile-upload" accept="image/*" style="display:none;">
-                        <span id="edit-profile-pic">
-                            <img src="../../img/core-img/pencil.svg" alt="Modifica">
-                        </span>
+<div class="container" style="margin-top: 40px; margin-bottom: 40px;">
+    <div class="profile-header">
+        <div class="profile-header-flex">
+            <div class="profile-img-col">
+                <img id="profile-img" src="../../img/core-img/user.svg" alt="Immagine profilo">
+                <form id="upload-form">
+                    <input type="file" id="profile-upload" accept="image/*" style="display:none;">
+                    <span id="edit-profile-pic">
+                        <img src="../../img/core-img/pencil.svg" alt="Modifica">
+                    </span>
+                </form>
+            </div>
+            <div class="profile-info">
+                <h2>Mario Rossi</h2>
+                <p>mario.rossi@email.com</p>
+                <a href="#" class="btn essence-btn btn-xsmall" id="change-password-btn">Cambia password</a>
+                <div id="change-password-form-container" style="display:none; margin-top:20px;">
+                    <form id="change-password-form"
+                        style="max-width:350px; margin:0; background:#fafafa; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:20px 24px;">
+                        <div class="form-group" style="margin-bottom:16px;">
+                            <label for="old-password" style="font-weight:500;">Vecchia password</label>
+                            <input type="password" id="old-password" class="form-control"
+                                style="width:100%; margin-top:4px;" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:16px;">
+                            <label for="new-password" style="font-weight:500;">Nuova password</label>
+                            <input type="password" id="new-password" class="form-control"
+                                style="width:100%; margin-top:4px;" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label for="confirm-password" style="font-weight:500;">Ripeti nuova password</label>
+                            <input type="password" id="confirm-password" class="form-control"
+                                style="width:100%; margin-top:4px;" required>
+                        </div>
+                        <button type="submit" class="btn essence-btn btn-small" style="width:100%;">Conferma</button>
                     </form>
                 </div>
-                <div class="profile-info">
-                    <h2>Mario Rossi</h2>
-                    <p>mario.rossi@email.com</p>
-                    <a href="#" class="btn essence-btn btn-xsmall" id="change-password-btn">Cambia password</a>
-                    <div id="change-password-form-container" style="display:none; margin-top:20px;">
-                        <form id="change-password-form" style="max-width:350px; margin:0; background:#fafafa; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:20px 24px;">
-                            <div class="form-group" style="margin-bottom:16px;">
-                                <label for="old-password" style="font-weight:500;">Vecchia password</label>
-                                <input type="password" id="old-password" class="form-control" style="width:100%; margin-top:4px;" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom:16px;">
-                                <label for="new-password" style="font-weight:500;">Nuova password</label>
-                                <input type="password" id="new-password" class="form-control" style="width:100%; margin-top:4px;" required>
-                            </div>
-                            <div class="form-group" style="margin-bottom:20px;">
-                                <label for="confirm-password" style="font-weight:500;">Ripeti nuova password</label>
-                                <input type="password" id="confirm-password" class="form-control" style="width:100%; margin-top:4px;" required>
-                            </div>
-                            <button type="submit" class="btn essence-btn btn-small" style="width:100%;">Conferma</button>
-                        </form>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="orders-section">
-            <h3>I tuoi ordini</h3>
-            <!-- ORDINI UTENTE -->
-            <div id="orders-list">
-                <div class="order-card">
-                    <img src="../../img/product-img/product-1.jpg" alt="Prodotto">
-                    <div class="order-details">
-                        <h5>Nome prodotto di esempio</h5>
-                        <p><strong>ID Ordine:</strong> 1</p>
-                        <p>Acquistato il: 01/07/2025</p>
-                        <p>Metodo di pagamento: Carta di credito</p>
-                    </div>
-                    <div class="order-meta">
-                        <span>€ 49,99</span>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <img src="../../img/product-img/product-2.jpg" alt="Prodotto">
-                    <div class="order-details">
-                        <h5>Altro prodotto di esempio</h5>
-                        <p><strong>ID Ordine:</strong> 2</p>
-                        <p>Acquistato il: 15/06/2025</p>
-                        <p>Metodo di pagamento: PayPal</p>
-                    </div>
-                    <div class="order-meta">
-                        <span>€ 29,90</span>
-                    </div>
-                </div>
-                <!-- AGGIUNGI QUI ALTRE ORDER-CARD DI ESEMPIO PER TEST PAGINAZIONE -->
-                <div class="order-card"><img src="../../img/product-img/product-3.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 3</h5><p><strong>ID Ordine:</strong> 3</p><p>Acquistato il: 10/06/2025</p><p>Metodo di pagamento: PayPal</p></div><div class="order-meta"><span>€ 19,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-4.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 4</h5><p><strong>ID Ordine:</strong> 4</p><p>Acquistato il: 05/06/2025</p><p>Metodo di pagamento: Carta di credito</p></div><div class="order-meta"><span>€ 59,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-5.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 5</h5><p><strong>ID Ordine:</strong> 5</p><p>Acquistato il: 01/06/2025</p><p>Metodo di pagamento: PayPal</p></div><div class="order-meta"><span>€ 39,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-6.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 6</h5><p><strong>ID Ordine:</strong> 6</p><p>Acquistato il: 28/05/2025</p><p>Metodo di pagamento: Carta di credito</p></div><div class="order-meta"><span>€ 24,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-7.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 7</h5><p><strong>ID Ordine:</strong> 7</p><p>Acquistato il: 20/05/2025</p><p>Metodo di pagamento: PayPal</p></div><div class="order-meta"><span>€ 14,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-8.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 8</h5><p><strong>ID Ordine:</strong> 8</p><p>Acquistato il: 15/05/2025</p><p>Metodo di pagamento: Carta di credito</p></div><div class="order-meta"><span>€ 99,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-1.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 9</h5><p><strong>ID Ordine:</strong> 9</p><p>Acquistato il: 10/05/2025</p><p>Metodo di pagamento: PayPal</p></div><div class="order-meta"><span>€ 9,90</span></div></div>
-                <div class="order-card"><img src="../../img/product-img/product-2.jpg" alt="Prodotto"><div class="order-details"><h5>Prodotto 10</h5><p><strong>ID Ordine:</strong> 10</p><p>Acquistato il: 01/05/2025</p><p>Metodo di pagamento: Carta di credito</p></div><div class="order-meta"><span>€ 59,90</span></div></div>
-            </div>
-            <div id="pagination" style="margin-top: 30px; text-align: center;"></div>
-            <!-- FINE ORDINI UTENTE -->
         </div>
     </div>
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer_area clearfix">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area d-flex mb-30">
-                        <div class="footer-logo mr-50">
-                            <a href="#"><img src="../../img/core-img/logo2.png" alt=""></a>
-                        </div>
-                        <div class="footer_menu">
-                            <ul>
-                                <li><a href="shop.html">Shop</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
+    <div class="orders-section">
+        <h3>I tuoi ordini</h3>
+        <!-- ORDINI UTENTE -->
+        <div id="orders-list">
+            <div class="order-card">
+                <img src="../../img/product-img/product-1.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Nome prodotto di esempio</h5>
+                    <p><strong>ID Ordine:</strong> 1</p>
+                    <p>Acquistato il: 01/07/2025</p>
+                    <p>Metodo di pagamento: Carta di credito</p>
                 </div>
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area mb-30">
-                        <ul class="footer_widget_menu">
-                            <li><a href="#">Order Status</a></li>
-                            <li><a href="#">Payment Options</a></li>
-                            <li><a href="#">Shipping and Delivery</a></li>
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Use</a></li>
-                        </ul>
-                    </div>
+                <div class="order-meta">
+                    <span>€ 49,99</span>
                 </div>
             </div>
-            <div class="row align-items-end">
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_heading mb-30">
-                            <h6>Subscribe</h6>
-                        </div>
-                        <div class="subscribtion_form">
-                            <form action="#" method="post">
-                                <input type="email" name="mail" class="mail" placeholder="Your email here">
-                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                    </div>
+            <div class="order-card">
+                <img src="../../img/product-img/product-2.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Altro prodotto di esempio</h5>
+                    <p><strong>ID Ordine:</strong> 2</p>
+                    <p>Acquistato il: 15/06/2025</p>
+                    <p>Metodo di pagamento: PayPal</p>
                 </div>
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_social_area">
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
+                <div class="order-meta">
+                    <span>€ 29,90</span>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-md-12 text-center">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>, distributed by <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
+            <!-- AGGIUNGI QUI ALTRE ORDER-CARD DI ESEMPIO PER TEST PAGINAZIONE -->
+            <div class="order-card"><img src="../../img/product-img/product-3.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 3</h5>
+                    <p><strong>ID Ordine:</strong> 3</p>
+                    <p>Acquistato il: 10/06/2025</p>
+                    <p>Metodo di pagamento: PayPal</p>
                 </div>
+                <div class="order-meta"><span>€ 19,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-4.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 4</h5>
+                    <p><strong>ID Ordine:</strong> 4</p>
+                    <p>Acquistato il: 05/06/2025</p>
+                    <p>Metodo di pagamento: Carta di credito</p>
+                </div>
+                <div class="order-meta"><span>€ 59,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-5.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 5</h5>
+                    <p><strong>ID Ordine:</strong> 5</p>
+                    <p>Acquistato il: 01/06/2025</p>
+                    <p>Metodo di pagamento: PayPal</p>
+                </div>
+                <div class="order-meta"><span>€ 39,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-6.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 6</h5>
+                    <p><strong>ID Ordine:</strong> 6</p>
+                    <p>Acquistato il: 28/05/2025</p>
+                    <p>Metodo di pagamento: Carta di credito</p>
+                </div>
+                <div class="order-meta"><span>€ 24,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-7.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 7</h5>
+                    <p><strong>ID Ordine:</strong> 7</p>
+                    <p>Acquistato il: 20/05/2025</p>
+                    <p>Metodo di pagamento: PayPal</p>
+                </div>
+                <div class="order-meta"><span>€ 14,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-8.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 8</h5>
+                    <p><strong>ID Ordine:</strong> 8</p>
+                    <p>Acquistato il: 15/05/2025</p>
+                    <p>Metodo di pagamento: Carta di credito</p>
+                </div>
+                <div class="order-meta"><span>€ 99,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-1.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 9</h5>
+                    <p><strong>ID Ordine:</strong> 9</p>
+                    <p>Acquistato il: 10/05/2025</p>
+                    <p>Metodo di pagamento: PayPal</p>
+                </div>
+                <div class="order-meta"><span>€ 9,90</span></div>
+            </div>
+            <div class="order-card"><img src="../../img/product-img/product-2.jpg" alt="Prodotto">
+                <div class="order-details">
+                    <h5>Prodotto 10</h5>
+                    <p><strong>ID Ordine:</strong> 10</p>
+                    <p>Acquistato il: 01/05/2025</p>
+                    <p>Metodo di pagamento: Carta di credito</p>
+                </div>
+                <div class="order-meta"><span>€ 59,90</span></div>
             </div>
         </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
-
-    <script src="../../js/jquery/jquery-2.2.4.min.js"></script>
-    <script src="../../js/popper.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/plugins.js"></script>
-    <script src="../../js/classy-nav.min.js"></script>
-    <script src="../../js/active.js"></script>
-    <script src="../../js/profile/profile.js"></script>
-</body>
-</html>
+        <div id="pagination" style="margin-top: 30px; text-align: center;"></div>
+        <!-- FINE ORDINI UTENTE -->
+    </div>
+</div>
