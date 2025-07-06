@@ -18,7 +18,7 @@ class QueryStringBuilder {
 
     public function build(): string{
         if(empty($this->params)){
-            return "";
+            return $this->path_file;
         }
 
         return $this->path_file . self::INIT . http_build_query($this->params,'',self::SEPARATOR);

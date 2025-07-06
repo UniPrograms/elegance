@@ -1,0 +1,29 @@
+<!-- wishlist.html - User Wishlist Amazon Style -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="order-details-container">
+        <div class="order-details-title">Wishlist</div>
+        <div class="wishlist-list-cards">
+            <[foreach]>
+            <div class="wishlist-product-card">
+                <img src=<[product_copertina]> alt="">
+                <div class="wishlist-product-info">
+                    <a href="product.php?id=1" class="order-product-card-title"><[product_name]></a>
+                    <div class="order-product-card-cat">Category: <[product_category]></div>
+                </div>
+                <div class="wishlist-actions">
+                    <button class="btn essence-btn btn-xsmall wishlist-add-btn">Add to cart</button>
+                    <a href="#" class="wishlist-remove-link">Remove</a>
+                </div>
+            </div>
+            <[/foreach]>
+        </div>
+    </div>
+</body>
+</html>

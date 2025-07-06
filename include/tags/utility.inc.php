@@ -32,4 +32,10 @@ class utility extends TagLibrary
         }
         return $result;
     }
+
+
+
+    public function idformatter($name, $data, $pars){
+        return "#". str_pad($data, 8, "0", STR_PAD_LEFT); 
+    }
 }

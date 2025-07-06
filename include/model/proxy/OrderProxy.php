@@ -21,9 +21,9 @@ class OrderProxy extends Order{
     public function getPaymentId(): int {return $this->paymentId;}
     public function getDeliveryId(): int {return $this->deliveryId;}
 
-    public function setUserId(int $userId): void {$this->userId = $userId;}
-    public function setPaymentId(int $paymentId): void {$this->paymentId = $paymentId;}
-    public function setDeliveryId(int $deliveryId): void {$this->paymentId = $deliveryId;}
+    public function setUserId(int $userId): void { $this->userId = $userId; }
+    public function setPaymentId(int $paymentId): void { $this->paymentId = $paymentId; }
+    public function setDeliveryId(int $deliveryId): void { $this->deliveryId = $deliveryId; }
 
 
     // Other Methods
@@ -42,9 +42,9 @@ class OrderProxy extends Order{
         return parent::getPayment();
     }
 
-    public function getDeliery(): ?User{
-        if(parent::getDelivery() == null && $this->paymentId > 0){
-            parent::setDelivery((($this->dataLayer)->getDeliveryDAO())->getDeliveryById($this->paymentId));
+    public function getDelivery(): ?Delivery{
+        if(parent::getDelivery() == null && $this->deliveryId > 0){
+            parent::setDelivery((($this->dataLayer)->getDeliveryDAO())->getDeliveryById($this->deliveryId));
         }
         return parent::getDelivery();
     }

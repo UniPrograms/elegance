@@ -75,6 +75,21 @@ class WishlistDAO extends DAO{
 
         return $rs ? $this->createWishlist($rs) : null;
     }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getWishlistByUserId(int $id): ?Wishlist {
+        $this->stmtGetWishlistByUser->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetWishlistByUser->execute();
+
+        $rs = $this->stmtGetWishlistByUser->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createWishlist($rs) : null;
+    }
 
 
     // Metodi privati

@@ -37,6 +37,7 @@ class User{
     public function setPassword(string $password) { $this->password = $password; }
     public function setRole(string $role) { $this->role = $role; }
 
-
+    // Other function
+    public function toString(): ?string {return $this->name ." ".$this->surname;}
 
 }

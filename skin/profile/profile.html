@@ -4,145 +4,94 @@
     <div class="profile-header">
         <div class="profile-header-flex">
             <div class="profile-img-col">
-                <img id="profile-img" src="../../img/core-img/user.svg" alt="Immagine profilo">
+                <img id="profile-img" src="img/core-img/user.svg" alt="Profile picture">
                 <form id="upload-form">
                     <input type="file" id="profile-upload" accept="image/*" style="display:none;">
                     <span id="edit-profile-pic">
-                        <img src="../../img/core-img/pencil.svg" alt="Modifica">
+                        <img src="img/core-img/pencil.svg" alt="Edit">
                     </span>
                 </form>
             </div>
             <div class="profile-info">
                 <h2>Mario Rossi</h2>
                 <p>mario.rossi@email.com</p>
-                <a href="#" class="btn essence-btn btn-xsmall" id="change-password-btn">Cambia password</a>
+                <a href="#" class="btn essence-btn btn-xsmall" id="change-password-btn">Change password</a>
                 <div id="change-password-form-container" style="display:none; margin-top:20px;">
                     <form id="change-password-form"
                         style="max-width:350px; margin:0; background:#fafafa; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:20px 24px;">
                         <div class="form-group" style="margin-bottom:16px;">
-                            <label for="old-password" style="font-weight:500;">Vecchia password</label>
+                            <label for="old-password" style="font-weight:500;">Old password</label>
                             <input type="password" id="old-password" class="form-control"
                                 style="width:100%; margin-top:4px;" required>
                         </div>
                         <div class="form-group" style="margin-bottom:16px;">
-                            <label for="new-password" style="font-weight:500;">Nuova password</label>
+                            <label for="new-password" style="font-weight:500;">New password</label>
                             <input type="password" id="new-password" class="form-control"
                                 style="width:100%; margin-top:4px;" required>
                         </div>
                         <div class="form-group" style="margin-bottom:20px;">
-                            <label for="confirm-password" style="font-weight:500;">Ripeti nuova password</label>
+                            <label for="confirm-password" style="font-weight:500;">Repeat new password</label>
                             <input type="password" id="confirm-password" class="form-control"
                                 style="width:100%; margin-top:4px;" required>
                         </div>
-                        <button type="submit" class="btn essence-btn btn-small" style="width:100%;">Conferma</button>
+                        <button type="submit" class="btn essence-btn btn-small" style="width:100%;">Confirm</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <div class="orders-section">
-        <h3>I tuoi ordini</h3>
-        <!-- ORDINI UTENTE -->
+        <h3>Your orders</h3>
         <div id="orders-list">
-            <div class="order-card">
-                <img src="../../img/product-img/product-1.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Nome prodotto di esempio</h5>
-                    <p><strong>ID Ordine:</strong> 1</p>
-                    <p>Acquistato il: 01/07/2025</p>
-                    <p>Metodo di pagamento: Carta di credito</p>
+            <!-- ORDER EXAMPLE 1 -->
+            <div class="order-amazon-card" style="border:1px solid #e3e3e3; border-radius:10px; margin-bottom:32px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                <div class="order-header" style="background:#f7f7f7; border-bottom:1px solid #e3e3e3; border-radius:10px 10px 0 0; padding:18px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+                    <div>
+                        <strong>Order #123456</strong> <a href="order_details.php?order_id=1" class="order-details-link" style="font-size:0.95em; color:#1a73e8; text-decoration:underline; margin-left:8px;">(details)</a><br>
+                        Placed on: 2025-07-01<br>
+                        Status: Delivered on 2025-07-04
+                    </div>
+                    <div style="font-size:1.1em; font-weight:600; color:#2d7a2d;">Total: € 79.89</div>
                 </div>
-                <div class="order-meta">
-                    <span>€ 49,99</span>
+                <div class="order-products" style="padding:18px 24px;">
+                    <div class="order-product-row" style="display:flex; align-items:center; margin-bottom:18px;">
+                        <img src="img/product-img/product-1.jpg" alt="Product 1" style="width:70px; height:70px; object-fit:cover; border-radius:8px; margin-right:18px;">
+                        <div>
+                            <div style="font-weight:500;"><a href="product.php?product_id=1" style="color:inherit; text-decoration:underline;">Elegant Men's Shoes</a></div>
+                            <div style="font-size:0.95em; color:#888;">Category: Shoes</div>
+                        </div>
+                    </div>
+                    <div class="order-product-row" style="display:flex; align-items:center; margin-bottom:18px;">
+                        <img src="img/product-img/product-2.jpg" alt="Product 2" style="width:70px; height:70px; object-fit:cover; border-radius:8px; margin-right:18px;">
+                        <div>
+                            <div style="font-weight:500;"><a href="product.php?product_id=2" style="color:inherit; text-decoration:underline;">Leather Belt</a></div>
+                            <div style="font-size:0.95em; color:#888;">Category: Accessories</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="order-card">
-                <img src="../../img/product-img/product-2.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Altro prodotto di esempio</h5>
-                    <p><strong>ID Ordine:</strong> 2</p>
-                    <p>Acquistato il: 15/06/2025</p>
-                    <p>Metodo di pagamento: PayPal</p>
+            <!-- ORDER EXAMPLE 2 -->
+            <div class="order-amazon-card" style="border:1px solid #e3e3e3; border-radius:10px; margin-bottom:32px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                <div class="order-header" style="background:#f7f7f7; border-bottom:1px solid #e3e3e3; border-radius:10px 10px 0 0; padding:18px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+                    <div>
+                        <strong>Order #123457</strong> <a href="order_details.php?order_id=123457" class="order-details-link" style="font-size:0.95em; color:#1a73e8; text-decoration:underline; margin-left:8px;">(details)</a><br>
+                        Placed on: 2025-06-15<br>
+                        Status: In delivery (expected 2025-06-18)
+                    </div>
+                    <div style="font-size:1.1em; font-weight:600; color:#2d7a2d;">Total: € 19.90</div>
                 </div>
-                <div class="order-meta">
-                    <span>€ 29,90</span>
+                <div class="order-products" style="padding:18px 24px;">
+                    <div class="order-product-row" style="display:flex; align-items:center; margin-bottom:18px;">
+                        <img src="img/product-img/product-3.jpg" alt="Product 3" style="width:70px; height:70px; object-fit:cover; border-radius:8px; margin-right:18px;">
+                        <div>
+                            <div style="font-weight:500;"><a href="../../product.php?id=3" style="color:inherit; text-decoration:underline;">Basic T-shirt</a></div>
+                            <div style="font-size:0.95em; color:#888;">Category: Clothing</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- AGGIUNGI QUI ALTRE ORDER-CARD DI ESEMPIO PER TEST PAGINAZIONE -->
-            <div class="order-card"><img src="../../img/product-img/product-3.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 3</h5>
-                    <p><strong>ID Ordine:</strong> 3</p>
-                    <p>Acquistato il: 10/06/2025</p>
-                    <p>Metodo di pagamento: PayPal</p>
-                </div>
-                <div class="order-meta"><span>€ 19,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-4.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 4</h5>
-                    <p><strong>ID Ordine:</strong> 4</p>
-                    <p>Acquistato il: 05/06/2025</p>
-                    <p>Metodo di pagamento: Carta di credito</p>
-                </div>
-                <div class="order-meta"><span>€ 59,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-5.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 5</h5>
-                    <p><strong>ID Ordine:</strong> 5</p>
-                    <p>Acquistato il: 01/06/2025</p>
-                    <p>Metodo di pagamento: PayPal</p>
-                </div>
-                <div class="order-meta"><span>€ 39,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-6.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 6</h5>
-                    <p><strong>ID Ordine:</strong> 6</p>
-                    <p>Acquistato il: 28/05/2025</p>
-                    <p>Metodo di pagamento: Carta di credito</p>
-                </div>
-                <div class="order-meta"><span>€ 24,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-7.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 7</h5>
-                    <p><strong>ID Ordine:</strong> 7</p>
-                    <p>Acquistato il: 20/05/2025</p>
-                    <p>Metodo di pagamento: PayPal</p>
-                </div>
-                <div class="order-meta"><span>€ 14,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-8.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 8</h5>
-                    <p><strong>ID Ordine:</strong> 8</p>
-                    <p>Acquistato il: 15/05/2025</p>
-                    <p>Metodo di pagamento: Carta di credito</p>
-                </div>
-                <div class="order-meta"><span>€ 99,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-1.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 9</h5>
-                    <p><strong>ID Ordine:</strong> 9</p>
-                    <p>Acquistato il: 10/05/2025</p>
-                    <p>Metodo di pagamento: PayPal</p>
-                </div>
-                <div class="order-meta"><span>€ 9,90</span></div>
-            </div>
-            <div class="order-card"><img src="../../img/product-img/product-2.jpg" alt="Prodotto">
-                <div class="order-details">
-                    <h5>Prodotto 10</h5>
-                    <p><strong>ID Ordine:</strong> 10</p>
-                    <p>Acquistato il: 01/05/2025</p>
-                    <p>Metodo di pagamento: Carta di credito</p>
-                </div>
-                <div class="order-meta"><span>€ 59,90</span></div>
             </div>
         </div>
         <div id="pagination" style="margin-top: 30px; text-align: center;"></div>
-        <!-- FINE ORDINI UTENTE -->
+        <!-- END USER ORDERS -->
     </div>
 </div>

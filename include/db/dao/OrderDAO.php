@@ -11,6 +11,7 @@ class OrderDAO extends DAO {
     private PDOStatement $stmtInsertOrder;
     private PDOStatement $stmtUpdateOrder;
     private PDOStatement $stmtDeleteOrder;
+    private PDOStatement $stmtGetOrderByIdAndUserId;
 
 
 
@@ -29,6 +30,7 @@ class OrderDAO extends DAO {
         $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (DATA_ARRIVO, PREZZO, INDIRIZZO_CONSEGNA, ID_UTENTE, ID_PAGAMENTO, ID_SPEDIZIONE) VALUES (?,?,?,?,?,?);");
         $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
         $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
+        $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE WHERE ID = ? AND ID_UTENTE = ?;");
     }
 
 
@@ -41,7 +43,7 @@ class OrderDAO extends DAO {
      * 
      * 
      */
-    public function getOrderById(int $id){
+    public function getOrderById(int $id): ?Order{
         $this->stmtGetOrderById->bindValue(1, $id, PDO::PARAM_INT);
         $this->stmtGetOrderById->execute();
 
@@ -77,12 +79,45 @@ class OrderDAO extends DAO {
         $this->stmtGetOrderByUser->execute();
         $rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC);
 
-        while ($rs = $this->stmtGetAllOrders->fetch(PDO::FETCH_ASSOC)) {
+        while ($rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createOrder($rs);
         }
         return $result;
     }
     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getOrderByUserId(int $id): array {
+        $this->stmtGetOrderByUser->bindValue(1, $id, PDO::PARAM_STR);
+        $this->stmtGetOrderByUser->execute();
+        $rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC);
+
+        while ($rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createOrder($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getOrderByIdAndUserId(int $id_order, int $id_user): ?Order{
+        $this->stmtGetOrderByIdAndUserId->bindValue(1, $id_order, PDO::PARAM_INT);
+        $this->stmtGetOrderByIdAndUserId->bindValue(2, $id_user, PDO::PARAM_INT);
+        $this->stmtGetOrderByIdAndUserId->execute();
+
+        $rs = $this->stmtGetOrderByIdAndUserId->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createOrder($rs) : null;
+    }
+ /**
      * 
      * 
      * 

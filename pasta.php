@@ -5,6 +5,11 @@ require_once("include/db/DataLayer.php");
 
 $factory = new DataLayer(new DB_Connection());
 
+
+$order = $factory->getOrderDAO()->getOrderById(1);
+echo $order->getPayment()->getName();
+
+/*
 // Utente 
 $user = $factory->getUserDAO()->getUserById(1);
 echo ("<h2> Utente: " . $user->getName() . "</h2>");
@@ -87,3 +92,7 @@ echo ("<h2> Recensione: " . $recensione[0]->getText() . "</h2>");
 // Valutazione
 $valutazione = $factory->getEvaluationDAO()->getEvaluationByProduct($prodotto);
 echo ("<h2> Valutazione: " . $valutazione[0]->getStar() . "</h2>");
+
+
+
+*/
