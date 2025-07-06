@@ -1,4 +1,56 @@
 /* Layout flessibile per header profilo */
+/* Stili per form cambio password */
+.change-password-form {
+    max-width: 350px;
+    margin: 0;
+    background: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 20px 24px;
+}
+.label-bold {
+    font-weight: 500;
+}
+.input-fullwidth {
+    width: 100%;
+    margin-top: 4px;
+}
+.btn-fullwidth {
+    width: 100%;
+}
+.product-title {
+    font-weight: 500;
+}
+.product-category {
+    font-size: 0.95em;
+    color: #888;
+}
+.order-total {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #2d7a2d;
+}
+.pagination {
+    margin-top: 30px;
+    text-align: center;
+}
+.profile-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.admin-section-spaced {
+    margin-top: 40px;
+}
+
+.order-summary-value.total {
+    font-weight: 600;
+    color: #2d7a2d;
+}
+
+.order-summary-col.address {
+    flex: 2;
+}
 .profile-header-flex {
     display: flex;
     flex-direction: row;
