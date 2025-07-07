@@ -15,39 +15,45 @@ if(!isset($_SESSION["auth"])){
 $factory = new DataLayer(new DB_Connection());
 $wishlistDAO = $factory->getWishlistDAO();
 $wishlistItemDAO = $factory->getWishlistItemDAO(); 
+$cartDAO = $factory->getCartDAO();
+$cartItemDAO = $factory->getCartItemDAO();
 $articleDAO = $factory->getArticleDAO();
 
 
 
-// Insirisce un articolo all'interno della wishlist
-if(isset($_REQUEST["store"])){
-    $newItem = new WishlistItem();
-    $newItem->setWishlist($wishlistDAO->getWishlistByUserId($_SESSION["id"]));
-    $newItem->setArticle($articleDAO->getArticleById($_REQUEST["article_id"]));
+// Sposto un articolo dalla wishlist al carrello
+if(isset($_REQUEST["move"])){
     
-    $result = $wishlistItemDAO->storeItem($newItem);
+    // WishlistItem corrente
+    $item = $wishlistItemDAO->getWishlistItemById($_REQUEST["item_id"]);
+    
+    // Inserisco all'interno del carrello
+    $new_cart_item = new CartItem();
+    $new_cart_item->setCart($cartDAO->getCartByUserId($_SESSION["id"]));
+    $new_cart_item->setArticle($item->getArticle());
+
+    $new_cart_item = $cartItemDAO->storeItem($new_cart_item);
+    
+    if($new_cart_item != null){
+       $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
+       echo $result ? "OK" : "NO";
+       exit;
+    }
 }
+
 
 
 // Elimina un articolo dalla wishlist
 else if(isset($_REQUEST["delete"])){
     $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
+    echo $result ? "OK" : "NO";
+    exit;
 }
 
 
-// Sposta un articolo dalla wishlist al carrello
-else if(isset($_REQUEST["move"])){
-    // Se qualcosa non viene passato per cui non è possibile reperire l'articolo
-    if(!isset($_REQUEST["product_id"]) || !isset($_REQUEST["size_id"]) || !isset($_REQUEST["color_id"])){
-        $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"],$_REQUEST["size_id"],$_REQUEST["color_id"]);
-
-        if($article != null){
-            $newWishlistItem = new WishlistItem();
-            $newWishlistItem->setArticle($article);
-            $newWishlistItem->setWishlist($wishlistDAO->getWishlistByUserId($_SESSION["id"]));
-            $result = $wishlistItemDAO->storeItem($newWishlistItem);
-        }
-    }
+// Inserisco un articolo nella wishlist
+else if(isset($_REQUEST["store"])){
+   
 }
 
 

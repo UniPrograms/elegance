@@ -14,12 +14,12 @@
             <div class="wishlist-product-card">
                 <img src=<[product_copertina]> alt="">
                 <div class="wishlist-product-info">
-                    <a href="product.php?id=1" class="order-product-card-title"><[product_name]></a>
+                    <a href=<[product_link]> class="order-product-card-title"><[product_name]></a>
                     <div class="order-product-card-cat">Category: <[product_category]></div>
                 </div>
                 <div class="wishlist-actions">
-                    <button class="btn essence-btn btn-xsmall wishlist-add-btn">Add to cart</button>
-                    <a href=<[delete_operation]> class="wishlist-remove-link">Remove</a>
+                    <button class="btn essence-btn btn-xsmall wishlist-add-btn" pageref=<[move_ref]> optional=<[optional_param_move]> value=<[value_article_move]> >Add to cart</button>
+                    <a href="" class="wishlist-remove-link" pageref=<[delete_ref]> optional=<[optional_param_delete]> value=<[value_article_delete]> >Remove</a>
                 </div>
             </div>
             <[/foreach]>

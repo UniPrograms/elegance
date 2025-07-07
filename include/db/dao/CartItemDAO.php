@@ -8,6 +8,8 @@ class CartItemDAO extends DAO {
     private PDOStatement $stmtGetCartItemById;
     private PDOStatement $stmtGetAllCartItems;
     private PDOStatement $stmtGetCartItemByCart;
+    private PDOStatement $stmtInsertItem;
+    private PDOStatement $stmtDeleteItem;
 
 
 
@@ -24,6 +26,8 @@ class CartItemDAO extends DAO {
         $this->stmtGetCartItemById = $this->conn->prepare("SELECT * FROM ITEM_CARRELLO WHERE ID = ?;");
         $this->stmtGetAllCartItems = $this->conn->prepare("SELECT * FROM ITEM_CARRELLO;");
         $this->stmtGetCartItemByCart = $this->conn->prepare("SELECT * FROM ITEM_CARRELLO WHERE ID_CARRELLO = ?;");
+        $this->stmtInsertItem = $this->conn->prepare("INSERT INTO ITEM_CARRELLO (ID_CARRELLO, ID_ARTICOLO) VALUES(?,?);");
+        $this->stmtDeleteItem = $this->conn->prepare("DELETE FROM ITEM_CARRELLO WHERE ID = ?");
     }
 
 
@@ -77,6 +81,48 @@ class CartItemDAO extends DAO {
         }
         return $result;
     }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function storeItem(CartItem $item): ?CartItem{
+        $this->stmtInsertItem->bindValue(1, $item->getCart()->getId(), PDO::PARAM_INT);
+        $this->stmtInsertItem->bindValue(2, $item->getArticle()->getId(), PDO::PARAM_INT);
+        $this->stmtInsertItem->execute();
+
+        if($this->stmtInsertItem->execute()){
+                $item->setId($this->conn->lastInsertId());
+                return $item;
+        }
+        return null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteItem(CartItem $item): bool{
+        $this->stmtDeleteItem->bindValue(1, $item->getId(), PDO::PARAM_INT);
+        return  $this->stmtDeleteItem->execute();
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteItemById(int $id): bool{
+        $this->stmtDeleteItem->bindValue(1, $id, PDO::PARAM_INT);
+        return  $this->stmtDeleteItem->execute();
+    }
+
+
 
 
     // Metodi privati
@@ -85,6 +131,7 @@ class CartItemDAO extends DAO {
         $cartItem = new CartItemProxy($this->dataLayer);
         $cartItem->setId($rs['ID']);
         $cartItem->setArticleId($rs["ID_ARTICOLO"]);
+        $cartItem->setCartId($rs["ID_CARRELLO"]);
         return $cartItem;
     }
 

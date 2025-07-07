@@ -28,15 +28,27 @@ foreach($wishlist_items as $item){
     $article = $item->getArticle();
     $product = $article->getProduct();
 
+    // Dati del prodotto
     $wishlist_page->setContent("product_copertina",$product->getCopertina());
     $wishlist_page->setContent("product_name",$product->getName());
     $wishlist_page->setContent("product_category", $product->getCategory()->getName());
 
+    // Consente di andare alla pagina specifica del prodotto
+    $query_string_builder = new QueryStringBuilder("product.php");
+    $query_string_builder->add("product_id", $product->getId());
+    $wishlist_page->setContent("product_link",$query_string_builder->build());
 
-    $query_string_builder = new QueryStringBuilder("wishlist_operation.php");
-    $query_string_builder->add("delete","1");
-    $query_string_builder->add("item_id", $item->getId());
-    $wishlist_page->setContent("delete_operation", $query_string_builder->build());
+    // Consente di settare la query string per eliminare un prodotto dalla wishlist
+    $wishlist_page->setContent("delete_ref", "wishlist_operation.php");
+    $wishlist_page->setContent("optional_param_delete", "delete");
+    $wishlist_page->setContent("value_article_delete", $item->getId());
+
+    // Consente di spostare un prodotto dalla wishlist al carrello
+    $wishlist_page->setContent("move_ref","wishlist_operation.php");
+    $wishlist_page->setContent("optional_param_move", "move");
+    $wishlist_page->setContent("value_article_move",$item->getId());
+    
+    
 }
 
 
