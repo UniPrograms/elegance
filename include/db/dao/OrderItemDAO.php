@@ -84,7 +84,6 @@ class OrderItemDAO extends DAO{
         $orderItem = new OrderItemProxy($this->dataLayer);
         $orderItem->setId($rs['ID']);
         $orderItem->setArticleId($rs["ID_ARTICOLO"]);
-        $orderItem->setQuantity($rs["QUANTITA"]);
         return $orderItem;
     }
 

@@ -5,6 +5,9 @@ require_once("include/model/proxy/OrderProxy.php");
 
 class OrderDAO extends DAO {
 
+
+    
+
     private PDOStatement $stmtGetOrderById;
     private PDOStatement $stmtGetAllOrders;
     private PDOStatement $stmtGetOrderByUser;
@@ -24,13 +27,13 @@ class OrderDAO extends DAO {
 
     // Inizializzazione degli statement
     public function init(): void {
-        $this->stmtGetOrderById = $this->conn->prepare("SELECT * FROM ORDINE WHERE ID = ?;");
-        $this->stmtGetAllOrders = $this->conn->prepare("SELECT * FROM ORDINE;");
-        $this->stmtGetOrderByUser = $this->conn->prepare("SELECT * FROM ORDINE WHERE ID_UTENTE = ?;");
-        $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (DATA_ARRIVO, PREZZO, INDIRIZZO_CONSEGNA, ID_UTENTE, ID_PAGAMENTO, ID_SPEDIZIONE) VALUES (?,?,?,?,?,?);");
-        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
-        $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
-        $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE WHERE ID = ? AND ID_UTENTE = ?;");
+        $this->stmtGetOrderById = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ?;");
+        $this->stmtGetAllOrders = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO;");
+        $this->stmtGetOrderByUser = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID_UTENTE = ?;");
+        $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE_COMPLETO (DATA_ARRIVO, PREZZO, INDIRIZZO_CONSEGNA, ID_UTENTE, ID_PAGAMENTO, ID_SPEDIZIONE) VALUES (?,?,?,?,?,?);");
+        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE_COMPLETO SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
+        $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE_COMPLETO WHERE ID = ?;");
+        $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ? AND ID_UTENTE = ?;");
     }
 
 
@@ -171,7 +174,7 @@ class OrderDAO extends DAO {
         $order->setId($rs['ID']);
         $order->setOrderDate($rs['DATA_ORDINE']);
         $order->setDeliveryDate($rs['DATA_ARRIVO']);
-        $order->setPrice($rs['PREZZO']);
+        $order->setPrice($rs['PREZZO_TOTALE']);
         $order->setAddressId($rs['ID_INDIRIZZO']);
         $order->setStatus($rs['STATO']);
         $order->setUserId($rs['ID_UTENTE']);

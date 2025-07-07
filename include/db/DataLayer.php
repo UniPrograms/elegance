@@ -16,7 +16,7 @@ require_once("dao/NotifyDAO.php");
 require_once("dao/OrderDAO.php");
 require_once("dao/OrderItemDAO.php");
 require_once("dao/ReviewDAO.php");
-require_once("dao/EvaluaionDAO.php");
+require_once("dao/EvaluationDAO.php");
 require_once("dao/WishlistDAO.php");
 require_once("dao/WishlistItemDAO.php");
 require_once("dao/SexDAO.php");

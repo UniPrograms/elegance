@@ -22,9 +22,9 @@ class CartDAO extends DAO{
 
     // Inizializzazione degli statement
     public function init(): void {
-        $this->stmtGetCartById = $this->conn->prepare("SELECT * FROM CARRELLO WHERE ID = ?;");
-        $this->stmtGetAllCarts = $this->conn->prepare("SELECT * FROM CARRELLO;");
-        $this->stmtGetCartByUser = $this->conn->prepare("SELECT * FROM CARRELLO WHERE ID_UTENTE = ?;");
+        $this->stmtGetCartById = $this->conn->prepare("SELECT * FROM CARRELLO_COMPLETO WHERE ID = ?;");
+        $this->stmtGetAllCarts = $this->conn->prepare("SELECT * FROM CARRELLO_COMPLETO;");
+        $this->stmtGetCartByUser = $this->conn->prepare("SELECT * FROM CARRELLO_COMPLETO WHERE ID_UTENTE = ?;");
     }
 
 
@@ -98,6 +98,7 @@ class CartDAO extends DAO{
         $cart = new CartProxy($this->dataLayer);
         $cart->setId($rs['ID']);
         $cart->setUserId($rs["ID_UTENTE"]);
+        $cart->setPrice($rs["PREZZO_TOTALE"]);
         return $cart;
     }
 
