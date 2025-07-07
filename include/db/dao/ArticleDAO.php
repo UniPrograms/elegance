@@ -30,18 +30,18 @@ class ArticleDAO extends DAO{
 
     // Inizializzazione degli Statement
     public function init(): void {
-        $this->stmtGetArticleById = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_ARTICOLO = ?;");
-        $this->stmtGetAllArticles = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO;");
-        $this->stmtGetArticleByName = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE NOME_PRODOTTO LIKE ?;");
-        $this->stmtGetArticleByNameInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE NOME_PRODOTTO LIKE ? LIMIT ? OFFSET ?;");
-        $this->stmtGetArticleByCategory = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_CATEGORIA = ?;");
-        $this->stmtGetArticleByCategoryInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_CATEGORIA = ? LIMIT ? OFFSET ?;");
-        $this->stmtGetArticleByProductor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_PRODUTTORE = ?;");
-        $this->stmtGetArticleByProductorInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_PRODUTTORE = ? LIMIT ? OFFSET ?;");
-        $this->stmtGetArticleByProductSizeColor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO WHERE ID_PRODOTTO = ? AND ID_TAGLIA = ? AND ID_COLORE = ?;");
-        $this->stmtInsertArticle = $this->conn->prepare("INSERT INTO ARTICOLO_PRODOTTO (ID_PRODOTTO, ID_TAGLIA, ID_COLORE, QUANTITA) VALUES (?, ?, ?, ?);");
-        $this->stmtUpdateArticle = $this->conn->prepare("UPDATE ARTICOLO_PRODOTTO SET ID_PRODOTTO = ?, ID_TAGLIA = ?, ID_COLORE = ?, QUANTITA = ? WHERE ID = ?;");
-        $this->stmtDeleteArticle = $this->conn->prepare("DELETE FROM ARTICOLO_PRODOTTO WHERE ID = ?;");
+        $this->stmtGetArticleById = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_ARTICOLO = ?;");
+        $this->stmtGetAllArticles = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO;");
+        $this->stmtGetArticleByName = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ?;");
+        $this->stmtGetArticleByNameInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? LIMIT ? OFFSET ?;");
+        $this->stmtGetArticleByCategory = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_CATEGORIA = ?;");
+        $this->stmtGetArticleByCategoryInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_CATEGORIA = ? LIMIT ? OFFSET ?;");
+        $this->stmtGetArticleByProductor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ?;");
+        $this->stmtGetArticleByProductorInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ? LIMIT ? OFFSET ?;");
+        $this->stmtGetArticleByProductSizeColor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ? AND ID_TAGLIA = ? AND ID_COLORE = ?;");
+        $this->stmtInsertArticle = $this->conn->prepare("INSERT INTO ARTICOLO_PRODOTTO_COMPLETO (ID_PRODOTTO, ID_TAGLIA, ID_COLORE, QUANTITA) VALUES (?, ?, ?, ?);");
+        $this->stmtUpdateArticle = $this->conn->prepare("UPDATE ARTICOLO_PRODOTTO_COMPLETO SET ID_PRODOTTO = ?, ID_TAGLIA = ?, ID_COLORE = ?, QUANTITA = ? WHERE ID = ?;");
+        $this->stmtDeleteArticle = $this->conn->prepare("DELETE FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID = ?;");
     }
 
 

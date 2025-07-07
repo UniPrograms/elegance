@@ -31,11 +31,11 @@ $profile_page->setContent("user_email", $user->getEmail());
 $orders = $orderDAO->getOrderByUserId($_SESSION["id"]);
 
 foreach($orders as $order){
-    
+
     $profile_page->setContent("order_id",$order->getId());
     $profile_page->setContent("order_date", $order->getOrderDate());
     $profile_page->setContent("order_status", $order->getStatus() != "CONSEGNATO" ? $order->getStatus() : $order->getStatus()."(".$order->getDeliveryDate().")");
-    $profile_page->setContent("order_price", "da definire con una query");
+    $profile_page->setContent("order_price", $order->getPrice());
     
     $quiery_string_builder = new QueryStringBuilder("order_details.php");
     $quiery_string_builder->add("order_id",$order->getId());
@@ -51,9 +51,7 @@ foreach($orders as $order){
         $quiery_string_builder = new QueryStringBuilder("product.php");
         $quiery_string_builder->add("product_id",$product->getId());
 
-        $profile_page->setContent("product_link",$quiery_string_builder->build());
-
-        
+        $profile_page->setContent("product_link",$quiery_string_builder->build());     
     }
 }
 

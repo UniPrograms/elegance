@@ -80,8 +80,8 @@ class OrderDAO extends DAO {
     public function getOrderByUser(User $user): array {
         $this->stmtGetOrderByUser->bindValue(1, $user->getId(), PDO::PARAM_STR);
         $this->stmtGetOrderByUser->execute();
-        $rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC);
-
+        
+        $result = [];
         while ($rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createOrder($rs);
         }
@@ -97,8 +97,8 @@ class OrderDAO extends DAO {
     public function getOrderByUserId(int $id): array {
         $this->stmtGetOrderByUser->bindValue(1, $id, PDO::PARAM_STR);
         $this->stmtGetOrderByUser->execute();
-        $rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC);
-
+        
+        $result = [];
         while ($rs = $this->stmtGetOrderByUser->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createOrder($rs);
         }
