@@ -34,7 +34,7 @@ $order = $orderDAO->getOrderByIdAndUserId($_GET["order_id"],$_SESSION["id"]);
 $order_details_page->setContent("order_id",$order->getId());
 $order_details_page->setContent("order_date",$order->getOrderDate());
 $order_details_page->setContent("order_status",$order->getStatus() != "CONSEGNATO" ? $order->getStatus() : $order->getStatus() ."(".$order->getDeliveryDate().")");
-$order_details_page->setContent("order_total_price","da definire in una query");
+$order_details_page->setContent("order_total_price",$order->getPrice());
 $order_details_page->setContent("order_delivery",$order->getDelivery()->getNAme());
 $order_details_page->setContent("order_payment",$order->getPayment()->getName());
 $order_details_page->setContent("order_recipient",$order->getUser()->toString());

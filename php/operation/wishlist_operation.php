@@ -24,6 +24,7 @@ if(isset($_REQUEST["store"])){
     $newItem = new WishlistItem();
     $newItem->setWishlist($wishlistDAO->getWishlistByUserId($_SESSION["id"]));
     $newItem->setArticle($articleDAO->getArticleById($_REQUEST["article_id"]));
+    
     $result = $wishlistItemDAO->storeItem($newItem);
 }
 
@@ -38,7 +39,14 @@ else if(isset($_REQUEST["delete"])){
 else if(isset($_REQUEST["move"])){
     // Se qualcosa non viene passato per cui non è possibile reperire l'articolo
     if(!isset($_REQUEST["product_id"]) || !isset($_REQUEST["size_id"]) || !isset($_REQUEST["color_id"])){
-        
+        $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"],$_REQUEST["size_id"],$_REQUEST["color_id"]);
+
+        if($article != null){
+            $newWishlistItem = new WishlistItem();
+            $newWishlistItem->setArticle($article);
+            $newWishlistItem->setWishlist($wishlistDAO->getWishlistByUserId($_SESSION["id"]));
+            $result = $wishlistItemDAO->storeItem($newWishlistItem);
+        }
     }
 }
 
