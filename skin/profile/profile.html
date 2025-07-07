@@ -22,8 +22,8 @@
         </form>
       </div>
       <div class="profile-info">
-        <h2>Mario Rossi</h2>
-        <p>mario.rossi@email.com</p>
+        <h2><[user_name::strformatter type="title" library="utility"]></h2>
+        <p><[user_email]></p>
         <a href="#" class="btn essence-btn btn-xsmall" id="change-password-btn"
           >Change password</a
         >
@@ -76,80 +76,36 @@
     <h3>Your orders</h3>
     <div id="orders-list">
       <!-- ORDER EXAMPLE 1 -->
+       <[foreach]>
       <div class="order-amazon-card">
         <div class="order-header">
           <div>
-            <strong>Order #123456</strong>
+            <strong>Order: <[order_id::idformatter library="utility"]></strong>
             <a
-              href="order_details.php?order_id=1"
-              class="order-details-link"
-              style="
-                font-size: 0.95em;
-                color: #1a73e8;
-                text-decoration: underline;
-                margin-left: 8px;
-              "
-              >(details)</a
+              href=<[order_link]> class="order-details-link"
+              style="font-size: 0.95em; color: #1a73e8; text-decoration: underline;
+                margin-left: 8px;">(details)</a
             ><br />
-            Placed on: 2025-07-01<br />
-            Status: Delivered on 2025-07-04
+            Placed on: <[order_date]><br />
+            Status: <[order_status]>
           </div>
-          <div class="order-total">Total: € 79.89</div>
+          <div class="order-total">Total: <[order_price]> $</div>
         </div>
         <div class="order-products">
+            <[foreach]>
           <div class="order-product-row">
             <img src="img/product-img/product-1.jpg" alt="Product 1" />
             <div>
               <div class="product-title">
-                <a href="product.php?product_id=1">Elegant Men's Shoes</a>
+                <a href=<[product_link]>><[product_name]></a>
               </div>
-              <div class="product-category">Category: Shoes</div>
+              <div class="product-category">Category: <[product_category]></div>
             </div>
           </div>
-          <div class="order-product-row">
-            <img src="img/product-img/product-2.jpg" alt="Product 2" />
-            <div>
-              <div class="product-title">
-                <a href="product.php?product_id=2">Leather Belt</a>
-              </div>
-              <div class="product-category">Category: Accessories</div>
-            </div>
-          </div>
+          <[/foreach]>
         </div>
       </div>
-      <!-- ORDER EXAMPLE 2 -->
-      <div class="order-amazon-card">
-        <div class="order-header">
-          <div>
-            <strong>Order #123457</strong>
-            <a
-              href="order_details.php?order_id=123457"
-              class="order-details-link"
-              style="
-                font-size: 0.95em;
-                color: #1a73e8;
-                text-decoration: underline;
-                margin-left: 8px;
-              "
-              >(details)</a
-            ><br />
-            Placed on: 2025-06-15<br />
-            Status: In delivery (expected 2025-06-18)
-          </div>
-          <div class="order-total">Total: € 19.90</div>
-        </div>
-        <div class="order-products">
-          <div class="order-product-row">
-            <img src="img/product-img/product-3.jpg" alt="Product 3" />
-            <div>
-              <div class="product-title">
-                <a href="../../product.php?id=3">Basic T-shirt</a>
-              </div>
-              <div class="product-category">Category: Clothing</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <[/foreach]>
     </div>
     <div id="pagination" class="pagination"></div>
     <!-- END USER ORDERS -->

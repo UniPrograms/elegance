@@ -129,7 +129,7 @@ class OrderDAO extends DAO {
             $this->stmtUpdateOrder->bindValue(1, $order->getOrderDate(), PDO::PARAM_STR);
             $this->stmtUpdateOrder->bindValue(2, $order->getDeliveryDate(), PDO::PARAM_STR);
             $this->stmtUpdateOrder->bindValue(3, $order->getPrice(), PDO::PARAM_STR);
-            $this->stmtUpdateOrder->bindValue(4, $order->getDeliveryAddress(), PDO::PARAM_STR);
+            $this->stmtUpdateOrder->bindValue(4, $order->getAddress()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateOrder->bindValue(5, $order->getStatus(), PDO::PARAM_STR);
             $this->stmtUpdateOrder->bindValue(6, $order->getUser()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateOrder->bindValue(7, $order->getPayment()->getId(), PDO::PARAM_INT);
@@ -141,7 +141,7 @@ class OrderDAO extends DAO {
             $this->stmtInsertOrder->bindValue(1, $order->getOrderDate(), PDO::PARAM_STR);
             $this->stmtInsertOrder->bindValue(2, $order->getDeliveryDate(), PDO::PARAM_STR);
             $this->stmtInsertOrder->bindValue(3, $order->getPrice(), PDO::PARAM_STR);
-            $this->stmtInsertOrder->bindValue(4, $order->getDeliveryAddress(), PDO::PARAM_STR);
+            $this->stmtInsertOrder->bindValue(4, $order->getAddress()->getId(), PDO::PARAM_INT);
             $this->stmtInsertOrder->bindValue(5, $order->getStatus(), PDO::PARAM_STR);
             $this->stmtInsertOrder->bindValue(6, $order->getUser()->getId(), PDO::PARAM_INT);
             $this->stmtInsertOrder->bindValue(7, $order->getPayment()->getId(), PDO::PARAM_INT);
@@ -172,7 +172,7 @@ class OrderDAO extends DAO {
         $order->setOrderDate($rs['DATA_ORDINE']);
         $order->setDeliveryDate($rs['DATA_ARRIVO']);
         $order->setPrice($rs['PREZZO']);
-        $order->setDeliveryAddress($rs['INDIRIZZO_CONSEGNA']);
+        $order->setAddressId($rs['ID_INDIRIZZO']);
         $order->setStatus($rs['STATO']);
         $order->setUserId($rs['ID_UTENTE']);
         $order->setPaymentId($rs['ID_PAGAMENTO']);

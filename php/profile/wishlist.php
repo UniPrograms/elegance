@@ -31,6 +31,12 @@ foreach($wishlist_items as $item){
     $wishlist_page->setContent("product_copertina",$product->getCopertina());
     $wishlist_page->setContent("product_name",$product->getName());
     $wishlist_page->setContent("product_category", $product->getCategory()->getName());
+
+
+    $query_string_builder = new QueryStringBuilder("wishlist_operation.php");
+    $query_string_builder->add("delete","1");
+    $query_string_builder->add("item_id", $item->getId());
+    $wishlist_page->setContent("delete_operation", $query_string_builder->build());
 }
 
 

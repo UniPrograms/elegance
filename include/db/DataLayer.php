@@ -23,6 +23,7 @@ require_once("dao/SexDAO.php");
 require_once("dao/SizeDAO.php");
 require_once("dao/ColorDAO.php");
 require_once("dao/ArticleDAO.php");
+require_once("dao/AddressDAO.php");
 
 
 
@@ -55,6 +56,7 @@ class DataLayer{
     private SizeDAO $sizeDAO;
     private ColorDAO $colorDAO;
     private ArticleDAO $articleDAO;
+    private AddressDAO $addressDAO;
 
 
 
@@ -97,6 +99,7 @@ class DataLayer{
         $this->sizeDAO = new SizeDAO($this);
         $this->colorDAO = new ColorDAO($this);
         $this->articleDAO = new ArticleDAO($this);
+        $this->addressDAO = new AddressDAO($this);
 
     }
 
@@ -187,6 +190,10 @@ class DataLayer{
 
     public function getArticleDAO(): ArticleDAO{
         return $this->articleDAO;
+    }
+
+    public function getAddressDAO(): AddressDAO{
+        return $this->addressDAO;
     }
 
 }

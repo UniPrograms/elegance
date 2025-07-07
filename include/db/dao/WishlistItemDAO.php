@@ -9,6 +9,8 @@ class WishlistItemDAO extends DAO{
     private PDOStatement $stmtGetWishlistItemById;
     private PDOStatement $stmtGetAllWishlistItems;
     private PDOStatement $stmtGetWishlistItemByWishlist;
+    private PDOStatement $stmtInsertItem;
+    private PDOStatement $stmtDeleteItem;
 
 
 
@@ -24,6 +26,8 @@ class WishlistItemDAO extends DAO{
         $this->stmtGetWishlistItemById = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI WHERE ID = ?;");
         $this->stmtGetAllWishlistItems = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI;");
         $this->stmtGetWishlistItemByWishlist = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI WHERE ID_LISTA_DESIDERI = ?;");
+        $this->stmtInsertItem = $this->conn->prepare("INSERT INTO ITEM_LISTA_DESIDERI (ID_LISTA_DESIDERI, ID_ARTICOLO) VALUES(?,?);");
+        $this->stmtDeleteItem = $this->conn->prepare("DELETE FROM ITEM_LISTA_DESIDERI WHERE ID = ?");
     }
 
 
@@ -77,6 +81,47 @@ class WishlistItemDAO extends DAO{
         }
         return $result;
     }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function storeItem(WishlistItem $item): ?WishlistItem{
+        $this->stmtInsertItem->bindValue(1, $item->getWishlist()->getId(), PDO::PARAM_INT);
+        $this->stmtInsertItem->bindValue(2, $item->getArticle()->getId(), PDO::PARAM_INT);
+        $this->stmtInsertItem->execute();
+
+        if($this->stmtInsertItem->execute()){
+                $item->setId($this->conn->lastInsertId());
+                return $item;
+        }
+        return null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteItem(WishlistItem $item): bool{
+        $this->stmtDeleteItem->bindValue(1, $item->getId(), PDO::PARAM_INT);
+        return  $this->stmtDeleteItem->execute();
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteItemById(int $id): bool{
+        $this->stmtDeleteItem->bindValue(1, $id, PDO::PARAM_INT);
+        return  $this->stmtDeleteItem->execute();
+    }
+
 
 
     // Metodi privati
@@ -85,6 +130,7 @@ class WishlistItemDAO extends DAO{
         $WishlistItem = new WishlistItemProxy($this->dataLayer);
         $WishlistItem->setId($rs['ID']);
         $WishlistItem->setArticleId($rs["ID_ARTICOLO"]);
+        $WishlistItem->setWishlistId($rs["ID_LISTA_DESIDERI"]);
         return $WishlistItem;
     }
 

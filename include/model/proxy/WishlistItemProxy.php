@@ -7,6 +7,7 @@ class WishlistItemProxy extends WishlistItem{
 
     private ?DataLayer $dataLayer;
     private int $articleId;
+    private int $wishlistId;
 
     public function __construct(?DataLayer $dataLayer){
         parent::__construct();
@@ -20,6 +21,8 @@ class WishlistItemProxy extends WishlistItem{
 
     public function setArticleId(int $articleId): void {$this->articleId = $articleId;}
 
+    public function setWishlistId(INT $wishlistId): void {$this->wishlistId = $wishlistId;}
+
 
     //Override Getter
     public function getArticle(): ?Article{
@@ -27,6 +30,14 @@ class WishlistItemProxy extends WishlistItem{
             parent::setArticle((($this->dataLayer)->getArticleDAO())->getArticleById($this->articleId));
         }
         return parent::getArticle();
+    }
+
+
+    public function getWishlist(): ?Wishlist{
+        if(parent::getWishlist() == null && $this->wishlistId > 0){
+            parent::setWishlist((($this->dataLayer)->getWishlistDAO())->getWishlistById($this->wishlistId));
+        }
+        return parent::getWishlist();
     }
 
 }

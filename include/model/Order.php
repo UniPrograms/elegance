@@ -10,7 +10,7 @@ class Order {
     protected ?string $orderDate;
     protected ?string $deliveryDate;
     protected float $price;
-    protected string $deliveryAddress;
+    protected ?Address $address;
     protected string $status;
     protected ?User $user;
     protected ?Payment $payment;
@@ -22,7 +22,7 @@ class Order {
         $this->orderDate = null;
         $this->deliveryDate = null;
         $this->price = 0.00;
-        $this->deliveryAddress = "";
+        $this->address = null;
         $this->status = "";
         $this->user = null;
         $this->payment = null;
@@ -35,7 +35,7 @@ class Order {
     public function getOrderDate(): string { return $this->orderDate; }
     public function getDeliveryDate(): string { return $this->deliveryDate; }
     public function getPrice(): float { return $this->price; }
-    public function getDeliveryAddress(): string { return $this->deliveryAddress; }
+    public function getAddress(): ?Address { return $this->address; }
     public function getStatus(): string { return $this->status; }
     public function getUser(): ?User { return $this->user; }
     public function getPayment(): ?Payment { return $this->payment; }
@@ -47,7 +47,7 @@ class Order {
     public function setOrderDate(string $orderDate): void { $this->orderDate = $orderDate; }
     public function setDeliveryDate(string $deliveryDate): void { $this->deliveryDate = $deliveryDate; }
     public function setPrice(float $price): void { $this->price = $price; }
-    public function setDeliveryAddress(string $deliveryAddress): void { $this->deliveryAddress = $deliveryAddress; }
+    public function setAddress(?Address $address): void { $this->address = $address; }
     public function setStatus(string $status): void { $this->status = $status; }
     public function setUser(?User $user): void { $this->user = $user; }
     public function setPayment(?Payment $payment): void { $this->payment = $payment; }
