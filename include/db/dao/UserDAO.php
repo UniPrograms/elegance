@@ -27,8 +27,8 @@ class UserDAO extends DAO{
         $this->stmtGetUserById = $this->conn->prepare("SELECT * FROM UTENTE WHERE ID = ?;");
         $this->stmtGetAllUsers = $this->conn->prepare("SELECT * FROM UTENTE;");
         $this->stmtGetUserByEmail = $this->conn->prepare("SELECT * FROM UTENTE WHERE EMAIL = ?;");
-        $this->stmtInsertUser = $this->conn->prepare("INSERT INTO UTENTE (NOME, COGNOME, EMAIL, PASSWORD, RUOLO) VALUES (?, ?, ?, ?, ?);");
-        $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ? WHERE ID = ?;");
+        $this->stmtInsertUser = $this->conn->prepare("INSERT INTO UTENTE (NOME, COGNOME, EMAIL, PASSWORD, RUOLO, URL_IMAGE, NUMERO_TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);");
+        $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ?, URL_IMAGE = ?, NUMERO_TELEFONO = ? WHERE ID = ?;");
         $this->stmtDeleteUser = $this->conn->prepare("DELETE FROM UTENTE WHERE ID = ?;");
     }
 
@@ -93,8 +93,10 @@ class UserDAO extends DAO{
             $this->stmtUpdateUser->bindValue(2, $user->getSurname(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(3, $user->getEmail(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
-            $this->stmtUpdateUser->bindValue(5, $user->getId(), PDO::PARAM_INT);
-            
+            $this->stmtUpdateUser->bindValue(5, $user->getImage(), PDO::PARAM_STR);
+            $this->stmtUpdateUser->bindValue(6, $user->getPhoneNumber(), PDO::PARAM_STR);
+            $this->stmtUpdateUser->bindValue(7, $user->getId(), PDO::PARAM_INT);
+
             if($this->stmtUpdateUser->execute()){
                 return $user;
             }
@@ -105,6 +107,8 @@ class UserDAO extends DAO{
             $this->stmtInsertUser->bindValue(3, $user->getEmail(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(5, $user->getRole(), PDO::PARAM_STR);
+            $this->stmtInsertUser->bindValue(6, $user->getImage(), PDO::PARAM_STR);
+            $this->stmtInsertUser->bindValue(7, $user->getPhoneNumber(), PDO::PARAM_STR);
             
             if($this->stmtInsertUser->execute()){
                 $user->setId($this->conn->lastInsertId());

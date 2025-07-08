@@ -20,11 +20,11 @@ class NotifyDAO extends DAO{
 
     // Inizializzazione degli statement
     public function init(): void {
-        $this->stmtGetNotifyById = $this->conn->prepare("SELECT * FROM NOTIFY WHERE ID = ?;");
-        $this->stmtGetNotifyByUser = $this->conn->prepare("SELECT * FROM NOTIFY WHERE ID_UTENTE = ?;");
-        $this->stmtInsertNotify = $this->conn->prepare("INSERT INTO NOTIFY (OGGETTO, TESTO, ID_UTENTE) VALUES (?,?,?);");
-        $this->stmtUpdateNotify = $this->conn->prepare("UPDATE NOTIFY SET OGGETTO = ?, TESTO = ?, ID_UTENTE = ?, STATO = ?, DATE = ? WHERE ID = ?;");
-        $this->stmtDeleteNotify = $this->conn->prepare("DELETE FROM NOTIFY WHERE ID = ?;");
+        $this->stmtGetNotifyById = $this->conn->prepare("SELECT * FROM NOTIFICA WHERE ID = ?;");
+        $this->stmtGetNotifyByUser = $this->conn->prepare("SELECT * FROM NOTIFICA WHERE ID_UTENTE = ? ORDER BY ID DESC;");
+        $this->stmtInsertNotify = $this->conn->prepare("INSERT INTO NOTIFICA (OGGETTO, TESTO, ID_UTENTE) VALUES (?,?,?);");
+        $this->stmtUpdateNotify = $this->conn->prepare("UPDATE NOTIFICA SET OGGETTO = ?, TESTO = ?, ID_UTENTE = ?, STATO = ?, DATE = ? WHERE ID = ?;");
+        $this->stmtDeleteNotify = $this->conn->prepare("DELETE FROM NOTIFICA WHERE ID = ?;");
     }
 
 
@@ -52,7 +52,7 @@ class NotifyDAO extends DAO{
      * 
      * 
      */
-    public function GetNotifyByUser(User $user): array {
+    public function getNotificationUser(User $user): array {
         $this->stmtGetNotifyByUser->bindValue(1, $user->getId(), PDO::PARAM_INT);
         $this->stmtGetNotifyByUser->execute();
         
@@ -70,12 +70,31 @@ class NotifyDAO extends DAO{
      * 
      * 
      */
+    public function getNotificationsByUserId(int $id): array {
+        $this->stmtGetNotifyByUser->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetNotifyByUser->execute();
+        
+        $result = [];
+        while ($rs = $this->stmtGetNotifyByUser->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createNotify($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
     public function storeNotify(Notify $notify): bool {
         if ($notify->getId() !== null) { // Aggiorno la notifica
             $this->stmtUpdateNotify->bindValue(1, $notify->getObject(), PDO::PARAM_STR);
             $this->stmtUpdateNotify->bindValue(2, $notify->getText(), PDO::PARAM_STR);
             $this->stmtUpdateNotify->bindValue(3, $notify->getUser()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateNotify->bindValue(4, $notify->getDate(), PDO::PARAM_STR);
+            $this->stmtUpdateNotify->bindValue(4, $notify->getState(), PDO::PARAM_STR);
+            $this->stmtUpdateNotify->bindValue(5, $notify->getDate(), PDO::PARAM_STR);
+            $this->stmtUpdateNotify->bindValue(6, $notify->getId(), PDO::PARAM_INT);
             
             return $this->stmtUpdateNotify->execute();
         } else {   // Inserisco la notifica
@@ -108,7 +127,7 @@ class NotifyDAO extends DAO{
         $notify->setObject($rs['OGGETTO']);
         $notify->setText($rs['TESTO']);
         $notify->setState($rs['STATO']);
-        $notify->setUser($rs['ID_UTENTE']);
+        $notify->setUserId($rs['ID_UTENTE']);
         $notify->setDate($rs['DATE']);
         return $notify;
     }

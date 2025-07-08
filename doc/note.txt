@@ -1,31 +1,5 @@
-1 - Bisogna sistema le immagini da poter visualizzare in product.html. Non tutte le immagini hanno la stessa grandezza
-    quindi bisogna capire quali sono consone e quali no. Le immagini che alla fine del path hanno "bg" dovrebbero andare bene.
-
-2 - Bisogna capire se va bene che nella wishlist ci finiscano gli articoli o i prodotti. Nel caso ci finiscano solo i prodotti,
-    non sarà possibile al momento di spostare il prodotto nel carrello inserire la taglia e il colore, quindi bisognerebbe quindi 
-    togliere il prodotto dal carrello e rimmeterlo, vanificando la presenza della wishlist. L'idea sarebbe di permettere l'aggiunta
-    del prodotto all'interno della wishlist solamente attraverso la pagina specifica del prodotto (product.php).
-
-3 - Rendere in 1FN la tabella ordine, in quanto il campo indirizzo non è atomico. Ci permette di essere più elastici nell'inserire i valori
-    al momento dell'ordine e incapsula in un solo punto la manipolazione leggibile dei campi (creiamo quindi un metodo toString()).
-
-4 - Il template engine non gestisce bene i foreach annidati, quindi bisognerebbe trovare una nuova strategia per poter vedere la cronologia
-    degli ordini.
-
-5 - Capire come gestire le notifiche a livello html. Si propone di togliere la wishlist e di sostituirla con l'icona delle notifiche.
-    Spostiamo la wishlist all'interno del profilo dell'utente, dove sono gestiti anche il profilo utente e la cronologia degli ordini. 
-    Quando c'è una nuova notifica, l'icona deve opportunamente segnalarlo. Quando una notifica viene aperta per la prima volta, bisogna
-    automaticamente cambiare il suo stato da "NON_LETTA" a "LETTA".
-
-6 - Creare dei trigger che, al momento in cui viene creato un ordine, o lo stato di quest'ultimo cambia, viene inviata una notifica per
-    aggiornarnare l'utente.
-
-7 - Bisogna capire come gestire gli articoli all'interno del db: mantenere un attributo quantità oppure creare sempre dei singoli record.
-    Da qui seguono i seguenti problemi su come eseguire le seguenti azioni:
-    
-    7.1 - Bisogna creare una vista che consenta di calcolare il prezzo totale degli articoli presenti nell'ordine;
-    
-    7.2 - Bisogna creare una vista che consenta di calcolare il prezzo totale degli articoli presenti nel carrello;
+1 - Cambiare lo stile del button per fare il login, quello per registrarsi, e dei due link per andare alla pagina di regitrazione
+    o tornare dalla pagina di registrazione alla pagina di login;
 
 
-
+2 - 

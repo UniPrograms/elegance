@@ -1,3 +1,169 @@
+/* --- Payment methods checkout --- */
+.payment-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  border-radius: 8px;
+  border: 2px solid #e3e3e3;
+  padding: 16px 18px;
+  font-size: 1.08em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  outline: none;
+}
+.payment-method-option:focus,
+.payment-method-option:hover {
+  border-color: #1a73e8;
+  background: #eaf6ff;
+}
+.payment-method-radio {
+  margin-right: 14px;
+  accent-color: #1a73e8;
+  width: 1.2em;
+  height: 1.2em;
+}
+.payment-method-option label {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-weight: 500;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.payment-method-option.selected {
+  border-color: #1976d2;
+  background: #f0f7ff;
+}
+/* Notifiche: layout e badge */
+/* Notifiche: layout e badge */
+.notification-list-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+}
+/* Nuovo stile notifiche: card più compatte, effetto "timeline" e badge più visibile */
+/* Card notifiche: occupa tutto lo spazio del box centrale */
+.notification-card {
+  width: 100%;
+  background: #f9f9fb;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(26,115,232,0.07);
+  padding: 18px 22px 14px 32px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  position: relative;
+  border: none;
+  border-left: 4px solid #1a73e8;
+  transition: border-color 0.2s, background 0.2s;
+  min-width: 0;
+}
+.notification-card.unread {
+  border-left: 4px solid #1976d2;
+  background: #f0f7ff;
+}
+.notification-header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 2px;
+  position: relative;
+}
+.notification-object {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1.09em;
+  letter-spacing: 0.2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.notification-card.unread .notification-object {
+  color: #1565c0;
+}
+.notification-date {
+  font-size: 0.97em;
+  color: #888;
+  font-style: italic;
+  margin-left: 0;
+  margin-top: 2px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.notification-message-row {
+  margin-top: 6px;
+}
+.notification-message {
+  color: #222;
+  font-size: 1.08em;
+  font-weight: 400;
+  line-height: 1.6;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  text-decoration: none;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+.notification-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+/* Badge "Nuova" solo se unread, in alto a destra */
+.notification-badge {
+  display: none;
+}
+.notification-card.unread .notification-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 16px;
+  font-size: 0.99em;
+  font-weight: 700;
+  background: #1976d2;
+  color: #fff;
+  letter-spacing: 1px;
+  box-shadow: 0 1px 4px rgba(26,115,232,0.07);
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  z-index: 3;
+}
+/* Notifiche: stile messaggio */
+.notification-message {
+  display: block;
+  font-size: 1.08em;
+  color: #222;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 8px 0 0 0;
+  font-weight: 400;
+  box-shadow: none;
+  line-height: 1.6;
+  word-break: break-word;
+  border-left: 4px solid #1a73e8;
+  padding-left: 14px;
+  text-decoration: none;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
 /* Wishlist: allinea i pulsanti "Add to cart" e "Remove" a destra */
 .wishlist-product-row {
   display: flex;

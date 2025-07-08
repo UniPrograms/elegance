@@ -1,6 +1,7 @@
-<div class="order-details-container">
-  <div class="order-details-title">Order details</div>
-  <div class="order-summary-box">
+<div class="container profile-container">
+  <div class="orders-section">
+    <h2 class="ct-profile-title">Order details</h2>
+    <div class="order-summary-box">
     <div class="order-summary-col">
       <div class="order-summary-label">Order ID</div>
       <div class="order-summary-value"><[order_id::idformatter library=utility]></div>
@@ -11,7 +12,7 @@
     </div>
     <div class="order-summary-col">
       <div class="order-summary-label">Status</div>
-      <div class="order-summary-value delivered"><[order_status::strformatter type="title" library=utility]></div>
+      <div class="order-summary-value delivered"><[order_status::enumformatter library=utility]></div>
     </div>
     <div class="order-summary-col">
       <div class="order-summary-label">Total</div>
@@ -36,17 +37,17 @@
       <div class="order-summary-value"><[order_address::strformatter type="title" library=utility]></div>
     </div>
   </div>
-  <div class="order-products-list-cards">
-    <h3>Order items</h3>
-    <[foreach]>
-    <div class="order-product-side">
-      <img src=<[product_copertina]> alt="" />
-      <div class="order-product-side-info">
-        <a href=<[product_link]> class="order-product-card-title"><[product_name]></a
-        >
-        <div class="order-product-card-cat">Category: <[product_category]></div>
+    <div class="order-products-list-cards">
+      <h3>Order items</h3>
+      <[foreach]>
+      <div class="order-product-side">
+        <img src=<[product_copertina]> alt="" />
+        <div class="order-product-side-info">
+          <a href=<[product_link]> class="order-product-card-title"><[product_name]></a>
+          <div class="order-product-card-cat">Category: <[product_category]></div>
+        </div>
       </div>
+      <[/foreach]>
     </div>
-    <[/foreach]>
   </div>
 </div>

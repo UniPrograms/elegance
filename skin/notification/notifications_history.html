@@ -1,0 +1,31 @@
+<div class="container profile-container">
+  <div class="orders-section">
+    <h2 class="ct-profile-title">Cronologia notifiche</h2>
+    <div id="notification-list" class="notification-list-centered">
+      <!-- NOTIFICA -->
+       <[foreach]>
+      <div class="notification-card">
+        <input type="hidden" class="notification-read-status" value=<[notification_read_value]> />
+        <div class="notification-row">
+          <div class="notification-main">
+            <div class="notification-header-row">
+              <span class="notification-object"><[notification_object]></span>
+              <span class="notification-date"><[noitification_date]></span>
+            </div>
+            <div class="notification-message-row">
+              <span class="notification-message"><[notification_text]></span>
+            </div>
+          </div>
+          <div class="notification-status">
+            <span class="notification-badge unread">Nuova</span>
+          </div>
+        </div>
+      </div>
+      <[/foreach]>
+      <!-- FINE NOTIFICA -->
+    </div>
+    </div>
+    <div id="pagination" class="pagination"></div>
+    <!-- END NOTIFICATION HISTORY -->
+  </div>
+</div>

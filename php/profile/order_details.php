@@ -37,7 +37,7 @@ $order_details_page->setContent("order_status",$order->getStatus() != "CONSEGNAT
 $order_details_page->setContent("order_total_price",$order->getPrice());
 $order_details_page->setContent("order_delivery",$order->getDelivery()->getNAme());
 $order_details_page->setContent("order_payment",$order->getPayment()->getName());
-$order_details_page->setContent("order_recipient",$order->getUser()->toString());
+$order_details_page->setContent("order_recipient",$order->getAddress()->getName()." ".$order->getAddress()->getSurname());
 $order_details_page->setContent("order_address",$order->getAddress()->toString());
 
 

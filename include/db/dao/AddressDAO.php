@@ -21,7 +21,7 @@ class AddressDAO extends DAO{
     // Inizializzazione degli Statement
     public function init(): void {
         $this->stmtGetAddressById = $this->conn->prepare("SELECT * FROM INDIRIZZO WHERE ID = ?;");
-        $this->stmtInsertAddress = $this->conn->prepare("INSERT INTO INDIRIZZO (NAZIONE, CITTA, VIA, CIVICO, CAP) VALUES(?, ?, ?, ?, ?);");
+        $this->stmtInsertAddress = $this->conn->prepare("INSERT INTO INDIRIZZO (NAZIONE, CITTA, VIA, CIVICO, CA, NOME, COGNOME, EMAIL, NUMERO_TELEFONO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
         
     }
 
@@ -42,13 +42,17 @@ class AddressDAO extends DAO{
     * 
     * 
     */
-    public function storeArticle(Address $address): bool {
+    public function storeAddress(Address $address): bool {
         // Inserisco il prodotto
         $this->stmtInsertAddress->bindValue(1, $address->getNazione(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(2, $address->getCitta(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(3, $address->getVia(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(4, $address->getCivico(), PDO::PARAM_STR);
-        $this->stmtInsertAddress->bindValue(4, $address->getCAP(), PDO::PARAM_INT);
+        $this->stmtInsertAddress->bindValue(5, $address->getCAP(), PDO::PARAM_STR);
+        $this->stmtInsertAddress->bindValue(6, $address->getName(), PDO::PARAM_STR);
+        $this->stmtInsertAddress->bindValue(7, $address->getSurname(), PDO::PARAM_STR);
+        $this->stmtInsertAddress->bindValue(8, $address->getEmail(), PDO::PARAM_STR);
+        $this->stmtInsertAddress->bindValue(9, $address->getPhoneNumber(), PDO::PARAM_STR);
         return $this->stmtInsertAddress->execute();
         
     }

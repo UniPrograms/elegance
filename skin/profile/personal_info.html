@@ -1,6 +1,6 @@
 <div class="ct-profile-card-container">
   <div class="ct-profile-card">
-    <form class="ct-profile-info-form" enctype="multipart/form-data">
+    <form class="ct-profile-info-form" enctype="multipart/form-data" method="post" action="user_operation.php">
       <h2 class="ct-profile-title">Personal Information</h2>
       <div class="ct-profile-fields-vertical">
         <div class="ct-profile-img-field-vertical">
@@ -32,6 +32,7 @@
       <div class="ct-profile-save-row">
         <button type="submit" class="btn essence-btn ct-profile-save-btn">Save</button>
       </div>
+      <input type="hidden" name="update" value="personal-info">
     </form>
   </div>
 </div>

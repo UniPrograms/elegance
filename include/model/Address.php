@@ -24,7 +24,7 @@ class Address{
         $this->citta = "";
         $this->via = "";
         $this->civico = "";
-        $this->cap = 00000;
+        $this->cap = "";
         $this->name = "";
         $this->surname = "";
         $this->phoneNumber = "";
@@ -37,11 +37,11 @@ class Address{
     public function getCitta(): ?string{return $this->citta;}
     public function getVia(): ?string{return $this->via;}
     public function getCivico(): ?string{return $this->civico;}
-    public function getCAP(): ?int{return $this->cap;}
-    public function getName(): ?int{return $this->name;}
-    public function getSurname(): ?int{return $this->surname;}
-    public function getPhoneNumber(): ?int{return $this->phoneNumber;}
-    public function getEmail(): ?int{return $this->email;}
+    public function getCAP(): ?string{return $this->cap;}
+    public function getName(): ?string{return $this->name;}
+    public function getSurname(): ?string{return $this->surname;}
+    public function getPhoneNumber(): ?string{return $this->phoneNumber;}
+    public function getEmail(): ?string{return $this->email;}
 
     // Setter
     public function setId(int $id){$this->id = $id;}
