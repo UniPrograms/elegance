@@ -1,29 +1,27 @@
-<!-- wishlist.html - User Wishlist Amazon Style -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wishlist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div class="order-details-container">
-        <div class="order-details-title">Wishlist</div>
-        <div class="wishlist-list-cards">
-            <[foreach]>
-            <div class="wishlist-product-card">
-                <img src=<[product_copertina]> alt="">
-                <div class="wishlist-product-info">
-                    <a href=<[product_link]> class="order-product-card-title"><[product_name]></a>
-                    <div class="order-product-card-cat">Category: <[product_category]></div>
-                </div>
-                <div class="wishlist-actions">
-                    <button class="btn essence-btn btn-xsmall wishlist-add-btn" pageref=<[move_ref]> optional=<[optional_param_move]> value=<[value_article_move]> >Add to cart</button>
-                    <a href="" class="wishlist-remove-link" pageref=<[delete_ref]> optional=<[optional_param_delete]> value=<[value_article_delete]> >Remove</a>
-                </div>
+<div class="container profile-container">
+  <div class="orders-section">
+    <h2 class="personal-info-title">Wishlist</h2>
+    <div id="wishlist-list">
+      <[foreach]>
+      <div class="order-amazon-card wishlist-amazon-card">
+        <div class="order-products wishlist-products">
+          <div class="order-product-row wishlist-product-row">
+            <img src="<[product_copertina]>" alt="">
+            <div>
+              <div class="product-title">
+                <a href="<[product_link]>" class="order-product-card-title"><[product_name]></a>
+              </div>
+              <div class="product-category">Category: <[product_category]></div>
             </div>
-            <[/foreach]>
+            <div class="wishlist-actions">
+              <button class="btn essence-btn btn-xsmall wishlist-add-btn" pageref="<[move_ref]>" optional="<[optional_param_move]>" value="<[value_article_move]>" >Add to cart</button>
+              <a href="" class="wishlist-remove-link" pageref="<[delete_ref]>" optional="<[optional_param_delete]>" value="<[value_article_delete]>" >Remove</a>
+            </div>
+          </div>
         </div>
+      </div>
+      <[/foreach]>
     </div>
-</body>
-</html>
+    <div id="pagination" class="pagination"></div>
+  </div>
+</div>

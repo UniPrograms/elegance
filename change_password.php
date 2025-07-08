@@ -1,7 +1,6 @@
 <?php 
 session_start();
 
-
 // Templating
 require_once("include/template2.inc.php");
 
@@ -13,16 +12,16 @@ require_once("include/db/DataLayer.php");
 require "php/home/header.php";
 require "php/home/cart_popup.php";
 require "php/home/footer.php";
-require "php/profile/profile.php";
+require "php/profile/change_password.php";
 
 
 
 $homepage = new Template("skin/index.html");
 
 $homepage->setContent("header",$header->get());
-$homepage->setContent("footer", $footer->get());
 $homepage->setContent("cart_popup",$cart_popup->get());
-$homepage->setContent("body",$profile_page->get());
+$homepage->setContent("footer", $footer->get());
+$homepage->setContent("body",$change_password_page->get());
 
 
 $homepage->close();

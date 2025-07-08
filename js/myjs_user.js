@@ -1,3 +1,17 @@
+    // Anteprima avatar personal info
+    const upload = document.getElementById('ct-profile-upload');
+    const preview = document.getElementById('ct-profile-img-preview');
+    if(upload && preview) {
+        upload.addEventListener('change', function(e) {
+            if (upload.files && upload.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    preview.src = ev.target.result;
+                };
+                reader.readAsDataURL(upload.files[0]);
+            }
+        });
+    }
 document.addEventListener('DOMContentLoaded', function() {
 
     // Rimozione dalla wishlist

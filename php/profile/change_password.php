@@ -16,13 +16,6 @@ if(!isset($_SESSION['auth'])) {
 
 // DAO 
 $factory = new DataLayer(new DB_Connection());
-$userDAO = $factory->getUserDAO();
-$orderDAO = $factory->getOrderDAO();
 
 // Template
-$profile_page = new Template("skin/profile/profile.html");
-
-
-
-
-?>
+$change_password_page = new Template("skin/profile/change_password.html");

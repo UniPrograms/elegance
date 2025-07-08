@@ -1,78 +1,118 @@
-
-
-    <div class="container profile-container">
-        <div class="profile-header">
-            <div class="profile-header-flex">
-                <div class="profile-img-col">
-                    <img id="admin-img" src="../../img/core-img/user.svg" alt="Immagine admin">
-                </div>
-                <div class="profile-info">
-                    <h2>Admin</h2>
-                    <p>admin@email.com</p>
-                </div>
-            </div>
-        </div>
-        <div class="admin-section">
-            <div class="admin-search-order">
-                <form id="search-order-form" class="admin-form">
-                    <label for="search-order-id">Cerca ordine per ID:</label>
-                    <input type="text" id="search-order-id" name="search-order-id" class="form-control" placeholder="ID ordine" required>
-                    <button type="submit" class="btn essence-btn btn-xsmall">Cerca</button>
-                </form>
-                <div id="order-details-result"></div>
-            </div>
-            <h3>Aggiungi nuovo prodotto</h3>
-            <form id="add-product-form" enctype="multipart/form-data" class="admin-form">
-                <div class="form-group">
-                    <label for="product-name">Nome prodotto</label>
-                    <input type="text" id="product-name" name="product-name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-price">Prezzo (€)</label>
-                    <input type="number" id="product-price" name="product-price" class="form-control" step="0.01" min="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-img">Immagine prodotto</label>
-                    <input type="file" id="product-img" name="product-img" class="form-control" accept="image/*" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-desc">Descrizione</label>
-                    <textarea id="product-desc" name="product-desc" class="form-control" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn essence-btn btn-small">Aggiungi prodotto</button>
-            </form>
-        </div>
-        <div class="admin-section admin-section-spaced">
-            <h3>Prodotti venduti</h3>
-            <div id="sold-products-list">
-                <!-- Esempio prodotto venduto -->
-                <div class="order-card">
-                    <img src="../../img/product-img/product-1.jpg" alt="Prodotto venduto">
-                    <div class="order-details">
-                        <h5>Scarpe Running</h5>
-                        <p><strong>ID Ordine:</strong> 1</p>
-                        <p>Venduto il: 01/07/2025</p>
-                        <p>Acquirente: Mario Rossi</p>
-                    </div>
-                    <div class="order-meta">
-                        <span>€ 79,99</span>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <img src="../../img/product-img/product-2.jpg" alt="Prodotto venduto">
-                    <div class="order-details">
-                        <h5>Maglietta Sportiva</h5>
-                        <p><strong>ID Ordine:</strong> 2</p>
-                        <p>Venduto il: 28/06/2025</p>
-                        <p>Acquirente: Laura Bianchi</p>
-                    </div>
-                    <div class="order-meta">
-                        <span>€ 29,90</span>
-                    </div>
-                </div>
-                <!-- Altri prodotti venduti... -->
-            </div>
-        </div>
+<div class="container profile-container">
+  <div class="profile-header">
+    <div class="profile-header-flex">
+      <div class="profile-img-col">
+        <img
+          id="admin-img"
+          src="../../img/core-img/user.svg"
+          alt="Immagine admin"
+        />
+      </div>
+      <div class="profile-info">
+        <h2>Admin</h2>
+        <p>admin@email.com</p>
+      </div>
     </div>
-
-    
+  </div>
+  <div class="admin-section">
+    <div class="admin-search-order">
+      <form id="search-order-form" class="admin-form">
+        <label for="search-order-id">Cerca ordine per ID:</label>
+        <input
+          type="text"
+          id="search-order-id"
+          name="search-order-id"
+          class="form-control"
+          placeholder="ID ordine"
+          required
+        />
+        <button type="submit" class="btn essence-btn btn-xsmall">Cerca</button>
+      </form>
+      <div id="order-details-result"></div>
+    </div>
+    <h3>Aggiungi nuovo prodotto</h3>
+    <form
+      id="add-product-form"
+      enctype="multipart/form-data"
+      class="admin-form"
+    >
+      <div class="form-group">
+        <label for="product-name">Nome prodotto</label>
+        <input
+          type="text"
+          id="product-name"
+          name="product-name"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="product-price">Prezzo (€)</label>
+        <input
+          type="number"
+          id="product-price"
+          name="product-price"
+          class="form-control"
+          step="0.01"
+          min="0"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="product-img">Immagine prodotto</label>
+        <input
+          type="file"
+          id="product-img"
+          name="product-img"
+          class="form-control"
+          accept="image/*"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="product-desc">Descrizione</label>
+        <textarea
+          id="product-desc"
+          name="product-desc"
+          class="form-control"
+          rows="2"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn essence-btn btn-small">
+        Aggiungi prodotto
+      </button>
+    </form>
+  </div>
+  <div class="admin-section admin-section-spaced">
+    <h3>Prodotti venduti</h3>
+    <div id="sold-products-list">
+      <!-- Esempio prodotto venduto -->
+      <div class="order-card">
+        <img src="../../img/product-img/product-1.jpg" alt="Prodotto venduto" />
+        <div class="order-details">
+          <h5>Scarpe Running</h5>
+          <p><strong>ID Ordine:</strong> 1</p>
+          <p>Venduto il: 01/07/2025</p>
+          <p>Acquirente: Mario Rossi</p>
+        </div>
+        <div class="order-meta">
+          <span>€ 79,99</span>
+        </div>
+      </div>
+      <div class="order-card">
+        <img src="../../img/product-img/product-2.jpg" alt="Prodotto venduto" />
+        <div class="order-details">
+          <h5>Maglietta Sportiva</h5>
+          <p><strong>ID Ordine:</strong> 2</p>
+          <p>Venduto il: 28/06/2025</p>
+          <p>Acquirente: Laura Bianchi</p>
+        </div>
+        <div class="order-meta">
+          <span>€ 29,90</span>
+        </div>
+      </div>
+      <!-- Altri prodotti venduti... -->
+    </div>
+  </div>
+</div>

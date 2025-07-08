@@ -1,0 +1,36 @@
+<div class="container profile-container">
+  <div class="orders-section">
+    <h2 class="personal-info-title">Order history</h2>
+    <div id="orders-list">
+      <[foreach]>
+      <div class="order-amazon-card">
+        <div class="order-header">
+          <div>
+            <strong>Order: <[order_id::idformatter library="utility"]></strong>
+            <a
+              href="<[order_link]>" class="order-details-link">(details)</a><br />
+            Placed on: <[order_date]><br />
+            Status: <[order_status]>
+          </div>
+          <div class="order-total">Total: <[order_price]> $</div>
+        </div>
+        <div class="order-products">
+          <[foreach]>
+          <div class="order-product-row">
+            <img src="img/product-img/product-1.jpg" alt="Product 1" />
+            <div>
+              <div class="product-title">
+                <a href="<[product_link]>" > <[product_name]></a>
+              </div>
+              <div class="product-category">Category: <[product_category]></div>
+            </div>
+          </div>
+          <[/foreach]>
+        </div>
+      </div>
+      <[/foreach]>
+    </div>
+    <div id="pagination" class="pagination"></div>
+    <!-- END USER ORDERS -->
+  </div>
+</div>
