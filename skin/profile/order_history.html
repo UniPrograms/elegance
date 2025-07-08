@@ -1,6 +1,6 @@
 <div class="container profile-container">
   <div class="orders-section">
-    <h2 class="personal-info-title">Order history</h2>
+    <h2 class="ct-profile-title">Order history</h2>
     <div id="orders-list">
       <[foreach]>
       <div class="order-amazon-card">
@@ -19,10 +19,10 @@
           <div class="order-product-row">
             <img src="img/product-img/product-1.jpg" alt="Product 1" />
             <div>
-              <div class="product-title">
-                <a href="<[product_link]>" > <[product_name]></a>
+              <div class="order-product-card-title">
+                <a href="<[product_link]>" class="order-product-card-title"><[product_name]></a>
               </div>
-              <div class="product-category">Category: <[product_category]></div>
+              <div class="order-product-card-cat">Category: <[product_category]></div>
             </div>
           </div>
           <[/foreach]>

@@ -23,37 +23,10 @@ $orderDAO = $factory->getOrderDAO();
 $personal_info_page = new Template("skin/profile/personal_info.html");
 
 
-/*$user = $userDAO->getUserById($_SESSION["id"]);
+$user = $userDAO->getUserById($_SESSION["id"]);
 
-$personal_info_page->setContent("user_name", $user->toString());
-$personal_info_page->setContent("user_email", $user->getEmail());
-
-$orders = $orderDAO->getOrderByUserId($_SESSION["id"]);
-
-foreach($orders as $order){
-
-    $personal_info_page->setContent("order_id",$order->getId());
-    $personal_info_page->setContent("order_date", $order->getOrderDate());
-    $personal_info_page->setContent("order_status", $order->getStatus() != "CONSEGNATO" ? $order->getStatus() : $order->getStatus()."(".$order->getDeliveryDate().")");
-    $personal_info_page->setContent("order_price", $order->getPrice());
-    
-    $quiery_string_builder = new QueryStringBuilder("order_details.php");
-    $quiery_string_builder->add("order_id",$order->getId());
-
-    $personal_info_page->setContent("order_link",$quiery_string_builder->build());
-
-    foreach($order->getOrderItem() as $item){
-        $product = $item->getArticle()->getProduct();
-
-        $personal_info_page->setContent("product_name", $product->getName());
-        $personal_info_page->setContent("product_category", $product->getCategory()->getName());
-        
-        $quiery_string_builder = new QueryStringBuilder("product.php");
-        $quiery_string_builder->add("product_id",$product->getId());
-
-        $personal_info_page->setContent("product_link",$quiery_string_builder->build());     
-    }
-}
-*/
+$personal_info_page->setContent("user_email",$user->getEmail());
+$personal_info_page->setContent("user_name",$user->getName());
+$personal_info_page->setContent("user_surname",$user->getSurname());
 
 ?>
