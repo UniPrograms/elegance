@@ -135,6 +135,8 @@ class UserDAO extends DAO{
         $user->setEmail($rs['EMAIL']);
         $user->setPassword($rs['PASSWORD']);
         $user->setRole($rs['RUOLO']);
+        $user->setUrlImage($rs["URL_IMAGE"]);
+        $user->setPhoneNumber($rs["NUMERO_TELEFONO"]);
 
         return $user;
     }

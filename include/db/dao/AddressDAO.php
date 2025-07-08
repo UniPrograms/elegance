@@ -63,6 +63,10 @@ class AddressDAO extends DAO{
         $address->setVia($rs["VIA"]);
         $address->setCivico($rs["CIVICO"]);
         $address->setCAP($rs["CAP"]);
+        $address->setName($rs["NOME"]);
+        $address->setSurname($rs["COGNOME"]);
+        $address->setEmail($rs["EMAIL"]);
+        $address->setPhoneNumber($rs["NUMERO_TELEFONO"]);
         return $address;
 
 

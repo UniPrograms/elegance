@@ -5,8 +5,10 @@ class User{
     private string $name;
     private string $surname;
     private string $email;
-    private $password;
-    private $role;
+    private string $password;
+    private string $role;
+    private ?string $urlImage;
+    private ?string $phoneNumber;
 
 
 
@@ -17,6 +19,8 @@ class User{
         $this->email = '';
         $this->password = '';
         $this->role = '';
+        $this->urlImage = '';
+        $this->phoneNumber = '';
         
     }
 
@@ -27,6 +31,8 @@ class User{
     public function getEmail(): string {return $this->email;}
     public function getPassword(): string {return $this->password;}
     public function getRole(): string {return $this->role;}
+    public function getImage(): string {return $this->urlImage;}
+    public function getPhoneNumber(): string {return $this->phoneNumber;}
 
 
     // Setter
@@ -36,6 +42,8 @@ class User{
     public function setEmail(string $email) { $this->email = $email; }
     public function setPassword(string $password) { $this->password = $password; }
     public function setRole(string $role) { $this->role = $role; }
+    public function setUrlImage(string $urlImage) { $this->urlImage = $urlImage; }
+    public function setPhoneNumber(string $phoneNumber) { $this->phoneNumber = $phoneNumber; }
 
     // Other function
     public function toString(): ?string {return $this->name ." ".$this->surname;}
