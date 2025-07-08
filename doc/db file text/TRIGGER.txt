@@ -25,3 +25,50 @@ END $$
 DELIMITER ;
 
 
+
+-- Inserisco una notifica quando viene inserito un nuovo ordine --
+DELIMITER $$
+CREATE TRIGGER NOTIFICA_DOPO_INSERITMENTO_ORDINE AFTER INSERT ON ORDINE FOR EACH ROW
+BEGIN
+	DECLARE ID_UTENTE INT;
+    DECLARE ID_ORDINE INT;
+    DECLARE TESTO TEXT;
+    
+    -- Assegno i valori alle variabili
+    SET ID_UTENTE = NEW.ID_UTENTE;
+    SET ID_ORDINE = NEW.ID;
+    SET TESTO = CONCAT('Il tuo ordine n. ', ID_ORDINE, ' è stato preso in carico con successo. Ti aggiorneremo appena sarà spedito.');
+    
+    INSERT INTO `NOTIFICA` (`OGGETTO`, `TESTO`, `ID_UTENTE`) VALUES ('Conferma ordine', TESTO, ID_UTENTE);
+END $$
+DELIMITER ;
+
+
+
+-- Inserisco una notifica quando viene modificato lo stato di un ordine--
+DELIMITER $$
+CREATE TRIGGER NOTIFICA_DOPO_MODIFICA_STATO_ORDINE AFTER UPDATE ON ORDINE FOR EACH ROW
+BEGIN
+	DECLARE ID_UTENTE INT;
+    DECLARE ID_ORDINE INT;
+    DECLARE NUOVO_STATO VARCHAR(20);
+    DECLARE OGGETTO VARCHAR(100);
+    DECLARE TESTO TEXT;
+    
+    -- Assegno i valori alle variabili
+    SET ID_UTENTE = NEW.ID_UTENTE;
+    SET ID_ORDINE = NEW.ID;
+    SET NUOVO_STATO = NEW.STATO;
+    
+	IF NUOVO_STATO = 'SPEDITO' THEN
+		SET OGGETTO = 'Ordine spedito';
+		SET TESTO = CONCAT('Il tuo ordine n. ', ID_ORDINE, ' è stato spedito. Presto arriverà all\'indirizzo indicato.');
+	ELSEIF NUOVO_STATO = 'CONSEGNATO' THEN
+		SET OGGETTO = 'Ordine consegnato';
+		SET TESTO = CONCAT('Il tuo ordine n. ', ID_ORDINE, ' è stato consegnato. Grazie per aver acquistato con noi!');
+	END IF;
+    
+    INSERT INTO `NOTIFICA` (`OGGETTO`, `TESTO`, `ID_UTENTE`) VALUES (OGGETTO, TESTO, ID_UTENTE);
+END $$
+DELIMITER ;
+
