@@ -18,6 +18,7 @@ if(!isset($_SESSION['auth'])) {
 $factory = new DataLayer(new DB_Connection());
 $userDAO = $factory->getUserDAO();
 $cartDAO = $factory->getCartDAO();
+$paymentDAO = $factory->getPaymentDAO();
 
 
 $checkout_page = new Template("skin/checkout/checkout.html");
@@ -38,4 +39,15 @@ $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
 
 $checkout_page->setContent("total_items", $cart->getSize()); 
 $checkout_page->setContent("total_price", $cart->getPrice());
+
+
+// Setto i metodi di pagamento
+
+$payments = $paymentDAO->getAllPayments();
+foreach($payments as $payment){
+    $checkout_page->setContent("payment_id", $payment->getId());
+    $checkout_page->setContent("payment_name", $payment->getName());
+}
+
+
 ?>

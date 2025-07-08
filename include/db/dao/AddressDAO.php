@@ -42,7 +42,7 @@ class AddressDAO extends DAO{
     * 
     * 
     */
-    public function storeAddress(Address $address): bool {
+    public function storeAddress(Address $address): ?Address {
         // Inserisco il prodotto
         $this->stmtInsertAddress->bindValue(1, $address->getNazione(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(2, $address->getCitta(), PDO::PARAM_STR);
@@ -53,7 +53,11 @@ class AddressDAO extends DAO{
         $this->stmtInsertAddress->bindValue(7, $address->getSurname(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(8, $address->getEmail(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(9, $address->getPhoneNumber(), PDO::PARAM_STR);
-        return $this->stmtInsertAddress->execute();
+        if($this->stmtInsertAddress->execute()){
+            $address->setId($this->conn->lastInsertId());
+            return $address;
+        }
+        return null;
         
     }
 
@@ -71,6 +75,7 @@ class AddressDAO extends DAO{
         $address->setSurname($rs["COGNOME"]);
         $address->setEmail($rs["EMAIL"]);
         $address->setPhoneNumber($rs["NUMERO_TELEFONO"]);
+        $address->setProvincia($rs["PROVINCIA"]);
         return $address;
 
 

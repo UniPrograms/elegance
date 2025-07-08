@@ -15,8 +15,8 @@ class Address{
     private ?string $name;
     private ?string $surname;
     private ?string $phoneNumber;
-    private ?string $email;
-   
+    private ?string $email; 
+    private ?string $provincia;
 
     public function __construct()    {
         $this->id = null;
@@ -29,6 +29,7 @@ class Address{
         $this->surname = "";
         $this->phoneNumber = "";
         $this->email = "";
+        $this->provincia = "";
     }
 
     // Getter
@@ -42,6 +43,7 @@ class Address{
     public function getSurname(): ?string{return $this->surname;}
     public function getPhoneNumber(): ?string{return $this->phoneNumber;}
     public function getEmail(): ?string{return $this->email;}
+    public function getProvincia(): ?string{return $this->provincia;}
 
     // Setter
     public function setId(int $id){$this->id = $id;}
@@ -54,6 +56,7 @@ class Address{
     public function setSurname(?string $surname) { $this->surname = $surname;}
     public function setPhoneNumber(?string $phoneNumber) { $this->phoneNumber = $phoneNumber;}
     public function setEmail(?string $email) { $this->email = $email;}
+    public function setProvincia(?string $provincia) { $this->provincia = $provincia;}
 
     // Other Methods
     public function toString(): string{

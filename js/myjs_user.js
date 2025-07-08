@@ -1,3 +1,49 @@
+// Validazione e invio dati checkout su "Place Order"
+document.addEventListener('DOMContentLoaded', function() {
+  var placeOrderBtn = document.querySelector('.order-details-confirmation .essence-btn');
+  if (!placeOrderBtn) return;
+  placeOrderBtn.addEventListener('click', function(e) {
+    // Campi obbligatori (tranne telefono)
+    var requiredFields = [
+      'first_name',
+      'last_name',
+      'email_address',
+      'country',
+      'street_address',
+      'postcode',
+      'city',
+      'state'
+    ];
+    var valid = true;
+    requiredFields.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el || !el.value || el.value.trim() === '') {
+        valid = false;
+        el && el.classList.add('is-invalid');
+      } else {
+        el.classList.remove('is-invalid');
+      }
+    });
+    // Metodo di pagamento
+    var payment = document.querySelector('input[name="payment_method"]:checked');
+    if (!payment) {
+      valid = false;
+      var opts = document.querySelectorAll('.payment-method-option');
+      opts.forEach(function(opt) { opt.classList.add('is-invalid'); });
+    } else {
+      var opts = document.querySelectorAll('.payment-method-option');
+      opts.forEach(function(opt) { opt.classList.remove('is-invalid'); });
+    }
+    if (!valid) {
+      e.preventDefault();
+      alert('Required fields missing.');
+      return false;
+    }
+    // Se tutti i campi sono validi, non fare nulla (nessun invio, nessun alert)
+    e.preventDefault();
+    return false;
+  });
+});
 // Evidenzia il metodo di pagamento selezionato (checkout)
 document.addEventListener('DOMContentLoaded', function() {
   var paymentOptions = document.querySelectorAll('.payment-method-option');
