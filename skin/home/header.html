@@ -28,30 +28,19 @@
             <li>
               <a href="#">Shop</a>
               <div class="megamenu">
+                <[foreach]>
                 <ul class="single-mega cn-col-4">
-                  <li class="title">Women's Collection</li>
+                  <li class="title"><[sex_name::strformatter type="capitalize" library="utility"]>'s Collection</li>
                   <[foreach]>
-                  <li><a href=<[shop_link_woman]>><[category_name_woman::strformatter type="capitalize" library="utility"]></a></li>           
+                  <li><a href=<[shop_link]>><[category_name::strformatter type="capitalize" library="utility"]></a></li>           
                   <[/foreach]>
                 </ul>
-                <ul class="single-mega cn-col-4">
-                  <li class="title">Men's Collection</li>
-                   <[foreach]>
-                  <li><a href=<[shop_link_man]>><[category_name_man::strformatter type="capitalize" library="utility"]></a></li>           
-                  <[/foreach]>
-                </ul>
-                <ul class="single-mega cn-col-4">
-                  <li class="title">Kid's Collection</li>
-                   <[foreach]>
-                  <li><a href=<[shop_link_kid]>><[category_name_kid::strformatter type="capitalize" library="utility"]></a></li>           
-                  <[/foreach]>
-                </ul>
+                <[/foreach]>
                 <div class="single-mega cn-col-4">
                   <img src="img/bg-img/bg-6.jpg" alt="" />
                 </div>
               </div>
             </li>
-
             <li><a href="regular_page.php">About Us</a></li>
             <li><a href="contact.php">Contact</a></li>
           </ul>
@@ -73,16 +62,16 @@
       </div>
       <!-- Favourite Area -->
       <div class="favourite-area">
-        <a href="notifications_history.php"><img src="img/core-img/bell.svg" alt="Notifiche" /></a>
+        <a href=<[notification_page_link]>><img src="img/core-img/bell.svg" alt="Notifiche" /></a>
       </div>
       <!-- User Login Info -->
       <div class="user-login-info">
-        <a href="profile.php"><img src="img/core-img/user.svg" alt="" /></a>
+        <a href=<[profile_page_link]>><img src="img/core-img/user.svg" alt="" /></a>
       </div>
       <!-- Cart Area -->
       <div class="cart-area">
-        <a href="#" id="essenceCartBtn"
-          ><img src="img/core-img/bag.svg" alt="" /> <span>3</span></a
+        <a href=<[cart_popup_page_link]> id="essenceCartBtn"
+          ><img src="img/core-img/bag.svg" alt="" /> <span><[cart_item_size]></span></a
         >
       </div>
     </div>

@@ -31,8 +31,8 @@ class OrderDAO extends DAO {
         $this->stmtGetAllOrders = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO;");
         $this->stmtGetOrderByUser = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID_UTENTE = ?;");
         $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (ID_INDIRIZZO, ID_UTENTE, ID_PAGAMENTO, ID_SPEDIZIONE) VALUES (?,?,?,?);");
-        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE_COMPLETO SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
-        $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE_COMPLETO WHERE ID = ?;");
+        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
+        $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
         $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ? AND ID_UTENTE = ?;");
     }
 
@@ -143,10 +143,10 @@ class OrderDAO extends DAO {
                 return $order;
             }
         } else { 
-            $this->stmtInsertOrder->bindValue(4, $order->getAddress()->getId(), PDO::PARAM_INT);
-            $this->stmtInsertOrder->bindValue(6, $order->getUser()->getId(), PDO::PARAM_INT);
-            $this->stmtInsertOrder->bindValue(7, $order->getPayment()->getId(), PDO::PARAM_INT);
-            $this->stmtInsertOrder->bindValue(8, $order->getDelivery()->getId(), PDO::PARAM_INT);
+            $this->stmtInsertOrder->bindValue(1, $order->getAddress()->getId(), PDO::PARAM_INT);
+            $this->stmtInsertOrder->bindValue(2, $order->getUser()->getId(), PDO::PARAM_INT);
+            $this->stmtInsertOrder->bindValue(3, $order->getPayment()->getId(), PDO::PARAM_INT);
+            $this->stmtInsertOrder->bindValue(4, $order->getDelivery()->getId(), PDO::PARAM_INT);
 
             if($this->stmtInsertOrder->execute()){
                 $order->setId($this->conn->lastInsertId());

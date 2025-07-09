@@ -6,8 +6,10 @@ require_once("include/db/DataLayer.php");
 $factory = new DataLayer(new DB_Connection());
 
 
-$order = $factory->getOrderDAO()->getOrderById(1);
-echo $order->getPayment()->getName();
+$cartDAO = $factory->getCartDAO();
+$cart = $cartDAO->getCartByUserId(1);
+
+echo $cart == null ? "sono null" : "non sono null";
 
 /*
 // Utente 

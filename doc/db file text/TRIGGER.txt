@@ -72,3 +72,38 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- Sposta gl articoli dal carrello all'ordine non appena quest'ultimo viene inserito --
+DELIMITER $$
+CREATE TRIGGER SPOSTA_ARTICOLI_DOPO_INSERIMENTO_ORDINE
+AFTER INSERT ON ORDINE
+FOR EACH ROW
+BEGIN
+    -- Inserisce tutti gli articoli dal carrello dell'utente nell'ordine appena creato
+    INSERT INTO ORDINE_ARTICOLO (ID_ARTICOLO, ID_ORDINE)
+    SELECT IC.ID_ARTICOLO, NEW.ID
+    FROM CARRELLO C
+    JOIN ITEM_CARRELLO IC ON IC.ID_CARRELLO = C.ID
+    WHERE C.ID_UTENTE = NEW.ID_UTENTE;
+
+    -- Per ogni articolo ordinato, scala la quantità di 1 (per ogni riga in ITEM_CARRELLO)
+    UPDATE ARTICOLO A
+    JOIN (
+        SELECT IC.ID_ARTICOLO, COUNT(*) AS qty
+        FROM CARRELLO C
+        JOIN ITEM_CARRELLO IC ON IC.ID_CARRELLO = C.ID
+        WHERE C.ID_UTENTE = NEW.ID_UTENTE
+        GROUP BY IC.ID_ARTICOLO
+    ) AS T ON T.ID_ARTICOLO = A.ID
+    SET A.QUANTITA = A.QUANTITA - T.qty;
+
+    -- Elimina tutti gli articoli dal carrello dell'utente
+    DELETE IC FROM ITEM_CARRELLO IC
+    JOIN CARRELLO C ON IC.ID_CARRELLO = C.ID
+    WHERE C.ID_UTENTE = NEW.ID_UTENTE;
+END$$
+
+DELIMITER ;
+
+
+
+

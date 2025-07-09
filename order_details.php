@@ -19,9 +19,9 @@ require "php/profile/order_details.php";
 
 $homepage = new Template("skin/index.html");
 
-$homepage->setContent("header",$header->get());
-$homepage->setContent("cart_popup",$cart_popup->get());
-$homepage->setContent("footer", $footer->get());
+$homepage->setContent("header",$header_page->get());
+$homepage->setContent("cart_popup",$cart_popup_page->get());
+$homepage->setContent("footer", $footer_page->get());
 $homepage->setContent("body",$order_details_page->get());
 
 

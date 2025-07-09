@@ -1,5 +1,5 @@
-1 - Cambiare lo stile del button per fare il login, quello per registrarsi, e dei due link per andare alla pagina di regitrazione
-    o tornare dalla pagina di registrazione alla pagina di login;
-
-
-2 - 
+NOTA IMPORTANTE: quando devi ricreare il db, devi far andare prima tutto schema. 
+                 Poi fai andare tutti i trigger tranne l'ultimo.
+                 Poi fai andare tutti i data.
+                 Poi fai andare l'ultimo trigger creato.
+        

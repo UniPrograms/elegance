@@ -1,9 +1,9 @@
 // Validazione e invio dati checkout su "Place Order"
 document.addEventListener('DOMContentLoaded', function() {
-  var placeOrderBtn = document.querySelector('.order-details-confirmation .essence-btn');
-  if (!placeOrderBtn) return;
-  placeOrderBtn.addEventListener('click', function(e) {
-    // Campi obbligatori (tranne telefono)
+  var checkoutForm = document.querySelector('form[action*="order_operation.php"]');
+  if (!checkoutForm) return;
+  checkoutForm.addEventListener('submit', function(e) {
+    // Campi obbligatori (tranne telefono e civico)
     var requiredFields = [
       'first_name',
       'last_name',
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         el.classList.remove('is-invalid');
       }
     });
-    // Metodo di pagamento
+    // Metodo di pagamento obbligatorio
     var payment = document.querySelector('input[name="payment_method"]:checked');
     if (!payment) {
       valid = false;
@@ -36,12 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (!valid) {
       e.preventDefault();
-      alert('Required fields missing.');
+      alert('Compila tutti i campi obbligatori.');
       return false;
     }
-    // Se tutti i campi sono validi, non fare nulla (nessun invio, nessun alert)
-    e.preventDefault();
-    return false;
+    // Se tutti i campi sono validi, lascia proseguire il submit normale
   });
 });
 // Evidenzia il metodo di pagamento selezionato (checkout)

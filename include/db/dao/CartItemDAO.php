@@ -91,7 +91,6 @@ class CartItemDAO extends DAO {
     public function storeItem(CartItem $item): ?CartItem{
         $this->stmtInsertItem->bindValue(1, $item->getCart()->getId(), PDO::PARAM_INT);
         $this->stmtInsertItem->bindValue(2, $item->getArticle()->getId(), PDO::PARAM_INT);
-        $this->stmtInsertItem->execute();
 
         if($this->stmtInsertItem->execute()){
                 $item->setId($this->conn->lastInsertId());

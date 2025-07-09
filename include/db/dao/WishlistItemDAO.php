@@ -91,7 +91,6 @@ class WishlistItemDAO extends DAO{
     public function storeItem(WishlistItem $item): ?WishlistItem{
         $this->stmtInsertItem->bindValue(1, $item->getWishlist()->getId(), PDO::PARAM_INT);
         $this->stmtInsertItem->bindValue(2, $item->getArticle()->getId(), PDO::PARAM_INT);
-        $this->stmtInsertItem->execute();
 
         if($this->stmtInsertItem->execute()){
                 $item->setId($this->conn->lastInsertId());

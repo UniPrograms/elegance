@@ -18,9 +18,9 @@ require "php/notification/notifications_history.php";
 
 $homepage = new Template("skin/index.html");
 
-$homepage->setContent("header",$header->get());
-$homepage->setContent("cart_popup",$cart_popup->get());
-$homepage->setContent("footer", $footer->get());
+$homepage->setContent("header",$header_page->get());
+$homepage->setContent("cart_popup",$cart_popup_page->get());
+$homepage->setContent("footer", $footer_page->get());
 $homepage->setContent("body",$notification_history_page->get());
 
 

@@ -7,6 +7,8 @@ class OrderItemProxy extends OrderItem{
 
     private ?DataLayer $dataLayer;
     private int $articleId;
+    private int $orderId;
+
 
     public function __construct(?DataLayer $dataLayer){
         parent::__construct();
@@ -17,8 +19,10 @@ class OrderItemProxy extends OrderItem{
 
     // Setter and Getter
     public function getArticleId(): int {return $this->articleId;}
+    public function getOrderId(): int {return $this->orderId;}
 
     public function setArticleId(int $articleId): void {$this->articleId = $articleId;}
+    public function setOrderId(int $orderId): void {$this->orderId = $orderId;}
 
 
     //Override Getter
@@ -28,5 +32,14 @@ class OrderItemProxy extends OrderItem{
         }
         return parent::getArticle();
     }
+
+
+     public function getOrder(): ?Order{
+        if(parent::getOrder() == null && $this->orderId > 0){
+            parent::setOrder((($this->dataLayer)->getOrderDAO())->getOrderById($this->orderId));
+        }
+        return parent::getOrder();
+    }
+
 
 }

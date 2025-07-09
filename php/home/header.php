@@ -1,60 +1,68 @@
 <?php
-
-// Database
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
-
-// Utility
 require_once("include/utility/QueryStringBuilder.php");
 
 
 // Template
-$header = new Template("skin/home/header.html");
+$header_page = new Template("skin/home/header.html");
 
+// DAO
 $factory = new DataLayer(new DB_Connection());
-$categorie = $factory->getCategoryDAO()->getAllCategories();
-$sexDao = $factory->getSexDAO();
+$categoryDAO = $factory->getCategoryDAO();
+$sexDAO = $factory->getSexDAO();
+$cartDAO = $factory->getCartDAO();
 
-// Woman column
-foreach ($categorie as $categoria) {
+$categories = $categoryDAO->getAllCategories();
+$sexes = $sexDAO->getAllSexs();
 
-    // Inserisco il nome della categoria
-    $header->setContent("category_name_woman", $categoria->getName());
+// Costruisco il menu a tendina
+foreach ($sexes as $sex) {
 
-    // Costruisco la query string
-    $query_string_builder = new QueryStringBuilder("shop.php");
-    $query_string_builder->add("category_id", $categoria->getId());
-    $query_string_builder->add("sex_id", $sexDao->getSexByName("WOMAN")->getId());
+    // Inserisco in tipo di sesso
+    $header_page->setContent("sex_name", $sex->getSex());
 
-    $header->setContent("shop_link_woman", $query_string_builder->build());
+    // Inserisco tutte le categorie associandole al sesso
+    foreach ($categories as $category) {
+
+        // Inserisco il nome della categoria
+        $header_page->setContent("category_name", $category->getName());
+
+        // Query String per andare alla pagina dello shop avendo la categoria selezionata e il sesso
+        $query_string_builder = new QueryStringBuilder("shop.php");
+        $query_string_builder->add("category_id", $category->getId());
+        $query_string_builder->add("sex_id", $sex->getId());
+
+        $header_page->setContent("shop_link", $query_string_builder->build());
+    }
 }
 
 
+// Inserisco le funzionalità ai button in base a se si è fatto l'accesso o meno
+$userIsLogged = isset($_SESSION["auth"]);
 
-// Man column
-foreach ($categorie as $categoria) {
+if ($userIsLogged) {
 
-    // Inserisco il nome della categoria
-    $header->setContent("category_name_man", $categoria->getName());
 
-    // Costruisco la query string
-    $query_string_builder = new QueryStringBuilder("shop.php");
-    $query_string_builder->add("category_id", $categoria->getId());
-    $query_string_builder->add("sex_id", $sexDao->getSexByName("MAN")->getId());
+    $header_page->setContent("notification_page_link", "notifications_history.php");
+    $header_page->setContent("profile_page_link", "profile.php");
+    $header_page->setContent("cart_popup_page_link", "#");
 
-    $header->setContent("shop_link_man", $query_string_builder->build());
-}
+    // Numero di articoli all'interno del carrello
+    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
+    $header_page->setContent("cart_item_size", $userIsLogged ? $cart->getSize() : "");
+} else {
 
-// Kid column
-foreach ($categorie as $categoria) {
+    $query_string_builder = new QueryStringBuilder("login.php");
 
-    // Inserisco il nome della categoria
-    $header->setContent("category_name_kid", $categoria->getName());
+    $query_string_builder->addEncoded("reference", "notifications_history.php");
+    $header_page->setContent("notification_page_link",  $query_string_builder->build());
 
-    // Costruisco la query string
-    $query_string_builder = new QueryStringBuilder("shop.php");
-    $query_string_builder->add("category_id", $categoria->getId());
-    $query_string_builder->add("sex_id", $sexDao->getSexByName("KID")->getId());
+    $query_string_builder->cleanParams();
+    $query_string_builder->addEncoded("reference", "profile.php");
+    $header_page->setContent("profile_page_link", $query_string_builder->build());
 
-    $header->setContent("shop_link_kid", $query_string_builder->build());
+    $query_string_builder->cleanParams();
+    $query_string_builder->addEncoded("reference", "index.php");
+    $header_page->setContent("cart_popup_page_link",  $query_string_builder->build());
 }

@@ -21,7 +21,7 @@ class AddressDAO extends DAO{
     // Inizializzazione degli Statement
     public function init(): void {
         $this->stmtGetAddressById = $this->conn->prepare("SELECT * FROM INDIRIZZO WHERE ID = ?;");
-        $this->stmtInsertAddress = $this->conn->prepare("INSERT INTO INDIRIZZO (NAZIONE, CITTA, VIA, CIVICO, CA, NOME, COGNOME, EMAIL, NUMERO_TELEFONO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        $this->stmtInsertAddress = $this->conn->prepare("INSERT INTO INDIRIZZO (NAZIONE, CITTA, VIA, CIVICO, CAP, NOME, COGNOME, EMAIL, NUMERO_TELEFONO, PROVINCIA) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         
     }
 
@@ -53,6 +53,7 @@ class AddressDAO extends DAO{
         $this->stmtInsertAddress->bindValue(7, $address->getSurname(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(8, $address->getEmail(), PDO::PARAM_STR);
         $this->stmtInsertAddress->bindValue(9, $address->getPhoneNumber(), PDO::PARAM_STR);
+        $this->stmtInsertAddress->bindValue(10, $address->getProvincia(), PDO::PARAM_STR);
         if($this->stmtInsertAddress->execute()){
             $address->setId($this->conn->lastInsertId());
             return $address;

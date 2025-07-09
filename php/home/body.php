@@ -9,7 +9,7 @@ require_once("include/utility/QueryStringBuilder.php");
 
 
 // Template
-$body = new Template("skin/home/body.html");
+$body_page = new Template("skin/home/body.html");
 
 
 $factory = new DataLayer(new DB_Connection());
@@ -18,16 +18,15 @@ $categoryDAO =  $factory->getCategoryDAO();
 // Id delle categorie
 $query_string_builder = new QueryStringBuilder("shop.php");
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHIRT")->getId());
-$body->setContent("shirt_link", $query_string_builder->build());
+$body_page->setContent("shirt_link", $query_string_builder->build());
 
-$query_string_builder->clean();
+$query_string_builder->cleanParams();
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHOES")->getId());
-$body->setContent("shoes_link", $query_string_builder->build());
+$body_page->setContent("shoes_link", $query_string_builder->build());
 
-
-$query_string_builder->clean();
+$query_string_builder->cleanParams();
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("ACCESSORIES")->getId());
-$body->setContent("shoes_link", $query_string_builder->build());
+$body_page->setContent("shoes_link", $query_string_builder->build());
 
 
 
