@@ -2,8 +2,6 @@
 // DATABASE
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
-
-// Utility
 require_once("include/utility/QueryStringBuilder.php");
 
 
