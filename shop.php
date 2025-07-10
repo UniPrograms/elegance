@@ -21,7 +21,7 @@ $homepage = new Template("skin/index.html");
 $homepage->setContent("header",$header_page->get());
 $homepage->setContent("cart_popup",$cart_popup_page->get());
 $homepage->setContent("footer", $footer_page->get());
-$homepage->setContent("body",$shop->get());
+$homepage->setContent("body",$shop_page->get());
 
 
 $homepage->close();

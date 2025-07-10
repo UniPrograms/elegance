@@ -7,9 +7,11 @@ class NotifyDAO extends DAO{
 
     private PDOStatement $stmtGetNotifyById;
     private PDOStatement $stmtGetNotifyByUser;
+    private PDOStatement $stmtGetNotifyByUserAndStatus;
     private PDOStatement $stmtInsertNotify;
     private PDOStatement $stmtUpdateNotify;
     private PDOStatement $stmtDeleteNotify;
+    
 
     // Costruttore
     public function __construct(?DataLayer $dataLayer) {
@@ -22,9 +24,11 @@ class NotifyDAO extends DAO{
     public function init(): void {
         $this->stmtGetNotifyById = $this->conn->prepare("SELECT * FROM NOTIFICA WHERE ID = ?;");
         $this->stmtGetNotifyByUser = $this->conn->prepare("SELECT * FROM NOTIFICA WHERE ID_UTENTE = ? ORDER BY ID DESC;");
+        $this->stmtGetNotifyByUserAndStatus = $this->conn->prepare("SELECT * FROM NOTIFICA WHERE ID_UTENTE = ? AND STATO = ?;");
         $this->stmtInsertNotify = $this->conn->prepare("INSERT INTO NOTIFICA (OGGETTO, TESTO, ID_UTENTE) VALUES (?,?,?);");
         $this->stmtUpdateNotify = $this->conn->prepare("UPDATE NOTIFICA SET OGGETTO = ?, TESTO = ?, ID_UTENTE = ?, STATO = ?, DATE = ? WHERE ID = ?;");
         $this->stmtDeleteNotify = $this->conn->prepare("DELETE FROM NOTIFICA WHERE ID = ?;");
+        
     }
 
 
@@ -70,12 +74,20 @@ class NotifyDAO extends DAO{
      * 
      * 
      */
-    public function getNotificationsByUserId(int $id): array {
-        $this->stmtGetNotifyByUser->bindValue(1, $id, PDO::PARAM_INT);
-        $this->stmtGetNotifyByUser->execute();
+    public function getNotificationsByUserId(int $id, ?string $status = null): array {
+        if($status == null){
+            $stmt = $this->stmtGetNotifyByUser;
+            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        }
+        else{
+            $stmt = $this->stmtGetNotifyByUserAndStatus;
+            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt->bindValue(2, $status, PDO::PARAM_STR);
+        }
+        $stmt->execute();
         
         $result = [];
-        while ($rs = $this->stmtGetNotifyByUser->fetch(PDO::FETCH_ASSOC)) {
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createNotify($rs);
         }
         return $result;

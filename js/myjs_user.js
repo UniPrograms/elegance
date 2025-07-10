@@ -1,3 +1,66 @@
+// Gestione apertura/chiusura menu categorie in base a category_id da URL
+document.addEventListener('DOMContentLoaded', function() {
+  // Funzione per ottenere il parametro category_id dalla query string
+  function getCategoryIdFromUrl() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get('category_id');
+  }
+  var categoryId = getCategoryIdFromUrl();
+  // Seleziona tutti i link delle categorie principali (sesso)
+  var sexLinks = document.querySelectorAll('.catagories-menu > ul > li > a[value]');
+  sexLinks.forEach(function(link) {
+    var value = link.getAttribute('value');
+    var li = link.closest('li');
+    var submenu = li ? li.querySelector('.sub-menu') : null;
+    if (!categoryId) {
+      // Nessun category_id: chiudi tutti i menu
+      if (submenu) submenu.classList.remove('show');
+    } else {
+      // Se il value corrisponde al category_id, apri solo quel menu
+      if (value === categoryId) {
+        if (submenu) submenu.classList.add('show');
+      } else {
+        if (submenu) submenu.classList.remove('show');
+      }
+    }
+  });
+});
+// Colora i quadrati dei colori nella shop sidebar in base all'attributo name
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.color_shop').forEach(function(el) {
+    var colorName = el.getAttribute('name');
+    if (colorName) {
+      // Gestione nomi standardizzati (case insensitive)
+      var cssColor = colorName.toLowerCase();
+      // Eventuale mappatura nomi DB -> CSS
+      var colorMap = {
+        'black': 'black',
+        'white': 'white',
+        'red': 'red',
+        'blue': 'blue',
+        'pink': 'pink',
+        'yellow': 'yellow',
+        'orange': 'orange',
+        'green': 'green',
+        'purple': 'purple',
+        'brown': 'brown',
+        'gray': 'gray',
+        'beige': 'beige'
+      };
+      if (colorMap[cssColor]) {
+        el.style.backgroundColor = colorMap[cssColor];
+      } else {
+        el.style.backgroundColor = cssColor; // fallback: prova col nome diretto
+      }
+      el.style.display = 'inline-block';
+      el.style.width = '24px';
+      el.style.height = '24px';
+      el.style.borderRadius = '50%';
+      el.style.border = '1px solid #ccc';
+      el.style.margin = '2px';
+    }
+  });
+});
 // Validazione e invio dati checkout su "Place Order"
 document.addEventListener('DOMContentLoaded', function() {
   var checkoutForm = document.querySelector('form[action*="order_operation.php"]');

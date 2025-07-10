@@ -8,10 +8,14 @@ require_once("include/utility/QueryStringBuilder.php");
 // DAO 
 $factory = new DataLayer(new DB_Connection());
 $productDAO = $factory->getProductDAO();
+$categoryDAO = $factory->getCategoryDAO();
+$sexDAO = $factory->getSexDAO();
+$productorDAO = $factory->getProductorDAO();
+$colorDAO = $factory->getColorDAO();
 
 
 // Template
-$shop = new Template("skin/shop/shop.html");
+$shop_page = new Template("skin/shop/shop.html");
 
 
 // Controllo i filtri che sono stati passati
@@ -27,6 +31,35 @@ $limit = isset($_GET["limit"]) ? (int) $_GET["limit"] : null;
 $offset = isset($_GET["offset"]) ? (int) $_GET["offset"] : null;
 
 // Prendo i prodotti in base ai filtri passati
-$products = $yourRepository->getProductFiltered( $name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price, $limit, $offset);
+$products = $productDAO->getProductFiltered($name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price, $limit, $offset);
 
 
+// Setto le categorie (e il sesso) per il menu
+foreach($sexDAO->getAllSexs() AS $sex){
+
+    $shop_page->setContent("sex_name", $sex->getSex());
+    $shop_page->setContent("sex_id", $sex->getId());
+    $shop_page->setContent("data_target","#".$sex->getId());
+    $shop_page->setContent("data_id", $sex->getId());
+
+    foreach($categoryDAO->getAllCategories() as $category){
+        $shop_page->setContent("category_name", $category->getName());
+    }
+}
+
+
+
+// Setto i colori
+foreach($colorDAO->getAllColors() as $color){
+    $shop_page->setContent("color_value", $color->getId());
+    $shop_page->setContent("color_name", $color->getColor());
+}
+
+
+
+
+// Setto il brand (produttore)
+foreach($productorDAO->getAllProductores() as $productor){
+    $shop_page->setContent("productor_value", $productor->getId());
+    $shop_page->setContent("productor_name", $productor->getName());
+}

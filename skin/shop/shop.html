@@ -30,84 +30,37 @@
             <div class="catagories-menu">
               <ul id="menu-content2" class="menu-content collapse show">
                 <!-- Single Item -->
-                <li data-toggle="collapse" data-target="#clothing">
-                  <a href="#">clothing</a>
-                  <ul class="sub-menu collapse show" id="clothing">
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">Bodysuits</a></li>
-                    <li><a href="#">Dresses</a></li>
-                    <li><a href="#">Hoodies &amp; Sweats</a></li>
-                    <li><a href="#">Jackets &amp; Coats</a></li>
-                    <li><a href="#">Jeans</a></li>
-                    <li><a href="#">Pants &amp; Leggings</a></li>
-                    <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                    <li><a href="#">Shirts &amp; Blouses</a></li>
-                    <li><a href="#">Shirts</a></li>
-                    <li><a href="#">Sweaters &amp; Knits</a></li>
+                <[foreach]>
+                <li data-toggle="collapse" data-target=<[data_target]>>
+                  <a href="#" style="font-weight:600; color:#1a1a1a; letter-spacing:0.5px; font-size:1em; text-transform:uppercase;" value=<[sex_id]>><[sex_name]></a>
+                  <ul class="sub-menu collapse show" id=<[data_id]>>
+                    <li><a href="#" style="font-weight:500; color:#444; font-size:0.98em;">All</a></li>
+                    <[foreach]>
+                    <li><a href="#" style="font-weight:500; color:#444; font-size:0.92em; letter-spacing:0.2px;"><[category_name::strformatter type="title" library="utility"]></a></li>
+                    <[/foreach]>
                   </ul>
                 </li>
+                <[/foreach]>
                 <!-- Single Item -->
-                <li
-                  data-toggle="collapse"
-                  data-target="#shoes"
-                  class="collapsed"
-                >
-                  <a href="#">shoes</a>
-                  <ul class="sub-menu collapse" id="shoes">
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">Bodysuits</a></li>
-                    <li><a href="#">Dresses</a></li>
-                    <li><a href="#">Hoodies &amp; Sweats</a></li>
-                    <li><a href="#">Jackets &amp; Coats</a></li>
-                    <li><a href="#">Jeans</a></li>
-                    <li><a href="#">Pants &amp; Leggings</a></li>
-                    <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                    <li><a href="#">Shirts &amp; Blouses</a></li>
-                    <li><a href="#">Shirts</a></li>
-                    <li><a href="#">Sweaters &amp; Knits</a></li>
-                  </ul>
-                </li>
-                <!-- Single Item -->
-                <li
-                  data-toggle="collapse"
-                  data-target="#accessories"
-                  class="collapsed"
-                >
-                  <a href="#">accessories</a>
-                  <ul class="sub-menu collapse" id="accessories">
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">Bodysuits</a></li>
-                    <li><a href="#">Dresses</a></li>
-                    <li><a href="#">Hoodies &amp; Sweats</a></li>
-                    <li><a href="#">Jackets &amp; Coats</a></li>
-                    <li><a href="#">Jeans</a></li>
-                    <li><a href="#">Pants &amp; Leggings</a></li>
-                    <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                    <li><a href="#">Shirts &amp; Blouses</a></li>
-                    <li><a href="#">Shirts</a></li>
-                    <li><a href="#">Sweaters &amp; Knits</a></li>
-                  </ul>
-                </li>
               </ul>
             </div>
           </div>
+          <!-- FINE CATEGORIE -->
 
           <!-- ##### Single Widget ##### -->
           <div class="widget price mb-50">
-            <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Filter by</h6>
             <!-- Widget Title 2 -->
-            <p class="widget-title2 mb-30">Price</p>
+            <h6 class="widget-title mb-30">Price</h6>
 
             <div class="widget-desc">
               <div class="slider-range">
                 <div
-                  data-min="49"
-                  data-max="360"
+                  data-min="0"
+                  data-max="1000"
                   data-unit="$"
                   class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                  data-value-min="49"
-                  data-value-max="360"
+                  data-value-min="0"
+                  data-value-max="1000"
                   data-label-result="Range:"
                 >
                   <div
@@ -122,45 +75,41 @@
                     tabindex="0"
                   ></span>
                 </div>
-                <div class="range-price">Range: $49.00 - $360.00</div>
+                <div class="range-price">Range: 00.00 $- 1000.00 $</div>
               </div>
             </div>
           </div>
 
+          <!-- INIZIO COLORE -->          
           <!-- ##### Single Widget ##### -->
           <div class="widget color mb-50">
             <!-- Widget Title 2 -->
-            <p class="widget-title2 mb-30">Color</p>
+            <h6 class="widget-title mb-30">Color</h6>
             <div class="widget-desc">
               <ul class="d-flex">
-                <li><a href="#" class="color1"></a></li>
-                <li><a href="#" class="color2"></a></li>
-                <li><a href="#" class="color3"></a></li>
-                <li><a href="#" class="color4"></a></li>
-                <li><a href="#" class="color5"></a></li>
-                <li><a href="#" class="color6"></a></li>
-                <li><a href="#" class="color7"></a></li>
-                <li><a href="#" class="color8"></a></li>
-                <li><a href="#" class="color9"></a></li>
-                <li><a href="#" class="color10"></a></li>
+                <[foreach]>
+                <li><a href="#" class="color_shop" value=<[color_value]> name=<[color_name]>></a></li>
+               <[/foreach]>
+                
               </ul>
             </div>
           </div>
+          <!-- FINE COLORE -->
 
-          <!-- ##### Single Widget ##### -->
+          <!-- PRODUTTORE -->
+          <!-- ##### Single  Widget ##### -->
           <div class="widget brands mb-50">
             <!-- Widget Title 2 -->
-            <p class="widget-title2 mb-30">Brands</p>
+            <h6 class="widget-title mb-30">Brands</h6>
             <div class="widget-desc">
               <ul>
-                <li><a href="#">Asos</a></li>
-                <li><a href="#">Mango</a></li>
-                <li><a href="#">River Island</a></li>
-                <li><a href="#">Topshop</a></li>
-                <li><a href="#">Zara</a></li>
+                <[foreach]>
+                <li><a href="#" value=<[productor_value]>><[productor_name]></a></li>
+                <[/foreach]>
               </ul>
             </div>
           </div>
+          <!-- FINE PRODUTTORE -->
         </div>
       </div>
 

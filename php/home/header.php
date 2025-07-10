@@ -12,6 +12,7 @@ $factory = new DataLayer(new DB_Connection());
 $categoryDAO = $factory->getCategoryDAO();
 $sexDAO = $factory->getSexDAO();
 $cartDAO = $factory->getCartDAO();
+$notificationDAO = $factory->getNotifyDAO();
 
 $categories = $categoryDAO->getAllCategories();
 $sexes = $sexDAO->getAllSexs();
@@ -43,14 +44,19 @@ $userIsLogged = isset($_SESSION["auth"]);
 
 if ($userIsLogged) {
 
-
     $header_page->setContent("notification_page_link", "notifications_history.php");
     $header_page->setContent("profile_page_link", "profile.php");
     $header_page->setContent("cart_popup_page_link", "#");
 
     // Numero di articoli all'interno del carrello
     $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
-    $header_page->setContent("cart_item_size", $userIsLogged ? $cart->getSize() : "");
+    $header_page->setContent("cart_item_size", $cart->getSize() == 0 ?  "" : $cart->getSize());
+
+    $notifications = $notificationDAO->getNotificationsByUserId($_SESSION["id"], "NON_LETTA");
+    
+    $header_page->setContent("notification_size", count($notifications) == 0 ? "" : count($notifications) );
+
+
 } else {
 
     $query_string_builder = new QueryStringBuilder("login.php");
