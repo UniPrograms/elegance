@@ -1,0 +1,93 @@
+
+        <div class="shop_sidebar_area">
+          <!-- ##### Single Widget ##### -->
+          <div class="widget catagory mb-50">
+            <!-- Widget Title -->
+            <h6 class="widget-title mb-30">Catagories</h6>
+
+            <!--  Catagories  -->
+            <div class="catagories-menu">
+              <ul id="menu-content2" class="menu-content collapse show">
+                <!-- Single Item -->
+                <[foreach]>
+                <li data-toggle="collapse" data-target=<[data_target]>>
+                  <a href="#" style="font-weight:600; color:#1a1a1a; letter-spacing:0.5px; font-size:1em; text-transform:uppercase;" value=<[sex_id]>><[sex_name]></a>
+                  <ul class="sub-menu collapse show" id=<[data_id]>>
+                    <li><a href="#" style="font-weight:500; color:#444; font-size:0.98em;">All</a></li>
+                    <[foreach]>
+                    <li><a href="#" style="font-weight:500; color:#444; font-size:0.92em; letter-spacing:0.2px;"><[category_name::strformatter type="title" library="utility"]></a></li>
+                    <[/foreach]>
+                  </ul>
+                </li>
+                <[/foreach]>
+                <!-- Single Item -->
+              </ul>
+            </div>
+          </div>
+          <!-- FINE CATEGORIE -->
+
+          <!-- ##### Single Widget ##### -->
+          <div class="widget price mb-50">
+            <!-- Widget Title 2 -->
+            <h6 class="widget-title mb-30">Price</h6>
+
+            <div class="widget-desc">
+              <div class="slider-range">
+                <div
+                  data-min="0"
+                  data-max="1000"
+                  data-unit="$"
+                  class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                  data-value-min="0"
+                  data-value-max="1000"
+                  data-label-result="Range:"
+                >
+                  <div
+                    class="ui-slider-range ui-widget-header ui-corner-all"
+                  ></div>
+                  <span
+                    class="ui-slider-handle ui-state-default ui-corner-all"
+                    tabindex="0"
+                  ></span>
+                  <span
+                    class="ui-slider-handle ui-state-default ui-corner-all"
+                    tabindex="0"
+                  ></span>
+                </div>
+                <div class="range-price">Range: 00.00 $- 1000.00 $</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INIZIO COLORE -->          
+          <!-- ##### Single Widget ##### -->
+          <div class="widget color mb-50">
+            <!-- Widget Title 2 -->
+            <h6 class="widget-title mb-30">Color</h6>
+            <div class="widget-desc">
+              <ul class="d-flex">
+                <[foreach]>
+                <li><a href="#" class="color_shop" value=<[color_value]> name=<[color_name]>></a></li>
+               <[/foreach]>
+                
+              </ul>
+            </div>
+          </div>
+          <!-- FINE COLORE -->
+
+          <!-- PRODUTTORE -->
+          <!-- ##### Single  Widget ##### -->
+          <div class="widget brands mb-50">
+            <!-- Widget Title 2 -->
+            <h6 class="widget-title mb-30">Brands</h6>
+            <div class="widget-desc">
+              <ul>
+                <[foreach]>
+                <li><a href="#" value=<[productor_value]>><[productor_name]></a></li>
+                <[/foreach]>
+              </ul>
+            </div>
+          </div>
+          <!-- FINE PRODUTTORE -->
+        </div>
+   
