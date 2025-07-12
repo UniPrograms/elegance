@@ -43,7 +43,7 @@ class ProductDAO extends DAO{
         $this->stmtInsertProduct = $this->conn->prepare("INSERT INTO PRODOTTO (NOME, PREZZO, DESCRIZIONE, ID_PRODUTTORE, ID_CATEGORIA) VALUES (?, ?, ?, ?, ?);");
         $this->stmtUpdateProduct = $this->conn->prepare("UPDATE PRODOTTO SET NOME = ?, PREZZO = ?, DESCRIZIONE = ?, ID_PRODUTTORE = ?, ID_CATEGORIA = ? WHERE ID = ?;");
         $this->stmtDeleteProduct = $this->conn->prepare("DELETE FROM PRODOTTO WHERE ID = ?;");
-        $this->stmtGetProductFiltered = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
+        $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
                                                                                                                     (? IS NULL OR ID_COLORE = ?) AND
@@ -51,7 +51,7 @@ class ProductDAO extends DAO{
                                                                                                                     (? IS NULL OR ID_PRODUTTORE = ?) AND
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO >= ?) AND 
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO <= ?);");
-        $this->stmtGetProductFilteredInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
+        $this->stmtGetProductFilteredInRange = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
                                                                                                                     (? IS NULL OR ID_COLORE = ?) AND
@@ -223,7 +223,7 @@ class ProductDAO extends DAO{
     
     $result = [];
     while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $result[] = $this->createProduct($rs);
+        $result[] = $this->getProductById($rs["ID_PRODOTTO"]);
     }
     return $result;
 }

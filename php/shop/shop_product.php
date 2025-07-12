@@ -9,11 +9,9 @@ $productDAO = $factory->getProductDAO();
 
 
 // Calcolo della paginazione
-$current_page = isset($_REQUEST["page"]) ? $_REQUEST["page"] - 1 : 0; 
+$current_page = isset($_REQUEST["page"]) && $_REQUEST["page"] > 0 ? $_REQUEST["page"] : 0;
 $limit = 9; // Item che voglio vedere per ogni pagina (rimane costante)
 $offset = $current_page * $limit; // Da che punto partire con la paginazione
-
-
 
 
 // Controllo i filtri che sono stati passati
@@ -31,6 +29,40 @@ $max_price = isset($_GET["max_price"]) ? (float) $_GET["max_price"] : null;
 // Prendo i prodotti in base ai filtri passati
 $products = $productDAO->getProductFiltered($name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price, $limit, $offset);
 
+$buffer = "";
+foreach ($products as $product) {
 
+    $query_string_builder = new QueryStringBuilder("product.php");
+    $query_string_builder->add("product_id",$product->getId());
 
-?>
+    $buffer .= '<div class="col-12 col-sm-6 col-lg-4">';
+    $buffer .= '<div class="single-product-wrapper">';
+    $buffer .= '<div class="product-img">';
+    $buffer .= '<img src="'.$product->getCopertina().'" alt="" />';
+    $buffer .= '<img class="hover-img" src="'.$product->getCopertina().'" alt="" />';
+    $buffer .= '</div>';
+    $buffer .= '<div class="product-description">';
+    $buffer .= '<span>Non so che metterci</span>';
+    $buffer .= '<a href="'.$query_string_builder->build().'">';
+    $buffer .= '<h6>'.$product->getName().'</h6>';
+    $buffer .= '</a>';
+    $buffer .= '<p class="product-price">'.$product->getPrice().' $</p>';
+    $buffer .= '<div class="hover-content">';
+    $buffer .= '<div class="add-to-cart-btn">';
+    $buffer .= '<a href="#" class="btn essence-btn">Add to Cart</a>';
+    $buffer .= '</div>';
+    $buffer .= '</div>';
+    $buffer .= '</div>';
+    $buffer .= '</div>';
+    $buffer .= '</div>';
+}
+
+$shop_product_page->setContent("products_item",$buffer);
+
+$isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
+if ($isAjax) {
+    echo $shop_product_page->get();
+    exit;
+}
