@@ -9,6 +9,8 @@ class WishlistItemDAO extends DAO{
     private PDOStatement $stmtGetWishlistItemById;
     private PDOStatement $stmtGetAllWishlistItems;
     private PDOStatement $stmtGetWishlistItemByWishlist;
+    private PDOStatement $stmtArticleIsContained;
+    private PDOStatement $stmtProductIsContained;
     private PDOStatement $stmtInsertItem;
     private PDOStatement $stmtDeleteItem;
 
@@ -26,6 +28,8 @@ class WishlistItemDAO extends DAO{
         $this->stmtGetWishlistItemById = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI WHERE ID = ?;");
         $this->stmtGetAllWishlistItems = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI;");
         $this->stmtGetWishlistItemByWishlist = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI WHERE ID_LISTA_DESIDERI = ?;");
+        $this->stmtArticleIsContained = $this->conn->prepare("SELECT * FROM ITEM_LISTA_DESIDERI WHERE ID_LISTA_DESIDERI = ? AND ID_ARTICOLO = ?;");
+        $this->stmtArticleIsContained = $this->conn->prepare("SELECT * FROM LISTA_DESIDERI_COMPLETA WHERE ID_LISTA_DESIDERI = ? AND ID_PRODOTTO = ?;");
         $this->stmtInsertItem = $this->conn->prepare("INSERT INTO ITEM_LISTA_DESIDERI (ID_LISTA_DESIDERI, ID_ARTICOLO) VALUES(?,?);");
         $this->stmtDeleteItem = $this->conn->prepare("DELETE FROM ITEM_LISTA_DESIDERI WHERE ID = ?");
     }
@@ -80,6 +84,38 @@ class WishlistItemDAO extends DAO{
             $result[] = $this->createWishlistItem($rs);
         }
         return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function articleIsContainted(?int $article_id, ?int $wishlist_id): bool{
+        $this->stmtArticleIsContained->bindValue(1, $wishlist_id, PDO::PARAM_INT);
+        $this->stmtArticleIsContained->bindValue(2, $article_id, PDO::PARAM_INT);
+        $this->stmtArticleIsContained->execute();
+
+        $rs = $this->stmtArticleIsContained->fetch(PDO::FETCH_ASSOC);
+
+        return $rs !== false; // true se trovato, false altrimenti
+    }
+        /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function productIsContainted(?int $product_id, ?int $wishlist_id): bool{
+        $this->stmtProductIsContained->bindValue(1, $wishlist_id, PDO::PARAM_INT);
+        $this->stmtProductIsContained->bindValue(2, $product_id, PDO::PARAM_INT);
+        $this->stmtProductIsContained->execute();
+
+        $rs = $this->stmtProductIsContained->fetch(PDO::FETCH_ASSOC);
+
+        return $rs !== false; // true se trovato, false altrimenti
     }
     /**
      * 

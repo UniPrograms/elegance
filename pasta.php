@@ -6,11 +6,11 @@ require_once("include/db/DataLayer.php");
 $factory = new DataLayer(new DB_Connection());
 
 $productDAO = $factory->getProductDAO();
+$articleDAO = $factory->getArticleDAO();
+$wishlistItemDAO = $factory->getWishlistItemDAO();
 
 
-$donna = $productDAO->getProductPopularBySexId(1, 0, 8);
-$uomo = $productDAO->getProductPopularBySexId(2, 0, 8);
-$uomo = $productDAO->getProductPopular(0, 8);
 
-echo count($donna);
-echo count($uomo);
+$article = $articleDAO->getArticleByProductSizeColor(1,1,1);
+
+echo $wishlistItemDAO->itemIsContainted($article->getId(), 1) == 1;

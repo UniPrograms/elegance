@@ -8,6 +8,7 @@ class SizeDAO extends DAO {
 
     private PDOStatement $stmtGetSizeById;
     private PDOStatement $stmtGetAllSizes;
+    private PDOStatement $stmtGetAvailableSizeFromProductId;
 
 
 
@@ -22,10 +23,11 @@ class SizeDAO extends DAO {
     public function init(): void {
         $this->stmtGetSizeById = $this->conn->prepare("SELECT * FROM TAGLIA WHERE ID = ?;");
         $this->stmtGetAllSizes = $this->conn->prepare("SELECT * FROM TAGLIA;");
+        $this->stmtGetAvailableSizeFromProductId = $this->conn->prepare("SELECT DISTINCT ID_TAGLIA, TAGLIA FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ?;");
     }
 
 
-    // Statemetn
+    // Statement
 
     /**
      * 
@@ -49,6 +51,23 @@ class SizeDAO extends DAO {
      * 
      * 
      */
+    public function getAvailableSizeFromProductId(?int $product_id): array {
+        $this->stmtGetAvailableSizeFromProductId->bindValue(1, $product_id, PDO::PARAM_INT);
+        $this->stmtGetAvailableSizeFromProductId->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAvailableSizeFromProductId->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->getSizeById($rs["ID_TAGLIA"]);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
     public function getAllSizes(): array {
         $this->stmtGetAllSizes->execute();
         $result = [];
@@ -58,7 +77,6 @@ class SizeDAO extends DAO {
         }
         return $result;
     }
-
 
     // Metodi privati
 

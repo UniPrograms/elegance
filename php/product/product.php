@@ -31,21 +31,18 @@ $product_page->setContent("product_productor",$product->getProductor()->getName(
 $product_page->setContent("product_price",$product->getPrice());
 $product_page->setContent("product_description",$product->getDescription());
 
-// Bisogna inserire qui la prima imamgine da presentare, quindi la copertina
-//$product_page->setContent("product_copertina", $product->getCopertina());
 
 
-// Inserisco le taglie all'interno della select
-$sizes = $sizeDAO->getAllSizes();
+// Inserisco le taglie disponibili del prodotto all'interno della select
+$sizes = $sizeDAO->getAvailableSizeFromProductId($_GET["product_id"]);
 foreach($sizes as $size){
     $product_page->setContent("size",$size->getSize());
     $product_page->setContent("value_size", $size->getId());
 }
 
 
-
 // Inserisco i colori all'interno della select
-$colors = $colorDAO->getAllColors();
+$colors = $colorDAO->getAvailableColorFromProductId($_GET["product_id"]);
 foreach($colors as $color){
     $product_page->setContent("color",$color->getColor());
     $product_page->setContent("value_color", $color->getId());
@@ -53,11 +50,18 @@ foreach($colors as $color){
 
 
 
+// Bisogna inserire qui la prima imamgine da presentare, quindi la copertina
+//$product_page->setContent("product_copertina", $product->getCopertina());
+
 // Inserisco le immagini secondarie da alternare alla copertina
 $images = $imageDAO->getImageByProduct($product);
 foreach($images as $image){
     $product_page->setContent("product_image",$image->getPath());
 }
+
+
+
+
 
 
 ?>
