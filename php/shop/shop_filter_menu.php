@@ -19,6 +19,7 @@ foreach($sexDAO->getAllSexs() AS $sex){
     $shop_filter_menu_page->setContent("data_id", $sex->getId());
 
     foreach($categoryDAO->getAllCategories() as $category){
+        $shop_filter_menu_page->setContent("category_id", $category->getId());
         $shop_filter_menu_page->setContent("category_name", $category->getName());
     }
 }

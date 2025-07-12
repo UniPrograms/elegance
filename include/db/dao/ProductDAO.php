@@ -6,7 +6,6 @@ require_once("include/model/proxy/ProductProxy.php");
 class ProductDAO extends DAO{
 
 
-
     private PDOStatement $stmtGetProductById;
     private PDOStatement $stmtGetAllProducts;
     private PDOStatement $stmtGetProductByName;
@@ -18,6 +17,9 @@ class ProductDAO extends DAO{
     private PDOStatement $stmtGetProductFiltered;
     private PDOStatement $stmtGetProductFilteredInRange;
     private PDOStatement $stmtGetPopularProduct;
+    private PDOStatement $stmtGetPopularProductInRange;
+    private PDOStatement $stmtGetPopularProductBySex;
+    private PDOStatement $stmtGetPopularProductBySexInRange;
     private PDOStatement $stmtInsertProduct;
     private PDOStatement $stmtUpdateProduct;
     private PDOStatement $stmtDeleteProduct;
@@ -43,6 +45,10 @@ class ProductDAO extends DAO{
         $this->stmtInsertProduct = $this->conn->prepare("INSERT INTO PRODOTTO (NOME, PREZZO, DESCRIZIONE, ID_PRODUTTORE, ID_CATEGORIA) VALUES (?, ?, ?, ?, ?);");
         $this->stmtUpdateProduct = $this->conn->prepare("UPDATE PRODOTTO SET NOME = ?, PREZZO = ?, DESCRIZIONE = ?, ID_PRODUTTORE = ?, ID_CATEGORIA = ? WHERE ID = ?;");
         $this->stmtDeleteProduct = $this->conn->prepare("DELETE FROM PRODOTTO WHERE ID = ?;");
+        $this->stmtGetPopularProduct = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA;");
+        $this->stmtGetPopularProductInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA LIMIT ? OFFSET ?;");
+        $this->stmtGetPopularProductBySex= $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ?;");
+        $this->stmtGetPopularProductBySexInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ? LIMIT ? OFFSET ?;");
         $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
@@ -60,7 +66,7 @@ class ProductDAO extends DAO{
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO >= ?) AND 
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO <= ?) 
                                                                                                                     LIMIT ? OFFSET ?;");
-        //$this->stmtGetPopularProduct = $this->conn->prepare("");
+        
     }
 
 
@@ -165,6 +171,56 @@ class ProductDAO extends DAO{
     
         while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createProduct($rs);
+        }
+        return $result;
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getProductPopular(?int $offset = null, ?int $limit = null): array {
+        if ($limit !== null && $offset !== null) {
+            $stmt = $this->stmtGetPopularProductInRange;
+            $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+        } else {
+            $stmt = $this->stmtGetPopularProduct;
+        }
+    
+        $stmt->execute();
+        
+        $result = [];
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->getProductById($rs["ID"]);
+        }
+        return $result;
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getProductPopularBySexId(int $sex_id, ?int $offset = null, ?int $limit = null): array {
+        if ($limit !== null && $offset !== null) {
+            $stmt = $this->stmtGetPopularProductBySexInRange;
+            $stmt->bindValue(1, $sex_id, PDO::PARAM_INT);
+            $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+            $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+        } else {
+            $stmt = $this->stmtGetPopularProductBySex;
+            $stmt->bindValue(1, $sex_id, PDO::PARAM_INT);
+        }
+    
+        $stmt->execute();
+        
+        $result = [];
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->getProductById($rs["ID"]);
         }
         return $result;
     }
