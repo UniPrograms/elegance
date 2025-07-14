@@ -2,7 +2,7 @@
 // Database
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
-
+require_once("include/utility/AjaxResponse.php");
 require_once("include/model/WishlistItem.php");
 
 // Se la sessione non è attiva
@@ -36,7 +36,8 @@ if(isset($_REQUEST["move"])){
     
     if($new_cart_item != null){
        $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
-       echo $result ? "OK" : "NO";
+       $ajax_response =  $result ? new AjaxResponse("OK") : new AjaxResponse("NO");
+       echo $ajax_response->build();
        exit;
     }
 }
@@ -46,7 +47,8 @@ if(isset($_REQUEST["move"])){
 // Elimina un articolo dalla wishlist
 else if(isset($_REQUEST["delete"])){
     $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
-    echo $result ? "OK" : "NO";
+    $ajax_response =  $result ? new AjaxResponse("OK") : new AjaxResponse("NO");
+    echo $ajax_response->build();
     exit;
 }
 

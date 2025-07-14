@@ -52,13 +52,11 @@ foreach($wishlist_items as $item){
     $wishlist_page->setContent("product_link",$query_string_builder->build());
 
     // Consente di settare la query string per eliminare un prodotto dalla wishlist
-    $wishlist_page->setContent("delete_ref", "wishlist_operation.php");
-    $wishlist_page->setContent("optional_param_delete", "delete");
+    $wishlist_page->setContent("operation_type_delete", "delete");
     $wishlist_page->setContent("value_article_delete", $item->getId());
 
     // Consente di spostare un prodotto dalla wishlist al carrello
-    $wishlist_page->setContent("move_ref","wishlist_operation.php");
-    $wishlist_page->setContent("optional_param_move", "move");
+    $wishlist_page->setContent("operation_type_move", "move");
     $wishlist_page->setContent("value_article_move",$item->getId());
     
     
