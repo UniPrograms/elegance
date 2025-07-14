@@ -31,6 +31,9 @@ $product_page->setContent("product_productor",$product->getProductor()->getName(
 $product_page->setContent("product_price",$product->getPrice());
 $product_page->setContent("product_description",$product->getDescription());
 
+// Inserisco l'id del prodotto per il campo nascosto
+$product_page->setContent("product_id_to_store",$product->getId());
+
 
 
 // Inserisco le taglie disponibili del prodotto all'interno della select
@@ -47,6 +50,10 @@ foreach($colors as $color){
     $product_page->setContent("color",$color->getColor());
     $product_page->setContent("value_color", $color->getId());
 }
+
+
+
+
 
 
 

@@ -51,13 +51,31 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Si è verificato un errore sconosciuto.');
           }
         } else if (data.status === 'OK') {
+          // Aggiorna badge header
+          var headerBadge = document.querySelector('#essenceCartBt span');
+          if (headerBadge && data.counter !== undefined) {
+            headerBadge.textContent = data.counter;
+          }
+          // Aggiorna numero articoli nella pagina carrello
+          var cartTotal = document.querySelector('.cart-summary .list-group-item span');
+          if (cartTotal && data.counter !== undefined) {
+            cartTotal.textContent = data.counter;
+          }
+          // Aggiorna prezzo totale se presente nella risposta (opzionale)
+          if (data.total_price !== undefined) {
+            var priceSpan = document.querySelector('.cart-summary .font-weight-bold');
+            if (priceSpan) priceSpan.textContent = data.total_price + ' $';
+          }
+          // Se il carrello è vuoto, reindirizza a cart.php
+          if (data.counter == 0) {
+            window.location.href = 'cart.php';
+            return;
+          }
           var row = btn.closest('tr');
           if (row) {
             row.style.transition = 'opacity 0.5s';
             row.style.opacity = 0;
-            setTimeout(function() { row.remove(); updateCartInfo(); }, 500);
-          } else {
-            updateCartInfo();
+            setTimeout(function() { row.remove(); }, 500);
           }
         } else {
           alert('Risposta inattesa dal server.');

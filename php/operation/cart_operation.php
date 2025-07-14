@@ -24,7 +24,7 @@ $articleDAO = $factory->getArticleDAO();
 if(isset($_REQUEST["store"])){
         
     // Se non è stato l'id di un articolo
-    if(!isset($_REQUEST["article_id"])){
+    if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
         $ajax_response = new AjaxResponse("ERROR");
         $ajax_response->add("title_message","Errore del server");
         $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
@@ -34,7 +34,7 @@ if(isset($_REQUEST["store"])){
 
     // Costruisco il nuovo item
     $new_cart_item = new CartItem();
-    $new_cart_item->setArticle($articleDAO->getArticleById($_REQUEST["article_id"]));
+    $new_cart_item->setArticle($articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"] ));
     $new_cart_item->setCart($cartDAO->getCartByUserId($_SESSION["id"]));
 
     $new_cart_item = $cartItemDAO->storeItem($new_cart_item); // Lo inserisco nel db
@@ -48,10 +48,19 @@ if(isset($_REQUEST["store"])){
         exit;
     }
 
+    $query_string_builder = new QueryStringBuilder("product.php");
+    $query_string_builder->add("product_id", $_REQUEST["product_id"]);
+    header("Location: ". $query_string_builder->build());
+
+    /*
+    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
+    
     $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("counter", (string)$cart->getSize());
+    $ajax_response->add("total_price", (string)$cart->getPrice());
     echo $ajax_response->build();
     exit;
-
+    */
 }
 
 
@@ -72,7 +81,10 @@ else if(isset($_REQUEST["delete"])){
 
     // Se è andata a buon fine
     if($result = $cartItemDAO->deleteItem($current_cart_item)){
+        $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
         $ajax_response = new AjaxResponse("OK");
+        $ajax_response->add("counter", (string)$cart->getSize());
+        $ajax_response->add("total_price", (string)$cart->getPrice());
     }
     else{   // Se l'operazione non è andata a buon fine
         $ajax_response = new AjaxResponse("ERROR");

@@ -15,21 +15,31 @@
     <a href="#">
       <h2><[product_name]></h2>
     </a>
+
     <p class="product-price"><[product_price]> $</p>
+
+    <!-- Messaggio prodotto terminato (statico, da rendere dinamico in seguito) -->
+    <div class="alert alert-danger font-weight-bold product-ended-alert">
+      Prodotto terminato
+    </div>
+
     <p class="product-desc">
       <[product_description]>
     </p>
 
     <!-- Form -->
-    <form class="cart-form clearfix" method="post">
+    <form class="cart-form clearfix" method="post" action="cart_operation.php">
+      <!-- Hidden fields -->
+      <input type="hidden" name="store" value="1">
+      <input type="hidden" name="product_id" value=<[product_id_to_store]>>
       <!-- Select Box -->
       <div class="select-box d-flex mt-50 mb-30">
-        <select name="select" id="productSize" class="mr-5">
+        <select name="size_id" id="productSize" class="mr-5" required>
           <[foreach]>
           <option value=<[value_size]>>Size: <[size]></option>
           <[/foreach]>
         </select>
-        <select name="select" id="productColor">
+        <select name="color_id" id="productColor" required>
           <[foreach]>
           <option value=<[value_color]>>Color: <[color]></option>
           <[/foreach]>
@@ -38,12 +48,12 @@
       <!-- Cart & Favourite Box -->
       <div class="cart-fav-box d-flex align-items-center">
         <!-- Cart -->
-        <button type="submit" name="addtocart" value="5" class="btn essence-btn">
+        <button type="submit" class="btn essence-btn">
           Add to cart
         </button>
         <!-- Favourite -->
         <div class="product-favourite ml-4">
-          <a href="#" class="favme fa fa-heart"></a>
+          <a href="" class="favme fa fa-heart"></a>
         </div>
       </div>
     </form>
