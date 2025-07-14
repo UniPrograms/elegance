@@ -44,10 +44,15 @@ foreach($cart_items as $item){
 
     $cart_page->setContent("product_image",$product->getCopertina());
     $cart_page->setContent("product_name",$product->getName());
+    $cart_page->setContent("color_name",$article->getColor()->getColor());
     $cart_page->setContent("product_brand",$product->getProductor()->getName());
     $cart_page->setContent("product_size",$article->getSize()->getSize());
     $cart_page->setContent("product_color",$article->getColor()->getColor());
     $cart_page->setContent("product_price",$product->getPrice());
+
+    $query_string_builder = new QueryStringBuilder("product.php");
+    $query_string_builder->add("product_id", $product->getId());
+    $cart_page->setContent("product_link", $query_string_builder->build());
 }
 
 
