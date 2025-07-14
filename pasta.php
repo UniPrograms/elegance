@@ -7,7 +7,3 @@ $factory = new DataLayer(new DB_Connection());
 
 $cartDAO = $factory->getCartDAO();
 
-$cart = $cartDAO->getCartByUserId(1);
-
-
-echo count($cart->getCartItem());

@@ -1,0 +1,37 @@
+<?php
+
+
+class AjaxResponse {
+ 
+    private string $status;
+    private array $params = [];
+
+     public function __construct(string $status){
+        $this->status = strtoupper($status); 
+    }
+
+    public function add(string $key, mixed $value){
+        $this->params[strtolower($key)] = $value;
+    }
+
+    public function addEncode(string $key, mixed $value){
+        $this->params[strtolower($key)] = base64_encode($value);
+    }
+
+    public function build(): string{
+        $this->add("status",$this->status);
+        return json_encode($this->params);
+    }
+
+    public function cleanParams(): void{
+        $this->params = [];
+    }
+
+    public function refresh(string $status){
+        $this->status = strtoupper($status); 
+        $this->cleanParams();
+    }
+}
+
+
+?>

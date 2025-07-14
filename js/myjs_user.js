@@ -1,3 +1,74 @@
+// Funzione modulare per aggiornare il carrello (numero item e prezzo)
+function updateCartInfo() {
+  fetch('cart_operation.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'count=1'
+  })
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    if (data.status === 'OK') {
+      // Aggiorna badge header
+      var headerBadge = document.querySelector('#essenceCartBt span');
+      if (headerBadge && data.counter !== undefined) {
+        headerBadge.textContent = data.counter;
+      }
+      // Aggiorna numero articoli nella pagina carrello
+      var cartTotal = document.querySelector('.cart-summary .list-group-item span');
+      if (cartTotal && data.counter !== undefined) {
+        cartTotal.textContent = data.counter;
+      }
+      // Aggiorna prezzo totale se presente nella risposta (opzionale)
+      if (data.total_price !== undefined) {
+        var priceSpan = document.querySelector('.cart-summary .font-weight-bold');
+        if (priceSpan) priceSpan.textContent = data.total_price + ' $';
+      }
+      // Se il carrello è vuoto, reindirizza a cart.php
+      if (data.counter == 0) {
+        window.location.href = 'cart.php';
+      }
+    }
+  });
+}
+// Gestione rimozione articolo dal carrello
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.remove-cart-item').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var cartItemId = btn.value;
+      if (!cartItemId) return;
+      fetch('cart_operation.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'delete=1&cart_item_id=' + encodeURIComponent(cartItemId)
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(data) {
+        if (data.status === 'ERROR') {
+          if (data.title_message && data.text_message) {
+            alert(data.title_message + '\n' + data.text_message);
+          } else {
+            alert('Si è verificato un errore sconosciuto.');
+          }
+        } else if (data.status === 'OK') {
+          var row = btn.closest('tr');
+          if (row) {
+            row.style.transition = 'opacity 0.5s';
+            row.style.opacity = 0;
+            setTimeout(function() { row.remove(); updateCartInfo(); }, 500);
+          } else {
+            updateCartInfo();
+          }
+        } else {
+          alert('Risposta inattesa dal server.');
+        }
+      })
+      .catch(function() {
+        alert('Si è verificato un errore di comunicazione con il server.');
+      });
+    });
+  });
+});
 // Gestione apertura/chiusura menu categorie in base a category_id da URL
 document.addEventListener('DOMContentLoaded', function() {
   // Funzione per ottenere il parametro category_id dalla query string
