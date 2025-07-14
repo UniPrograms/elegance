@@ -16,6 +16,7 @@ $factory = new DataLayer(new DB_Connection());
 $categoryDAO =  $factory->getCategoryDAO();
 $productDAO = $factory->getProductDAO();
 $sexDAO = $factory->getSexDAO();
+$productorDAO = $factory->getProductorDAO();
 
 // Id delle categorie
 $query_string_builder = new QueryStringBuilder("shop.php");
@@ -29,6 +30,13 @@ $body_page->setContent("shoes_link", $query_string_builder->build());
 $query_string_builder->cleanParams();
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("ACCESSORIES")->getId());
 $body_page->setContent("shoes_link", $query_string_builder->build());
+
+
+// Lodo dei brand (Produttori)
+$brands = $productorDAO->getAllProductores(6,0);
+foreach($brands as $brand){
+    $body_page->setContent("brand_image", $brand->getLogo());
+}
 
 
 // Slider con i vestiti più venduti

@@ -46,7 +46,7 @@ if ($userIsLogged) {
 
     $header_page->setContent("notification_page_link", "notifications_history.php");
     $header_page->setContent("profile_page_link", "profile.php");
-    $header_page->setContent("cart_popup_page_link", "#");
+    $header_page->setContent("cart_popup_page_link", "cart.php");
 
     // Numero di articoli all'interno del carrello
     $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
@@ -57,7 +57,7 @@ if ($userIsLogged) {
     $header_page->setContent("notification_size", count($notifications) == 0 ? "" : count($notifications) );
 
 
-} else {
+} else { // Nel caso fosse stato fatto il login
 
     $query_string_builder = new QueryStringBuilder("login.php");
 
@@ -69,6 +69,6 @@ if ($userIsLogged) {
     $header_page->setContent("profile_page_link", $query_string_builder->build());
 
     $query_string_builder->cleanParams();
-    $query_string_builder->addEncoded("reference", "index.php");
+    $query_string_builder->addEncoded("reference", "cart.php");
     $header_page->setContent("cart_popup_page_link",  $query_string_builder->build());
 }

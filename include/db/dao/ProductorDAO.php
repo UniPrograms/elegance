@@ -8,6 +8,7 @@ class ProductorDAO extends DAO {
     // Prepared Statement
     private PDOStatement $stmtGetProductorById;
     private PDOStatement $stmtGetAllProductores;
+    private PDOStatement $stmtGetAllProductoresInRange;
     private PDOStatement $stmtGetProductorByName;
     private PDOStatement $stmtInsertProductor;
     private PDOStatement $stmtUpdateProductor;
@@ -25,6 +26,7 @@ class ProductorDAO extends DAO {
     public function init(): void {
         $this->stmtGetProductorById = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE ID = ?;");
         $this->stmtGetAllProductores = $this->conn->prepare("SELECT * FROM PRODUTTORE;");
+        $this->stmtGetAllProductoresInRange = $this->conn->prepare("SELECT * FROM PRODUTTORE LIMIT ? OFFSET ?;");
         $this->stmtGetProductorByName = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NAME LIKE ?;");
         $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME) VALUES (?);");
         $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ? WHERE ID = ?;");
@@ -56,11 +58,20 @@ class ProductorDAO extends DAO {
      * 
      * 
      */
-    public function getAllProductores(): array {
-        $this->stmtGetAllProductores->execute();
-        $result = [];
+    public function getAllProductores(?int $limit = null, ?int $offset = null): array {
+        if($limit !== null && $offset !== null){
+            $stmt = $this->stmtGetAllProductoresInRange;
+            $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);   
+        }
+        else{
+            $stmt = $this->stmtGetAllProductores;
+        }
+        
+        $stmt->execute();
 
-        while ($rs = $this->stmtGetAllProductores->fetch(PDO::FETCH_ASSOC)) {
+        $result = [];
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $this->createProductor($rs);
         }
         return $result;
@@ -116,6 +127,7 @@ class ProductorDAO extends DAO {
         $productor = new ProductorProxy($this->dataLayer);
         $productor->setId($rs['ID']);
         $productor->setName($rs['NOME']);
+        $productor->setLogo($rs['LOGO_URL']);
         return $productor;
     }
 

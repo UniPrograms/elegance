@@ -24,6 +24,15 @@ $wishlist = $wishlistDAO->getWishlistByUserId($_SESSION["id"]);
 $wishlist_items = $wishlistItemDAO->getWishlistItemByWishlist($wishlist);
 
 
+if(count($wishlist_items) == 0){
+    $query_string_builder = new QueryStringBuilder("empty_collection.php");
+    $query_string_builder->addEncoded("title_message", "Wishlist vuota.");
+    $query_string_builder->addEncoded("text_message", "Non hai ancora inserito nessun prodotto!");
+    header("Location: " . $query_string_builder->build());
+    exit;
+}
+
+
 foreach($wishlist_items as $item){
     $article = $item->getArticle();
     $product = $article->getProduct();
@@ -31,7 +40,11 @@ foreach($wishlist_items as $item){
     // Dati del prodotto
     $wishlist_page->setContent("product_copertina",$product->getCopertina());
     $wishlist_page->setContent("product_name",$product->getName());
-    $wishlist_page->setContent("product_category", $product->getCategory()->getName());
+    $wishlist_page->setContent("product_brand", $product->getProductor()->getName());
+    $wishlist_page->setContent("product_size", $article->getSize()->getSize());
+    $wishlist_page->setContent("product_color", $article->getColor()->getColor());
+    $wishlist_page->setContent("product_price", $product->getPrice());
+    
 
     // Consente di andare alla pagina specifica del prodotto
     $query_string_builder = new QueryStringBuilder("product.php");

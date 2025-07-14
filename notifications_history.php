@@ -10,7 +10,6 @@ require_once("include/db/DataLayer.php");
 
 // Page
 require "php/home/header.php";
-require "php/home/cart_popup.php";
 require "php/home/footer.php";
 require "php/notification/notifications_history.php";
 
@@ -19,7 +18,6 @@ require "php/notification/notifications_history.php";
 $homepage = new Template("skin/index.html");
 
 $homepage->setContent("header",$header_page->get());
-$homepage->setContent("cart_popup",$cart_popup_page->get());
 $homepage->setContent("footer", $footer_page->get());
 $homepage->setContent("body",$notification_history_page->get());
 

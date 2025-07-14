@@ -1,6 +1,7 @@
 <?php 
 session_start();
 
+
 // Templating
 require_once("include/template2.inc.php");
 
@@ -11,7 +12,7 @@ require_once("include/db/DataLayer.php");
 // Page
 require "php/home/header.php";
 require "php/home/footer.php";
-require "php/profile/order_history.php";
+require "php/generics/empty_collection.php";
 
 
 
@@ -19,7 +20,7 @@ $homepage = new Template("skin/index.html");
 
 $homepage->setContent("header",$header_page->get());
 $homepage->setContent("footer", $footer_page->get());
-$homepage->setContent("body",$order_history_page->get());
+$homepage->setContent("body",$empty_collection_page->get());
 
 
 $homepage->close();

@@ -11,7 +11,6 @@ require_once("include/db/DataLayer.php");
 
 // Page
 require "php/home/header.php";
-require "php/home/cart_popup.php";
 require "php/home/footer.php";
 require "php/contact/contact.php";
 
@@ -20,9 +19,8 @@ require "php/contact/contact.php";
 $homepage = new Template("skin/index.html");
 
 $homepage->setContent("header",$header_page->get());
-$homepage->setContent("cart_popup",$cart_popup_page->get());
 $homepage->setContent("footer", $footer_page->get());
-$homepage->setContent("body",$contact->get());
+$homepage->setContent("body",$contact_page->get());
 
 
 $homepage->close();

@@ -5,12 +5,9 @@ require_once("include/db/DataLayer.php");
 
 $factory = new DataLayer(new DB_Connection());
 
-$productDAO = $factory->getProductDAO();
-$articleDAO = $factory->getArticleDAO();
-$wishlistItemDAO = $factory->getWishlistItemDAO();
+$cartDAO = $factory->getCartDAO();
+
+$cart = $cartDAO->getCartByUserId(1);
 
 
-
-$article = $articleDAO->getArticleByProductSizeColor(1,1,1);
-
-echo $wishlistItemDAO->itemIsContainted($article->getId(), 1) == 1;
+echo count($cart->getCartItem());

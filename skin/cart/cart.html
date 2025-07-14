@@ -1,0 +1,61 @@
+<!-- ##### Cart Items Page Start ##### -->
+<section class="cart_area section-padding-80">
+  <div class="container">
+    <div class="row">
+      <!-- Cart Items List -->
+      <div class="col-12 col-lg-8 mb-4 mb-lg-0">
+        <div class="cart-table cart-table-scroll clearfix">
+          <table class="table table-responsive mb-0 w-100">
+            <thead>
+              <tr>
+                <th style="width: 80px;"></th>
+                <th style="width: 32%; min-width: 180px;">Product</th>
+                <th style="width: 10%; min-width: 60px;">Size</th>
+                <th style="width: 58%;">Color / Price / Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+                <!-- Riga della tabella -->
+                 <[foreach]>
+              <tr>
+                <td class="align-middle cart-img-col"> <img src=<[product_image]> alt="img" class="img-fluid rounded cart-img"></td>
+                <td class="align-middle"><[product_name::strformatter type="title" library="utility"]></td>
+                <td class="align-middle"><[product_size]></td>
+                <td class="align-middle" colspan="3">
+                  <div class="cart-flex-row">
+                    <span class="cart-color-flex">
+                      <span class="cart-color-box" style="background:#222;"></span>
+                      <span class="cart-color-name"><[product_color::strformatter type="capitalize" library="utility"]></span>
+                    </span>
+                    <span class="cart-price"><[product_price]> $</span>
+                    <button class="btn btn-sm btn-danger remove-cart-item" title="Rimuovi"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+               <!-- Fine Riga della tabella -->
+              <[/foreach]>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Cart Summary -->
+      <div class="col-12 col-lg-4">
+        <div class="cart-summary card shadow-sm border-0 rounded-4 p-4">
+          <h5 class="mb-3">Cart Summary</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              Total Articles
+              <span><[total_article]></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              Total Price
+              <span class="font-weight-bold"><[total_price]> $</span>
+            </li>
+          </ul>
+          <a href="checkout.php" class="btn essence-btn btn-block">Procedi al Checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ##### Cart Items Page End ##### -->

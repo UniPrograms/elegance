@@ -7,7 +7,7 @@ require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
 
 
-// Se non Ã¨ stato fatto il login
+// Se non è stato fatto il login
 if(!isset($_SESSION['auth'])) {
     header("Location: login.php");
     exit;
@@ -23,6 +23,15 @@ $notificationDAO = $factory->getNotifyDAO();
 $notification_history_page = new Template("skin/notification/notifications_history.html");
 
 $notifications = $notificationDAO->getNotificationsByUserId($_SESSION["id"]);
+
+if(count($notifications) == 0){
+    $query_string_builder = new QueryStringBuilder("empty_collection.php");
+    $query_string_builder->addEncoded("title_message", "Nessuna notifica.");
+    $query_string_builder->addEncoded("text_message", "Non hai ancora ricevuto/a nessuna notifica!");
+    header("Location: " . $query_string_builder->build());
+    exit;
+}
+
 
 foreach($notifications as $notification){
 

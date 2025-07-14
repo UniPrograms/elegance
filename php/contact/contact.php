@@ -1,5 +1,5 @@
 <?php
 
-$contact = new Template("skin/contact/contact.html");
+$contact_page = new Template("skin/contact/contact.html");
 
 ?>

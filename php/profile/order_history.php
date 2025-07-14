@@ -24,6 +24,16 @@ $order_history_page = new Template("skin/profile/order_history.html");
 
 $orders = $orderDAO->getOrderByUserId($_SESSION["id"]);
 
+
+if(count($orders) == 0){
+    $query_string_builder = new QueryStringBuilder("empty_collection.php");
+    $query_string_builder->addEncoded("title_message", "Cronologia vuota.");
+    $query_string_builder->addEncoded("text_message", "Non hai ancora effettuato nessun ordine!");
+    header("Location: " . $query_string_builder->build());
+    exit;
+}
+
+
 foreach($orders as $order){
 
     $order_history_page->setContent("order_id",$order->getId());
