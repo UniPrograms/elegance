@@ -44,6 +44,7 @@ foreach($cart_items as $item){
 
     $cart_page->setContent("product_image",$product->getCopertina());
     $cart_page->setContent("product_name",$product->getName());
+    $cart_page->setContent("product_brand",$product->getProductor()->getName());
     $cart_page->setContent("product_size",$article->getSize()->getSize());
     $cart_page->setContent("product_color",$article->getColor()->getColor());
     $cart_page->setContent("product_price",$product->getPrice());
