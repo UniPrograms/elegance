@@ -9,10 +9,10 @@
               <tr>
                 <th style="width: 80px"></th>
                 <th style="width: 36%">Product</th>
-                <th style="width: 12%">Size</th>
-                <th style="width: 12%">Color</th>
-                <th style="width: 12%">Price</th>
-                <th style="width: 12%">Azioni</th>
+                <th class="text-center" style="width: 12%">Size</th>
+                <th class="text-center" style="width: 12%">Color</th>
+                <th class="text-center" style="width: 12%">Price</th>
+                <th class="text-center" style="width: 12%">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -28,25 +28,25 @@
                   <div class="product-category small text-muted mt-1">Category: <[product_category]></div>
                 </td>
                 <!-- Size -->
-                <td class="align-middle"><[product_size]></td>
+                <td class="align-middle text-center"><[product_size]></td>
                 <!-- Color -->
-                <td class="align-middle">
-                  <div class="wishlist-color-box d-flex align-items-center" style="min-width:80px;">
+                <td class="align-middle text-center">
+                  <div class="wishlist-color-box d-inline-flex align-items-center justify-content-center wishlist-color-box-min">
                     <span class="cart-color-box" style="background:<[product_color_code]>;"></span>
                     <span class="cart-color-name ml-2"><[product_color]></span>
                   </div>
                 </td>
                 <!-- Price -->
-                <td class="align-middle">
-                  <div class="wishlist-price text-center" style="min-width:80px; font-weight:600;">€ <[product_price]></div>
+                <td class="align-middle text-center">
+                  <div class="wishlist-price wishlist-price-min">€ <[product_price]></div>
                 </td>
-                <!-- Azioni -->
-                <td class="align-middle">
-                  <div class="wishlist-actions d-flex align-items-center" style="min-width:100px; gap:0;">
-                    <button class="btn wishlist-add-btn btn-success d-flex align-items-center justify-content-center" style="min-width: 44px; height: 38px; border-radius: 12px; padding: 0 12px; margin-right:2px;" pageref="<[move_ref]>" optional="<[optional_param_move]>" value="<[value_article_move]>" title="Aggiungi al carrello">
+                <!-- Actions -->
+                <td class="align-middle text-center">
+                  <div class="wishlist-actions d-inline-flex align-items-center justify-content-center wishlist-actions-min">
+                    <button class="btn wishlist-add-btn btn-primary d-flex align-items-center justify-content-center wishlist-btn-min" pageref="<[move_ref]>" optional="<[optional_param_move]>" value="<[value_article_move]>" title="Aggiungi al carrello">
                       <i class="fa fa-shopping-cart"></i>
                     </button>
-                    <button class="btn wishlist-remove-btn btn-danger d-flex align-items-center justify-content-center" style="min-width: 44px; height: 38px; border-radius: 12px; padding: 0 12px; margin-left:2px;" pageref="<[delete_ref]>" optional="<[optional_param_delete]>" value="<[value_article_delete]>" title="Rimuovi dalla wishlist">
+                    <button class="btn wishlist-remove-btn btn-danger d-flex align-items-center justify-content-center wishlist-btn-min" pageref="<[delete_ref]>" optional="<[optional_param_delete]>" value="<[value_article_delete]>" title="Rimuovi dalla wishlist">
                       <i class="fa fa-trash"></i>
                     </button>
                   </div>
