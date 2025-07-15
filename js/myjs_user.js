@@ -1,3 +1,23 @@
+
+/*
+// Switch colore cuore wishlist (product.html)
+document.addEventListener('DOMContentLoaded', function() {
+  var favHeart = document.getElementById('add-to-wishlist');
+  if (favHeart) {
+    favHeart.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (favHeart.classList.contains('heart-grey')) {
+        favHeart.classList.remove('heart-grey');
+        favHeart.classList.add('heart-red');
+      } else {
+        favHeart.classList.remove('heart-red');
+        favHeart.classList.add('heart-grey');
+      }
+    });
+  }
+});
+*/
+
 // Funzione per mostrare alert su click "Sposta nel carrello" dalla wishlist
 document.addEventListener('DOMContentLoaded', function() {
   // Selettore per tutti i bottoni "Sposta nel carrello" dalla wishlist
@@ -524,7 +544,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (favHeart) {
     favHeart.addEventListener('click', function(event) {
       event.preventDefault();
-      
+ 
+      var operation = this.className == 'heart-grey' ? "store" : "delete";
+      alert("Errore: " + response.text_message);
       const productId = document.querySelector('input[name="product_id"]').value;
       const sizeSelect = document.getElementById('productSize');
       const sizeId = sizeSelect ? sizeSelect.value : null;
@@ -535,17 +557,16 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "POST",
         url: "wishlist_operation.php",
         data: {
-          store: 1,
-          product_id: productId,
-          size_id: sizeId,
-          color_id: colorId,
+          "operation": operation,
+          "product_id": productId,
+          "size_id": sizeId,
+          "color_id": colorId,
         },
         dataType: "json",
       }).done(function (response) {  
-
+        // Non cambiare mai la classe o il colore del cuore
         if(response.status == "OK"){
-          // Devo inserire il codice che, mi permette 
-          // di cambiare il colore al cuore
+          alert(this.className);
         }
         else{
           alert("Errore: " + response.text_message);

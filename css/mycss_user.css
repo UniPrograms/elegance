@@ -1,3 +1,14 @@
+/* Stili cuore wishlist (product.html) */
+.heart-grey {
+  color: #ccc !important;
+  transition: color 0.2s;
+  font-size: 32px !important;
+}
+.heart-red {
+  color: #dc0345 !important;
+  transition: color 0.2s;
+  font-size: 32px !important;
+}
 /* Messaggio prodotto terminato (product.html) */
 .product-ended-alert {
   font-size: 1.2rem;
