@@ -1,5 +1,2 @@
-NOTA IMPORTANTE: quando devi ricreare il db, devi far andare prima tutto schema. 
-                 Poi fai andare tutti i trigger tranne l'ultimo.
-                 Poi fai andare tutti i data.
-                 Poi fai andare l'ultimo trigger creato.
-        
+Bisogna cambiare il metodo di invio del tipo di operazione all'interno dei file operation.
+Bisogna inviare Operation = "tipo operazione"
