@@ -1,3 +1,105 @@
+// Funzione per mostrare alert su click "Sposta nel carrello" dalla wishlist
+document.addEventListener('DOMContentLoaded', function() {
+  // Selettore per tutti i bottoni "Sposta nel carrello" dalla wishlist
+  document.querySelectorAll('.move-to-cart-item').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var itemId = this.getAttribute("value");
+
+      $.ajax({
+        type: "POST",
+        url: "wishlist_operation.php",
+        data: {
+          "item_id": itemId,
+          "move": 1,
+        },
+        dataType: "json",
+      }).done(function(response){
+
+          if(response.status == "OK"){
+            var cart_size = response.cart_item_size;
+            var wishlist_size = response.wishlist_item_size;
+            
+            if(wishlist_size <= 0){
+              window.location.href = "wishlist.php";
+              return;
+            }
+            else{
+              // Aggiorna il badge del carrello nell'header
+              var headerBadge = document.querySelector('#essenceCartBt span');
+              if(headerBadge && typeof cart_size !== "undefined") {
+                headerBadge.textContent = cart_size;
+              }
+              // Fai scomparire lentamente la riga dell'item
+              var row = btn.closest('tr');
+              if(row) {
+                row.style.transition = 'opacity 0.5s';
+                row.style.opacity = 0;
+                setTimeout(function() {
+                  row.remove();
+                }, 500);
+              }
+            }
+
+          }
+          else{
+            alert("Errore: " + response.text_message);
+          }
+      });
+    });
+  });
+
+  // Selettore per tutti i bottoni "Rimuovi dalla wishlist"
+  document.querySelectorAll('.remove-wishlist-item').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var itemId = this.getAttribute("value");
+
+      $.ajax({
+        type: "POST",
+        url: "wishlist_operation.php",
+        data: {
+          "item_id": itemId,
+          "delete": 1,
+        },
+        dataType: "json",
+      }).done(function(response){
+
+          if(response.status == "OK"){
+            var cart_size = response.cart_item_size;
+            var wishlist_size = response.wishlist_item_size;
+            
+            if(wishlist_size <= 0){
+              window.location.href = "wishlist.php";
+              return;
+            }
+            else{
+              // Aggiorna il badge del carrello nell'header
+              var headerBadge = document.querySelector('#essenceCartBt span');
+              if(headerBadge && typeof cart_size !== "undefined") {
+                headerBadge.textContent = cart_size;
+              }
+              // Fai scomparire lentamente la riga dell'item
+              var row = btn.closest('tr');
+              if(row) {
+                row.style.transition = 'opacity 0.5s';
+                row.style.opacity = 0;
+                setTimeout(function() {
+                  row.remove();
+                }, 500);
+              }
+            }
+
+          }
+          else{
+            alert("Errore: " + response.text_message);
+          }
+      });
+    });
+  });
+});
+
+
+
+
 // Gestione rimozione articolo dal carrello
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.remove-cart-item').forEach(function(btn) {
@@ -55,6 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
+
 // Gestione apertura/chiusura menu categorie in base a category_id da URL
 document.addEventListener('DOMContentLoaded', function() {
   // Funzione per ottenere il parametro category_id dalla query string

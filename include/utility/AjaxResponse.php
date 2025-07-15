@@ -18,7 +18,7 @@ class AjaxResponse {
         $this->params[strtolower($key)] = base64_encode($value);
     }
 
-    public function build(): string{
+    public function build(){
         $this->add("status",$this->status);
         return json_encode($this->params);
     }

@@ -23,7 +23,7 @@ $articleDAO = $factory->getArticleDAO();
 
 // Sposto un articolo dalla wishlist al carrello
 if(isset($_REQUEST["move"])){
-    
+
     header("Content-Type: application/json;");
     // WishlistItem corrente
     $item = $wishlistItemDAO->getWishlistItemById($_REQUEST["item_id"]);
@@ -42,6 +42,7 @@ if(isset($_REQUEST["move"])){
         if($result){
             $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
             $wishlist = $wishlistDAO->getWishlistByUserId($_SESSION["id"]);
+            
             $ajax_response = new AjaxResponse("OK");
             $ajax_response->add("cart_item_size", $cart->getSize());
             $ajax_response->add("wishlist_item_size", $wishlist->getSize());
@@ -50,6 +51,7 @@ if(isset($_REQUEST["move"])){
             exit;
         }
         $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("text_message", "Non è stato possibile eseguire l'operazione!");
         echo $ajax_response->build();
         exit;
     }
@@ -60,7 +62,17 @@ if(isset($_REQUEST["move"])){
 // Elimina un articolo dalla wishlist
 else if(isset($_REQUEST["delete"])){
     $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
-    $ajax_response =  $result ? new AjaxResponse("OK") : new AjaxResponse("NO");
+    
+    if($result){
+        $wishlist = $wishlistDAO->getWishlistByUserId($_SESSION["id"]);
+
+        $ajax_response = new AjaxResponse("OK");
+        $ajax_response->add("wishlist_item_size", $wishlist->getSize());
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $ajax_response = new AjaxResponse("ERROR");
     echo $ajax_response->build();
     exit;
 }
