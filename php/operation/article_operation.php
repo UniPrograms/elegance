@@ -12,11 +12,11 @@ if(!isset($_SESSION["auth"])){
 }
 
 
+
+
 //DAO 
 $factory = new DataLayer(new DB_Connection());
 $articleDAO = $factory->getArticleDAO();
-
-
 
 // Inserimento di un articolo all'interno del carrello
 if(isset($_REQUEST["store"])){
@@ -35,7 +35,7 @@ else if(isset($_REQUEST["delete"])){
 // Conta il numero di elementi all'interno del carrello
 else if(isset($_REQUEST["count"])){
 
-    header("Content-type: application/json");
+    header("ContentType: application/json");
 
     // Controllo tramite l'id dell'articolo
     if(isset($_REQUEST["article_id"])){
@@ -47,13 +47,13 @@ else if(isset($_REQUEST["count"])){
     }
     else{
         $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_error","Il server non ha potuto elaborare la richiesta.");
+        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
         echo $ajax_response->build();
     }
 
     
     $ajax_response = new AjaxResponse("OK");
-    $ajax_response->add("qty",$article->getQuantity());
+    $ajax_response->add("article_qty",$article->getQuantity());
     echo $ajax_response->build();
     exit;
 }

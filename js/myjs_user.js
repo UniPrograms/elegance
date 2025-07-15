@@ -187,6 +187,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+
+
 // Colora i quadrati dei colori nella shop sidebar in base all'attributo name
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.color_shop').forEach(function(el) {
@@ -223,6 +226,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+
+
 // Validazione e invio dati checkout su "Place Order"
 document.addEventListener('DOMContentLoaded', function() {
   var checkoutForm = document.querySelector('form[action*="order_operation.php"]');
@@ -267,6 +273,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Se tutti i campi sono validi, lascia proseguire il submit normale
   });
 });
+
+
+
 // Evidenzia il metodo di pagamento selezionato (checkout)
 document.addEventListener('DOMContentLoaded', function() {
   var paymentOptions = document.querySelectorAll('.payment-method-option');
@@ -295,6 +304,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
 // Evidenzia le notifiche non lette in base al campo nascosto
 document.addEventListener('DOMContentLoaded', function() {
   var notificationCards = document.querySelectorAll('.notification-card');
@@ -331,22 +342,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-// Gestione submit form prodotto
-// Sostituisce la versione precedente: aggancio tramite id
 
+
+    // Gestione submit form prodotto
 document.addEventListener('DOMContentLoaded', function() {
   var productForm = document.getElementById('add-to-cart-form');
   if (!productForm) return;
+
   productForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    // id prodotto (campo nascosto)
+
+    // Non succede nulla se il button è disabilitato
+    var buttonAddToCart = document.querySelector('#btn-add-to-cart');
+    if (buttonAddToCart.disabled || buttonAddToCart.classList.contains('disabled')) return; 
+  
+
+    // Prendo i parametri
     var productId = productForm.querySelector('input[name="product_id"]')?.value;
-    // id size selezionata (select)
     var sizeInput = productForm.querySelector('select[name="size_id"]');
     var sizeId = sizeInput ? sizeInput.value : '';
-    // colore selezionato (select)
     var colorInput = productForm.querySelector('select[name="color_id"]');
     var colorId = colorInput ? colorInput.value : '';
+    
     
     $.ajax({
       type: "POST",
@@ -366,23 +383,173 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Aggiorno il badge del carrello nell'header
         var headerBadge = document.querySelector('#essenceCartBt span');
-        if(headerBadge && typeof cart_size !== "undefined"){
-          headerBadge.textContent = cart_size;
+        if(headerBadge && typeof cart_size !== "undefined") headerBadge.textContent = cart_size;
+        
+
+        // Aggiorno la label e il button in base alla quantità dell'articolo
+        var labelAvailable = document.querySelector('#available-label');
+        var buttonAddToCart = document.querySelector('#btn-add-to-cart');
+        
+        if(labelAvailable && typeof article_qty !== "undefined" && article_qty <= 0 ){
+          labelAvailable.setAttribute("class","alert alert-danger font-weight-bold product-ended-alert");
+          buttonAddToCart.setAttribute("class","btn essence-btn disabled");   
         }
 
-        // Aggiorno la quantità dell'oggetto
-        var labelAvailable = document.querySelector('#available-label');
-        if(labelAvailable && typeof article_qty !== "undefined"){
-          if(article_qty <= 0){
-            labelAvailable.setAttribute("class","alert alert-danger font-weight-bold product-ended-alert");
-          }
-        }
       }
       else{
         alert("Errore: " + response.text_message);
       }
+    });
+  });
+});
 
+
+// Gestione del badge di prodotto terminato
+// all'avvio della pagina
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('product.php')) {
+    
+    // Prendo la form
+    var productForm = document.getElementById('add-to-cart-form');
+    if(!productForm) return;
+
+    // Ottengo i valori
+    const productId = productForm.querySelector('input[name="product_id"]')?.value;
+    const sizeId = productForm.querySelector('select[name="size_id"]')?.value;
+    const colorId = productForm.querySelector('select[name="color_id"]')?.value
+
+     $.ajax({
+      type: "POST",
+      url:"article_operation.php",
+      data:{
+        "count": 1,
+        "product_id": productId,
+        "size_id": sizeId,
+        "color_id": colorId,
+      },
+      dataType: "json",
+    }).done(function(response){
+
+        if(response.status == 'OK'){
+          var article_qty = response.article_qty;
+
+          // Aggiorno la label e il button in base alla quantità dell'articolo
+          var labelAvailable = document.querySelector('#available-label');
+          var buttonAddToCart = document.querySelector('#btn-add-to-cart');
+        
+          if(labelAvailable && typeof article_qty !== "undefined" && article_qty <= 0 ){
+            labelAvailable.setAttribute("class","alert alert-danger font-weight-bold product-ended-alert");
+            buttonAddToCart.setAttribute("class","btn essence-btn disabled");   
+          }
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
     });
 
+  }
+});
+
+
+// Gestione della selezione del prodotto
+// in base alla quantità del prodotto 
+document.addEventListener('DOMContentLoaded', function() {
+  const productIdInput = document.querySelector('input[name="product_id"]');
+  const sizeSelect = document.getElementById('productSize');
+  const colorSelect = document.getElementById('productColor');
+
+  const customSelects = document.querySelectorAll('.nice-select');
+
+  customSelects.forEach(function(customSelect) {
+    customSelect.addEventListener('click', function(event) {
+      const clickedElem = event.target;
+
+      if (clickedElem.classList.contains('option')) {
+        setTimeout(function() {
+          const productId = productIdInput ? productIdInput.value : null;
+          const sizeId = sizeSelect ? sizeSelect.value : null;
+          const colorId = colorSelect ? colorSelect.value : null;
+
+          // alert(`Prodotto ID: ${productId}\nSize ID: ${sizeId}\nColor ID: ${colorId}`);
+
+          // Esegui la chiamata AJAX jQuery
+          $.ajax({
+            type: "POST",
+            url: "article_operation.php",
+            data: {
+              count: 1,
+              product_id: productId,
+              size_id: sizeId,
+              color_id: colorId,
+            },
+            dataType: "json",
+          }).done(function(response) {
+            if (response.status === 'OK') {
+              const article_qty = response.article_qty;
+
+              const labelAvailable = document.querySelector('#available-label');
+              const buttonAddToCart = document.querySelector('#btn-add-to-cart');
+
+              if (labelAvailable && typeof article_qty !== "undefined" && article_qty <= 0) {
+                labelAvailable.setAttribute("class", "alert alert-danger font-weight-bold product-ended-alert");
+                if (buttonAddToCart) {
+                  buttonAddToCart.setAttribute("class", "btn essence-btn disabled");
+                }
+              } else {
+                // Se quantità > 0, eventualmente ripristina lo stato attivo
+                if (labelAvailable) {
+                  labelAvailable.setAttribute("class", ""); // O la classe originale
+                }
+                if (buttonAddToCart) {
+                  buttonAddToCart.setAttribute("class", "btn essence-btn");
+                }
+              }
+            } else {
+              alert("Errore: " + response.text_message);
+            }
+          }).fail(function() {
+            alert("Errore: " + response.text_message);
+          });
+        }, 0);
+      }
+    });
   });
+});
+
+
+// Gestisco l'inserimento di un articolo all'interno della wishlist
+document.addEventListener('DOMContentLoaded', function() {
+  const favHeart = document.getElementById('add-to-wishlist');
+
+  if (favHeart) {
+    favHeart.addEventListener('click', function(event) {
+      event.preventDefault();
+      
+      const productId = document.querySelector('input[name="product_id"]').value;
+      const sizeSelect = document.getElementById('productSize');
+      const sizeId = sizeSelect ? sizeSelect.value : null;
+      const colorSelect = document.getElementById('productColor');
+      const colorId = colorSelect ? colorSelect.value : null;
+
+      $.ajax({
+        type: "POST",
+        url: "wishlist_operation.php",
+        data: {
+          store: 1,
+          product_id: productId,
+          size_id: sizeId,
+          color_id: colorId,
+        },
+        dataType: "json",
+      }).done(function (response) {  
+
+        if(response.status == "OK"){
+          // Devo inserire il codice che, mi permette 
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+      });
+    });
+  }
 });
