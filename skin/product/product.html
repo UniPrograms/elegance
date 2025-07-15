@@ -19,7 +19,7 @@
     <p class="product-price"><[product_price]> $</p>
 
     <!-- Messaggio prodotto terminato (statico, da rendere dinamico in seguito) -->
-    <div class="alert alert-danger font-weight-bold product-ended-alert">
+    <div class="alert alert-danger font-weight-bold product-ended-alert-hidden" id="available-label">
       Prodotto terminato
     </div>
 
@@ -28,7 +28,7 @@
     </p>
 
     <!-- Form -->
-    <form class="cart-form clearfix" method="post" action="cart_operation.php">
+    <form class="cart-form clearfix" method="post" id="add-to-cart-form">
       <!-- Hidden fields -->
       <input type="hidden" name="store" value="1">
       <input type="hidden" name="product_id" value=<[product_id_to_store]>>

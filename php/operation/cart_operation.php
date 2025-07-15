@@ -22,7 +22,9 @@ $articleDAO = $factory->getArticleDAO();
 
 // Inserimento di un articolo all'interno del carrello
 if(isset($_REQUEST["store"])){
-        
+    
+    header("ContentType: application/json");
+
     // Se non è stato l'id di un articolo
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
         $ajax_response = new AjaxResponse("ERROR");
@@ -43,24 +45,23 @@ if(isset($_REQUEST["store"])){
     if($new_cart_item == null){
         $ajax_response = new AjaxResponse("ERROR");
         $ajax_response->add("title_message","Errore del server");
-        $ajax_response->add("text_message","Non è possibile inserire il prodotto.");
+        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
         echo $ajax_response->build();
         exit;
     }
-
-    $query_string_builder = new QueryStringBuilder("product.php");
-    $query_string_builder->add("product_id", $_REQUEST["product_id"]);
-    header("Location: ". $query_string_builder->build());
-
-    /*
-    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
     
+    $current_article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"] );
+    $current_cart = $cartDAO->getCartByUserId($_SESSION["id"]);
+    $article_qty = $current_article->getQuantity();
+    $cart_qty = $current_cart->getSize();
+
     $ajax_response = new AjaxResponse("OK");
-    $ajax_response->add("counter", (string)$cart->getSize());
-    $ajax_response->add("total_price", (string)$cart->getPrice());
+    $ajax_response->add("cart_item_size",(string) $cart_qty);
+    $ajax_response->add("article_qty",(string) $article_qty);
+
     echo $ajax_response->build();
     exit;
-    */
+
 }
 
 

@@ -331,3 +331,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+// Gestione submit form prodotto
+// Sostituisce la versione precedente: aggancio tramite id
+
+document.addEventListener('DOMContentLoaded', function() {
+  var productForm = document.getElementById('add-to-cart-form');
+  if (!productForm) return;
+  productForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // id prodotto (campo nascosto)
+    var productId = productForm.querySelector('input[name="product_id"]')?.value;
+    // id size selezionata (select)
+    var sizeInput = productForm.querySelector('select[name="size_id"]');
+    var sizeId = sizeInput ? sizeInput.value : '';
+    // colore selezionato (select)
+    var colorInput = productForm.querySelector('select[name="color_id"]');
+    var colorId = colorInput ? colorInput.value : '';
+    
+    $.ajax({
+      type: "POST",
+      url:"cart_operation.php",
+      data:{
+        "store": 1,
+        "product_id": productId,
+        "size_id": sizeId,
+        "color_id": colorId,
+      },
+      dataType: "json",
+    }).done(function(response){
+
+      if(response.status == "OK"){
+        var cart_size = response.cart_item_size;
+        var article_qty = response.article_qty;
+
+        // Aggiorno il badge del carrello nell'header
+        var headerBadge = document.querySelector('#essenceCartBt span');
+        if(headerBadge && typeof cart_size !== "undefined"){
+          headerBadge.textContent = cart_size;
+        }
+
+        // Aggiorno la quantità dell'oggetto
+        var labelAvailable = document.querySelector('#available-label');
+        if(labelAvailable && typeof article_qty !== "undefined"){
+          if(article_qty <= 0){
+            labelAvailable.setAttribute("class","alert alert-danger font-weight-bold product-ended-alert");
+          }
+        }
+      }
+      else{
+        alert("Errore: " + response.text_message);
+      }
+
+    });
+
+  });
+});
