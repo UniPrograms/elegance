@@ -545,6 +545,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if(response.status == "OK"){
           // Devo inserire il codice che, mi permette 
+          // di cambiare il colore al cuore
         }
         else{
           alert("Errore: " + response.text_message);
