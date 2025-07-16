@@ -9,6 +9,7 @@ class User{
     private ?string $role;
     private ?string $urlImage;
     private ?string $phoneNumber;
+    private ?string $registrationDate;
 
 
 
@@ -21,6 +22,7 @@ class User{
         $this->role = '';
         $this->urlImage = '';
         $this->phoneNumber = '';
+        $this->registrationDate = '';
         
     }
 
@@ -33,6 +35,7 @@ class User{
     public function getRole(): ?string {return $this->role;}
     public function getImage(): ?string {return $this->urlImage;}
     public function getPhoneNumber(): ?string {return $this->phoneNumber;}
+    public function getRegistrationDate(): ?string {return $this->registrationDate;}
 
 
     // Setter
@@ -44,6 +47,7 @@ class User{
     public function setRole(?string $role) { $this->role = $role; }
     public function setUrlImage(?string $urlImage) { $this->urlImage = $urlImage; }
     public function setPhoneNumber(?string $phoneNumber) { $this->phoneNumber = $phoneNumber; }
+    public function setRegistrationDate(?string $registrationDate) { $this->registrationDate = $registrationDate; }
 
     // Other function
     public function toString(): ?string {return $this->name ." ".$this->surname;}

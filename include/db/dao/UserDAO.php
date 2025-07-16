@@ -141,7 +141,7 @@ class UserDAO extends DAO{
         $user->setRole($rs['RUOLO']);
         $user->setUrlImage($rs["URL_IMAGE"]);
         $user->setPhoneNumber($rs["NUMERO_TELEFONO"]);
-
+        $user->setRegistrationDate($rs["DATA_REGISTRAZIONE"]);
         return $user;
     }
 
