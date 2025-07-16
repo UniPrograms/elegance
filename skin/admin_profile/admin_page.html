@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../css/mycss_admin.css"/>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="https://fv5-5.files.fm/thumb_show.php?i=fumh79bxsj&view&v=1&PHPSESSID=9835c3f9a2fd8e3786e1a2675517cd5c6dd9be1d" alt="User Profile" class="profile-img">
+    <div class="user-name">Mario Rossi</div>
+    <ul>
+      <li class="active" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+      <li onclick="showSection('products')"><i class="fas fa-box-open"></i> Products</li>
+      <li onclick="showSection('orders')"><i class="fas fa-shopping-cart"></i> Orders</li>
+      <li onclick="showSection('users')"><i class="fas fa-users"></i> Users</li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <h1>Dashboard</h1>
+      <a href="../../profile.php" class="profile-link">Profilo</a>
+    </div>
+
+    <section id="dashboard" class="active">
+      <div class="cards">
+        <div class="card">
+          <div>
+            <h4>Utenti Registrati</h4>
+            <div class="number">152</div>
+          </div>
+          <i class="fas fa-user"></i>
+        </div>
+
+        <div class="card">
+          <div>
+            <h4>Ordini Effettuati</h4>
+            <div class="number">89</div>
+          </div>
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+
+        <div class="card">
+          <div>
+            <h4>Prodotti in Magazzino</h4>
+            <div class="number">325</div>
+          </div>
+          <i class="fas fa-boxes"></i>
+        </div>
+
+        <div class="card">
+          <div>
+            <h4>Ordini in Elaborazione</h4>
+            <div class="number">12</div>
+          </div>
+          <i class="fas fa-clock"></i>
+        </div>
+
+        <div class="card">
+          <div>
+            <h4>Ricavi ultimi 30 giorni</h4>
+            <div class="number">€3,200.00</div>
+          </div>
+          <i class="fas fa-euro-sign"></i>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="search-box">
+        <input type="text" placeholder="Cerca prodotti...">
+      </div>
+      <table id="products-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Nome</th><th>Categoria</th><th>Prezzo</th><th>Stock</th><th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>001</td><td>Giacca Uomo</td><td>Abbigliamento</td><td>€99.90</td><td>15</td>
+            <td class="actions">
+              <button class="edit">Modifica</button>
+              <button class="delete">Elimina</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="orders">
+      <div class="search-box">
+        <input type="text" placeholder="Cerca ordini...">
+      </div>
+      <table id="orders-table">
+        <thead>
+          <tr>
+            <th>ID Ordine</th><th>Cliente</th><th>Data</th><th>Totale</th><th>Stato</th><th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>#1023</td><td>Luca Bianchi</td><td>2025-07-15</td><td>€149.90</td><td>Spedito</td>
+            <td class="actions">
+              <button class="view">Visualizza</button>
+              <button class="delete">Annulla</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="users">
+      <div class="search-box">
+        <input type="text" placeholder="Cerca utenti...">
+      </div>
+      <table id="users-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Nome</th><th>Email</th><th>Registrato il</th><th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>U1001</td><td>Giulia Verdi</td><td>giulia@email.com</td><td>2025-06-10</td>
+            <td class="actions">
+              <button class="view">Visualizza</button>
+              <button class="delete">Elimina</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+  </script>
+  <script src="../../js/myjs_admin.js"></script>
+  </script>
+
+</body>
+</html>
