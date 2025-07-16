@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "POST",
         url: "wishlist_operation.php",
         data: {
-          "item_id": itemId,
-          "move": 1,
+          item_id: itemId,
+          operation: "move",
         },
         dataType: "json",
       }).done(function(response){
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "POST",
         url: "wishlist_operation.php",
         data: {
-          "item_id": itemId,
-          "delete": 1,
+          item_id: itemId,
+          operation: "delete",
         },
         dataType: "json",
       }).done(function(response){
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Gestisco l'inserimento di un articolo all'interno della wishlist
+// Gestisco l'inserimento (e rimozione) di un articolo all'interno della wishlist
 document.addEventListener('DOMContentLoaded', function() {
   const favHeart = document.getElementById('add-to-wishlist');
 
@@ -526,27 +526,35 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();
  
       var operation = this.className == 'heart-grey' ? "store" : "delete";
-      alert("Errore: " + response.text_message);
+
       const productId = document.querySelector('input[name="product_id"]').value;
       const sizeSelect = document.getElementById('productSize');
       const sizeId = sizeSelect ? sizeSelect.value : null;
       const colorSelect = document.getElementById('productColor');
       const colorId = colorSelect ? colorSelect.value : null;
 
+      
       $.ajax({
         type: "POST",
         url: "wishlist_operation.php",
         data: {
-          "operation": operation,
-          "product_id": productId,
-          "size_id": sizeId,
-          "color_id": colorId,
+          operation: operation,
+          product_id: productId,
+          size_id: sizeId,
+          color_id: colorId,
         },
         dataType: "json",
       }).done(function (response) {  
         // Non cambiare mai la classe o il colore del cuore
         if(response.status == "OK"){
-          alert(this.className);
+          var favHeart = document.getElementById('add-to-wishlist');
+              if (favHeart.classList.contains('heart-grey')) {
+                favHeart.classList.remove('heart-grey');
+                favHeart.classList.add('heart-red');
+              } else {
+                favHeart.classList.remove('heart-red');
+                favHeart.classList.add('heart-grey');
+              }
         }
         else{
           alert("Errore: " + response.text_message);

@@ -21,8 +21,10 @@ $articleDAO = $factory->getArticleDAO();
 
 
 
+
+
 // Sposto un articolo dalla wishlist al carrello
-if(isset($_REQUEST["move"])){
+if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'move'){
 
     header("Content-Type: application/json;");
     // WishlistItem corrente
@@ -58,11 +60,17 @@ if(isset($_REQUEST["move"])){
 }
 
 
-
 // Elimina un articolo dalla wishlist
-else if(isset($_REQUEST["delete"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
     
-    $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
+    if(isset($_REQUEST["item_id"])){
+        $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
+    }
+    else if(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"])){
+        $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"]);
+        $wishlist_item = $wishlistItemDAO->getWishlistItemByArticleId($article->getId(), $wishlistDAO->getWishlistByUserId($_SESSION["id"])->getId());
+        $result = $wishlistItemDAO->deleteItemById($wishlist_item->getId());
+    }
     
     // Se l'eliminazione NON è andata a buon fine
     if(!$result){
@@ -84,7 +92,7 @@ else if(isset($_REQUEST["delete"])){
 
 
 // Inserisco un articolo nella wishlist
-else if(isset($_REQUEST["store"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
 
     // Se non sono stati passati i parametri giusti
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
