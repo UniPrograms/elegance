@@ -48,7 +48,7 @@ foreach($wishlist_items as $item){
 
     // Consente di andare alla pagina specifica del prodotto
     $query_string_builder = new QueryStringBuilder("product.php");
-    $query_string_builder->add("product_id", $product->getId());
+    $query_string_builder->add("article_id", $article->getId());
     $wishlist_page->setContent("product_link",$query_string_builder->build());
 
     // Consente di settare la query string per eliminare un prodotto dalla wishlist

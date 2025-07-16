@@ -126,4 +126,42 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
     exit;
 }
 
+
+// Controlla se un articolo è all'interno della wishlist
+else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'is_present'){
+
+    // Ricerca wishlist_item tramite l'id
+    if(isset($_REQUEST["item_id"])){
+        $wishlist_item = $wishlistItemDAO->getWishlistItemById($_REQUEST["item_id"]);
+    }
+    // Ricerca wishlist item tramite id del prodotto, id della size e id del colore
+    else if(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"])){
+        $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"]);
+        $wishlist_item = $wishlistItemDAO->getWishlistItemByArticleId($article->getId(), $wishlistDAO->getWishlistByUserId($_SESSION["id"])->getId());
+    }
+    // Parametri non passati correttamente
+    else{
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message","Errore del server");
+        $ajax_response->add("text_message","I parametri passati non sono sufficienti.");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    // Se non è stato trovato nessun item corrispondente
+    if($wishlist_item == null){
+        $ajax_response = new AjaxResponse("OK");
+        $ajax_response->add("is_present","false");
+        echo $ajax_response->build();
+        exit;
+    }
+
+
+    // Se è stato trovato l'item corrispondente
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("is_present","true");
+    echo $ajax_response->build();
+    exit;
+}
+
 ?>

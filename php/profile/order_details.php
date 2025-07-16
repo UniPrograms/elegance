@@ -46,13 +46,14 @@ $order_details_page->setContent("order_address",$order->getAddress()->toString()
 $order_items = $order->getOrderItem();
 
 foreach($order_items as $item){
-    $product = $item->getArticle()->getProduct();
+    $article = $item->getArticle();
+    $product = $article->getProduct();
     $order_details_page->setContent("product_copertina",$product->getCopertina());
     $order_details_page->setContent("product_name",$product->getName());
     $order_details_page->setContent("product_category",$product->getCategory()->getName());
 
     $query_string_builder = new QueryStringBuilder("product.php");
-    $query_string_builder->add("product_id", $product->getId());
+    $query_string_builder->add("article_id", $article->getId());
     $order_details_page->setContent("product_link",$query_string_builder->build());
 
 }

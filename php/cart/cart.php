@@ -55,7 +55,7 @@ foreach($cart_items as $item){
     
 
     $query_string_builder = new QueryStringBuilder("product.php");
-    $query_string_builder->add("product_id", $product->getId());
+    $query_string_builder->add("article_id", $article->getId());
     $cart_page->setContent("product_link", $query_string_builder->build());
 }
 

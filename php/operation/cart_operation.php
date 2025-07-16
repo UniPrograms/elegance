@@ -19,10 +19,9 @@ $cartDAO = $factory->getCartDAO();
 $articleDAO = $factory->getArticleDAO();
 
 
-
 // Inserimento di un articolo all'interno del carrello
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
-    
+
     header("ContentType: application/json");
 
     // Se non è stato l'id di un articolo

@@ -13,7 +13,6 @@ if(!isset($_SESSION["auth"])){
 
 
 
-
 //DAO 
 $factory = new DataLayer(new DB_Connection());
 $articleDAO = $factory->getArticleDAO();
@@ -47,6 +46,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
     }
     else{
         $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message","Operazione non valida");
         $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
         echo $ajax_response->build();
     }
@@ -58,12 +58,40 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
     exit;
 }
 
+// Ritorna le informazioni necessarie dell'articolo
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_information"){
 
-// Se non viene inserita una parola per capire 
-// l'operazione da effettuare, bisogna decidere
-// se rimandare ad una pagina di errore.
-// Nel frattempo inserisco una stampa per capire
-// Se si entra in questo campo
+    header("ContentType: application/json");
+
+    // Se non è stato passato l'id dell'articolo
+    if(!isset($_REQUEST["article_id"])){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message","Operazione non valida");
+        $ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $article = $articleDAO->getArticleById($_REQUEST["article_id"]);
+
+    // Se non è stato trovato l'articolo (id sbagliato)
+    if($article == null){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message","Operazione non valida");
+        $ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    // Se è andato tutto bene
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("size_id",$article->getSize()->getId());
+    $ajax_response->add("color_id", $article->getColor()->getId());
+    echo $ajax_response->build();
+    exit;
+}
+
+
 $ajax_response = new AjaxResponse("ERROR");
 $ajax_response->add("title_message","Operazione non valida");
 $ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");

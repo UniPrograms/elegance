@@ -98,8 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
 // Gestione rimozione articolo dal carrello
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.remove-cart-item').forEach(function(btn) {
@@ -107,57 +105,61 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var cartItemId = btn.value;
       if (!cartItemId) return;
-      fetch('cart_operation.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'delete=1&cart_item_id=' + encodeURIComponent(cartItemId)
-      })
-      .then(function(response) { return response.json(); })
-      .then(function(data) {
-        if (data.status === 'ERROR') {
-          if (data.title_message && data.text_message) {
-            alert(data.title_message + '\n' + data.text_message);
-          } else {
-            alert('Si è verificato un errore sconosciuto.');
-          }
-        } else if (data.status === 'OK') {
+
+      $.ajax({
+        type: "POST",
+        url: "cart_operation.php",
+        data: {
+          operation: "delete",
+          cart_item_id: cartItemId
+        },
+        dataType: "json",
+      }).done(function(response) {
+        if (response.status == "OK") {
           // Aggiorna badge header
           var headerBadge = document.querySelector('#essenceCartBt span');
-          if (headerBadge && data.counter !== undefined) {
-            headerBadge.textContent = data.counter;
+          if (headerBadge && typeof response.counter !== "undefined") {
+            headerBadge.textContent = response.counter;
           }
+
           // Aggiorna numero articoli nella pagina carrello
           var cartTotal = document.querySelector('.cart-summary .list-group-item span');
-          if (cartTotal && data.counter !== undefined) {
-            cartTotal.textContent = data.counter;
+          if (cartTotal && typeof response.counter !== "undefined") {
+            cartTotal.textContent = response.counter;
           }
-          // Aggiorna prezzo totale se presente nella risposta (opzionale)
-          if (data.total_price !== undefined) {
+
+          // Aggiorna prezzo totale
+          if (typeof response.total_price !== "undefined") {
             var priceSpan = document.querySelector('.cart-summary .font-weight-bold');
-            if (priceSpan) priceSpan.textContent = data.total_price + ' $';
+            if (priceSpan) {
+              priceSpan.textContent = response.total_price + ' $';
+            }
           }
+
           // Se il carrello è vuoto, reindirizza a cart.php
-          if (data.counter == 0) {
+          if (response.counter == 0) {
             window.location.href = 'cart.php';
             return;
           }
+
+          // Rimuovi la riga con effetto dissolvenza
           var row = btn.closest('tr');
           if (row) {
             row.style.transition = 'opacity 0.5s';
             row.style.opacity = 0;
-            setTimeout(function() { row.remove(); }, 500);
+            setTimeout(function() {
+              row.remove();
+            }, 500);
           }
-        } else {
-          alert('Risposta inattesa dal server.');
+
+        } else if (response.status == "ERROR") {
+            alert("Errore: " +  response.text_message);
         }
-      })
-      .catch(function() {
-        alert('Si è verificato un errore di comunicazione con il server.');
       });
+
     });
   });
 });
-
 
 
 // Gestione apertura/chiusura menu categorie in base a category_id da URL
@@ -187,7 +189,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
 
 
 // Colora i quadrati dei colori nella shop sidebar in base all'attributo name
@@ -226,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
 
 
 // Validazione e invio dati checkout su "Place Order"
@@ -273,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Se tutti i campi sono validi, lascia proseguire il submit normale
   });
 });
-
 
 
 // Evidenzia il metodo di pagamento selezionato (checkout)
@@ -328,23 +327,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-    // Anteprima avatar personal info
-    const upload = document.getElementById('ct-profile-upload');
-    const preview = document.getElementById('ct-profile-img-preview');
-    if(upload && preview) {
-        upload.addEventListener('change', function(e) {
-            if (upload.files && upload.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    preview.src = ev.target.result;
-                };
-                reader.readAsDataURL(upload.files[0]);
-            }
-        });
+
+
+// Anteprima dell'avatar della foto nel profilo utente al momento del caricamento
+const upload = document.getElementById('ct-profile-upload');
+const preview = document.getElementById('ct-profile-img-preview');
+if(upload && preview) {
+  upload.addEventListener('change', function(e) {
+    if (upload.files && upload.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(ev) { preview.src = ev.target.result;};
+      reader.readAsDataURL(upload.files[0]);
     }
+  });
+}
 
 
-    // Gestione submit form prodotto
+// Gestione submit form prodotto
 document.addEventListener('DOMContentLoaded', function() {
   var productForm = document.getElementById('add-to-cart-form');
   if (!productForm) return;
@@ -364,12 +363,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var colorInput = productForm.querySelector('select[name="color_id"]');
     var colorId = colorInput ? colorInput.value : '';
     
-    
     $.ajax({
       type: "POST",
       url:"cart_operation.php",
       data:{
-        operation: store,
+        operation: "store",
         product_id: productId,
         size_id: sizeId,
         color_id: colorId,
@@ -404,8 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Gestione del badge di prodotto terminato
-// all'avvio della pagina
+// Gestione del badge di prodotto terminato all'avvio della pagina
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('product.php')) {
     
@@ -422,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
       type: "POST",
       url:"article_operation.php",
       data:{
-        operation: count,
+        operation: "count",
         product_id: productId,
         size_id: sizeId,
         color_id: colorId,
@@ -451,8 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Gestione della selezione del prodotto
-// in base alla quantità del prodotto 
+// Gestione del badge di prodotto al momento  della selezione della taglia/colore 
 document.addEventListener('DOMContentLoaded', function() {
   const productIdInput = document.querySelector('input[name="product_id"]');
   const sizeSelect = document.getElementById('productSize');
@@ -470,7 +466,6 @@ document.addEventListener('DOMContentLoaded', function() {
           const sizeId = sizeSelect ? sizeSelect.value : null;
           const colorId = colorSelect ? colorSelect.value : null;
 
-          // alert(`Prodotto ID: ${productId}\nSize ID: ${sizeId}\nColor ID: ${colorId}`);
 
           // Esegui la chiamata AJAX jQuery
           $.ajax({
@@ -507,17 +502,110 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
               alert("Errore: " + response.text_message);
             }
-          }).fail(function() {
-            alert("Errore: " + response.text_message);
           });
-        }, 0);
+        });
       }
     });
   });
 });
 
 
-// Gestisco l'inserimento (e rimozione) di un articolo all'interno della wishlist
+// Gestione del colore del cuore all'avvio della pagina
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('product.php')) {
+    
+    // Prendo la form
+    var productForm = document.getElementById('add-to-cart-form');
+    if(!productForm) return;
+
+    // Ottengo i valori
+    const productId = productForm.querySelector('input[name="product_id"]')?.value;
+    const sizeId = productForm.querySelector('select[name="size_id"]')?.value;
+    const colorId = productForm.querySelector('select[name="color_id"]')?.value
+
+     $.ajax({
+      type: "POST",
+      url:"wishlist_operation.php",
+      data:{
+        operation: "is_present",
+        product_id: productId,
+        size_id: sizeId,
+        color_id: colorId,
+      },
+      dataType: "json",
+    }).done(function(response){
+
+        if(response.status == 'OK'){
+           var favHeart = document.getElementById('add-to-wishlist');
+              if (response.is_present == "true") {
+                favHeart.classList.remove('heart-grey');
+                favHeart.classList.add('heart-red');
+              } else {
+                favHeart.classList.remove('heart-red');
+                favHeart.classList.add('heart-grey');
+              }
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+    });
+
+  }
+});
+
+
+// Gestione del colore del cuore al momento della selezione della taglia/colore
+document.addEventListener('DOMContentLoaded', function() {
+  const productIdInput = document.querySelector('input[name="product_id"]');
+  const sizeSelect = document.getElementById('productSize');
+  const colorSelect = document.getElementById('productColor');
+
+  const customSelects = document.querySelectorAll('.nice-select');
+
+  customSelects.forEach(function(customSelect) {
+    customSelect.addEventListener('click', function(event) {
+      const clickedElem = event.target;
+
+      if (clickedElem.classList.contains('option')) {
+        setTimeout(function() {
+          const productId = productIdInput ? productIdInput.value : null;
+          const sizeId = sizeSelect ? sizeSelect.value : null;
+          const colorId = colorSelect ? colorSelect.value : null;
+
+
+          // Esegui la chiamata AJAX jQuery
+          $.ajax({
+            type: "POST",
+            url: "wishlist_operation.php",
+            data: {
+              operation: "is_present",
+              product_id: productId,
+              size_id: sizeId,
+              color_id: colorId,
+            },
+            dataType: "json",
+          }).done(function(response) {
+            if (response.status === 'OK') {
+              var favHeart = document.getElementById('add-to-wishlist');
+              if (response.is_present == "true") {
+                favHeart.classList.remove('heart-grey');
+                favHeart.classList.add('heart-red');
+              } else {
+                favHeart.classList.remove('heart-red');
+                favHeart.classList.add('heart-grey');
+              }
+            } else {
+              alert("Errore: " + response.text_message);
+            }
+          });
+        });
+      }
+    });
+  });
+});
+
+
+// Gestione dell'inserimento (e rimozione) di un articolo all'interno della wishlist
 document.addEventListener('DOMContentLoaded', function() {
   const favHeart = document.getElementById('add-to-wishlist');
 
@@ -545,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         dataType: "json",
       }).done(function (response) {  
-        // Non cambiare mai la classe o il colore del cuore
+        // Cambia il colore del cuore in base al suo stato attuale (effetto toggle)
         if(response.status == "OK"){
           var favHeart = document.getElementById('add-to-wishlist');
               if (favHeart.classList.contains('heart-grey')) {
@@ -563,3 +651,65 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+
+
+// Gestione della taglia/colore se alla pagina del prodotto viene passato un articolo specifico
+/*
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Prendo il nome della pagina corrente
+  var current_page = window.location.pathname.split("/").pop();
+
+  // Se la pagina non è product.php, non fa niente
+  if (current_page !== 'product.php') return;
+  
+  // Prendo i parametri all'interno dell'url
+  var params = new URLSearchParams(window.location.search);
+  
+  // Controllo se è stato passato un articolo
+  if(params.has("article_id")){
+
+    var articleId = params.get("article_id");
+    
+    $.ajax({
+        type: "POST",
+        url: "article_operation.php",
+        data: {
+          operation: "get_information",
+          article_id: articleId,
+        },
+        dataType: "json",
+    }).done(function(response){
+
+      if(response.status == "OK"){
+        var size_id = response.size_id;
+        var color_id = response.color_id;
+
+        // Aggiornamento del colore
+        var selectColor = document.querySelector('select[name="color_id"]');
+        if (selectColor) {
+          selectColor.value = color_id;
+          $(selectColor).niceSelect('update');
+        }
+
+        // Aggiornamento della taglia
+        var selectSize = document.querySelector('select[name="size_id"]');
+        if (selectSize) {
+          selectSize.value = size_id;
+          $(selectSize).niceSelect('update');
+        }
+      }
+      else{
+        // Altrimenti non succede nulla
+      }
+
+    });
+
+
+  }
+  
+
+
+});
+*/
