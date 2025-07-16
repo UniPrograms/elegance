@@ -1,2 +1,23 @@
 Bisogna cambiare il metodo di invio del tipo di operazione all'interno dei file operation.
 Bisogna inviare Operation = "tipo operazione"
+
+
+
+/*
+// Switch colore cuore wishlist (product.html)
+document.addEventListener('DOMContentLoaded', function() {
+  var favHeart = document.getElementById('add-to-wishlist');
+  if (favHeart) {
+    favHeart.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (favHeart.classList.contains('heart-grey')) {
+        favHeart.classList.remove('heart-grey');
+        favHeart.classList.add('heart-red');
+      } else {
+        favHeart.classList.remove('heart-red');
+        favHeart.classList.add('heart-grey');
+      }
+    });
+  }
+});
+*/

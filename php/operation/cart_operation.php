@@ -50,6 +50,7 @@ if(isset($_REQUEST["store"])){
         exit;
     }
     
+    // Se è andato tutto bene
     $current_article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"] );
     $current_cart = $cartDAO->getCartByUserId($_SESSION["id"]);
     $article_qty = $current_article->getQuantity();
