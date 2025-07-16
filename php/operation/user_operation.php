@@ -18,7 +18,7 @@ $userDAO = $factory->getUserDAO();
 
 
 // Aggiornamento di un utente (info personali)
-if(isset($_REQUEST["update"]) && $_REQUEST["update"] == "personal-info"){
+if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "personal-info"){
         
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
@@ -45,7 +45,7 @@ if(isset($_REQUEST["update"]) && $_REQUEST["update"] == "personal-info"){
 
 
 // Aggiornamento utente (password)
-else if(isset($_REQUEST["update"]) && $_REQUEST["update"] == "change-password"){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-password"){
 
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
@@ -75,7 +75,7 @@ else if(isset($_REQUEST["update"]) && $_REQUEST["update"] == "change-password"){
 
 
 // Eliminazione di un utente
-else if(isset($_REQUEST["delete"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
 }
 

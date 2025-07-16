@@ -21,7 +21,7 @@ $articleDAO = $factory->getArticleDAO();
 
 
 // Inserimento di un articolo all'interno del carrello
-if(isset($_REQUEST["store"])){
+if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     
     header("ContentType: application/json");
 
@@ -67,7 +67,7 @@ if(isset($_REQUEST["store"])){
 
 
 // Rimozione di un articolo all'interno del carrello
-else if(isset($_REQUEST["delete"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato l'id di un articolo
     if(!isset($_REQUEST["cart_item_id"])){
@@ -100,7 +100,7 @@ else if(isset($_REQUEST["delete"])){
 
 
 // Conta il numero di elementi all'interno del carrello
-else if(isset($_REQUEST["count"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 
     $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
     

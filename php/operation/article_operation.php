@@ -19,21 +19,21 @@ $factory = new DataLayer(new DB_Connection());
 $articleDAO = $factory->getArticleDAO();
 
 // Inserimento di un articolo all'interno del carrello
-if(isset($_REQUEST["store"])){
+if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     echo "operazione di store";
     exit;
 }
 
 
 // Rimozione di un articolo all'interno del carrello
-else if(isset($_REQUEST["delete"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     echo "operazione di delete";
     exit;
 }
 
 
 // Conta il numero di elementi all'interno del carrello
-else if(isset($_REQUEST["count"])){
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 
     header("ContentType: application/json");
 

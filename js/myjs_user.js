@@ -369,10 +369,10 @@ document.addEventListener('DOMContentLoaded', function() {
       type: "POST",
       url:"cart_operation.php",
       data:{
-        "store": 1,
-        "product_id": productId,
-        "size_id": sizeId,
-        "color_id": colorId,
+        operation: store,
+        product_id: productId,
+        size_id: sizeId,
+        color_id: colorId,
       },
       dataType: "json",
     }).done(function(response){
@@ -422,10 +422,10 @@ document.addEventListener('DOMContentLoaded', function () {
       type: "POST",
       url:"article_operation.php",
       data:{
-        "count": 1,
-        "product_id": productId,
-        "size_id": sizeId,
-        "color_id": colorId,
+        operation: count,
+        product_id: productId,
+        size_id: sizeId,
+        color_id: colorId,
       },
       dataType: "json",
     }).done(function(response){
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
             type: "POST",
             url: "article_operation.php",
             data: {
-              count: 1,
+              operation: "count",
               product_id: productId,
               size_id: sizeId,
               color_id: colorId,
