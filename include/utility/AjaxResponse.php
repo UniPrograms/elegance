@@ -31,6 +31,21 @@ class AjaxResponse {
         $this->status = strtoupper($status); 
         $this->cleanParams();
     }
+
+    public static function genericServerError(): AjaxResponse{
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message","Operazione non valida");
+        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
+        return $ajax_response;
+    }
+
+
+    public static function okNoContent(): AjaxResponse{
+        $ajax_response = new AjaxResponse("OK");
+        return $ajax_response;
+    }
+
+    
 }
 
 

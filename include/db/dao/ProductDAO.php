@@ -323,6 +323,17 @@ class ProductDAO extends DAO{
         $this->stmtDeleteProduct->bindValue(1, $product->getId(), PDO::PARAM_INT);
         return $this->stmtDeleteProduct->execute();
     }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function deleteProductById(int $id): bool {
+        $this->stmtDeleteProduct->bindValue(1, $id, PDO::PARAM_INT);
+        return $this->stmtDeleteProduct->execute();
+    }
 
 
     // Metodi privati
