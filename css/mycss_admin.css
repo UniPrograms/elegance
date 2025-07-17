@@ -132,10 +132,12 @@ table th:last-child, table td.actions {
 }
 .actions button {
   margin-right: 5px;
-  padding: 6px 10px;
+  padding: 6px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  min-width: 80px;
+  box-sizing: border-box;
 }
 .actions .edit { background-color: #ffc107; color: #fff; }
 .actions .delete { background-color: #dc3545; color: #fff; }
