@@ -2,7 +2,7 @@
 // Database
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
-
+require_once("include/utility/AjaxResponse.php");
 require_once("include/model/WishlistItem.php");
 
 // Se la sessione non è attiva
@@ -90,7 +90,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     }
 
     // Eseguo la query
-    $result = $userDAO->deleteUser($_REQUEST["user_id"]);
+    $result = $userDAO->deleteUserById($_REQUEST["user_id"]);
 
     // Se non è andata a buon fine
     if(!$result){

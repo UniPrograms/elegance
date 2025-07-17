@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function(){
     btn.addEventListener('click', function() {
 
       var userId = this.getAttribute("value");
-      
+      var row = this.closest("tr");
       $.ajax({
         type: "POST",
         url: "user_operation.php",
@@ -38,10 +38,12 @@ document.addEventListener('DOMContentLoaded', function(){
         dataType: "json",
       }).done(function(response){
 
-        alert("ciccia");
-
         if(response.status == "OK"){
-          alert("Utente eliminato con successo.");
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
         }
         else{
           alert("Errore: " + response.text_message);
