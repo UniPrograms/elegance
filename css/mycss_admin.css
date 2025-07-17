@@ -1,3 +1,103 @@
+/* Allineamento larghezza campo file path come gli altri input info-list */
+.info-input-align {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+/* Allineamento text field per path file copertina come gli altri input */
+.input-file-path-align {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #333;
+  background: #f8f9fa;
+  box-sizing: border-box;
+}
+/* Bottone custom per input file copertina */
+.choose-file-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background 0.2s;
+  margin-right: 0.5rem;
+}
+.choose-file-btn:hover {
+  background-color: #0056b3;
+}
+.product-gallery-thumb-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.delete-thumb-btn {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(220,53,69,0.92);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.13);
+  transition: background 0.2s;
+}
+.product-gallery-thumb-wrapper:hover .delete-thumb-btn {
+  display: block;
+}
+.delete-thumb-btn:hover {
+  background: #dc3545;
+}
+/* Galleria immagini prodotto admin_viewproduct */
+.product-images-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 1rem;
+  min-height: 180px;
+  max-width: 100%;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-items: center;
+  align-items: start;
+}
+.product-gallery-thumb {
+  width: 135px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.product-gallery-thumb:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.13);
+}
+.product-gallery-thumb {
+  width: 90px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+}
 /* Layout affiancato per admin_viewproduct */
 .product-admin-flexbox {
   display: flex;
@@ -141,9 +241,8 @@
   color: #555;
 }
 .user-profile .info-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 2rem;
+  position: relative;
+  padding-bottom: 4.5rem;
 }
 .user-profile .info-list li {
   display: flex;
@@ -194,6 +293,25 @@
   background: #f8f9fa;
   color: #555;
 }
+
+.info-list-actions {
+  position: static;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: none;
+  background: transparent;
+  padding: 0 0 0.5rem 0;
+  z-index: 2;
+}
+.action-left, .action-right {
+  position: static;
+}
+.user-profile .info-list {
+  padding-bottom: 3.5rem;
+}
+
 @media (max-width: 700px) {
   .user-profile {
     padding: 1rem;
@@ -351,3 +469,10 @@ table th:last-child, table td.actions {
 .actions .edit { background-color: #ffc107; color: #fff; }
 .actions .delete { background-color: #dc3545; color: #fff; }
 .actions .view { background-color: #007bff; color: #fff; }
+
+.vertical-btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}

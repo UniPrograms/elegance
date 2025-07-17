@@ -11,9 +11,26 @@
       <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name]>" /></li>
       <li><span class="label">Prezzo:</span> <input type="text" id="product-price" value="<[product_price]>" /></li>
       <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3" style="width:67.5%;resize:vertical;"><[product_description]></textarea></li>
-      <li><span class="label">Carica Immagine:</span> <input type="file" id="product-cover-img-file" accept="image/*" style="width:100%"></li>
-      <li><span class="label">Brand:</span> <input type="text" id="product-brand-input" value="<[product_brand]>" /></li>
-      <li><span class="label">Categoria:</span> <input type="text" id="product-category" value="<[product_category]>" /></li>
+      <li style="display: flex; align-items: center;">
+        <span class="label" style="flex:1;">Carica Immagine:</span>
+        <div style="flex:2; display:flex; gap:0.5rem; align-items:center;">
+          <input type="text" id="cover-img-file-path" readonly class="input-file-path-align info-input-align" style="margin:-6;" />
+          <input type="file" id="product-cover-img-file" accept="image/*" style="display:none;">
+          <button type="button" class="choose-file-btn" id="choose-cover-img-btn">Scegli il file</button>
+        </div>
+      </li>
+      <li><span class="label">Brand:</span>
+        <select id="product-brand-input" name="product-brand">
+          <option value="">Seleziona brand</option>
+          <!-- [brand_options] -->
+        </select>
+      </li>
+      <li><span class="label">Categoria:</span>
+        <select id="product-category" name="product-category">
+          <option value="">Seleziona categoria</option>
+          <!-- [category_options] -->
+        </select>
+      </li>
       <li><span class="label">Sesso:</span>
         <select id="product-gender" name="product-gender">
           <option value="UOMO" <[product_gender_selected_uomo]> >Uomo</option>
@@ -21,17 +38,22 @@
           <option value="UNISEX" <[product_gender_selected_unisex]> >Unisex</option>
         </select>
       </li>
-      <li style="display: flex; align-items: center; justify-content: space-between;">
-        <button class="add-article-button" id="admin-add-article" type="button">Aggiungi articolo</button>
-        <button class="save-button" id="admin-update-product">Save</button>
+      <li class="info-list-actions">
+        <div class="action-left">
+          <button class="add-article-button" id="admin-add-article" type="button">Aggiungi articolo</button>
+        </div>
+        <div class="action-right">
+          <button class="save-button" id="admin-update-product">Save</button>
+        </div>
       </li>
     </ul>
   </div>
   <div class="product-image-panel">
-    <div class="product-image-preview-wrapper">
-      <img id="product-image-preview" src="https://fv5-5.files.fm/thumb_show.php?i=fumh79bxsj" alt="Preview immagine prodotto" />
+    <div class="product-images-gallery" id="product-images-gallery">
+      <!-- Qui verranno mostrate le anteprime delle immagini caricate -->
     </div>
-    <input type="file" id="product-image-file-input" accept="image/*" style="display:none;" />
-    <button class="edit-image-button" id="admin-edit-product-image" type="button" onclick="document.getElementById('product-image-file-input').click();">Modifica immagine</button>
+    <input type="file" id="product-images-input" accept="image/*" multiple style="display:none;" />
+    <button class="edit-image-button" id="admin-add-product-images" type="button">Aggiungi foto prodotto</button>
   </div>
+  
 </div>
