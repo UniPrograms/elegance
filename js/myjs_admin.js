@@ -219,6 +219,40 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 // Aggiornamento dati ordine admin
+document.addEventListener('DOMContentLoaded', function(){
+
+    const updateBtn = document.querySelector("#admin-update-order");
+    
+    updateBtn.addEventListener("click", function(btn){
+
+      const orderId = document.getElementById("order-id-input").value;
+      const orderStatus = document.getElementById("order-status-input").value;
+   
+
+       $.ajax({
+        type: "POST",
+        url: "order_operation.php",
+        data: {
+          order_id: orderId,
+          order_status: orderStatus,
+          operation: "admin-update-state",
+        },
+        dataType: "json",
+      }).done(function (response) { 
+
+          if(response.status == "OK"){
+            window.location.href = "admin_vieworder.php?order_id=" + orderId;
+          }else{
+            alert("Errore: " + response.text_message);
+          }
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.error("Errore AJAX:", textStatus, errorThrown);
+      });
+      
+    });
+
+});
 
 
 

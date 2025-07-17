@@ -3,6 +3,7 @@
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
+require_once("include/utility/AjaxResponse.php");
 require_once("include/model/Order.php");
 require_once("include/model/OrderItem.php");
 
@@ -26,8 +27,36 @@ $cartItemDAO = $factory->getCartItemDAO();
 
 
 
-// Inserimento di un nuovo ordine
-if(isset($_REQUEST["store"])){
+// Modifica dello stato dell'ordine da parte dell'admin
+if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "admin-update-state"){
+
+    // Se non sono stati forniti i dati necessari
+    if(!(isset($_REQUEST["order_id"]) && isset($_REQUEST["order_status"]))){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Effettuo l'aggiornamento dell stato nel db
+    $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
+
+    $order->setStatus($_REQUEST["order_status"]);
+
+
+    $order = $orderDAO->storeOrder($order);
+
+    // Se qualcosa è andato male
+    if($order == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Se tutto è andato bene
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+
+}
+// Inserimento di un nuovo ordine da parte dell'utente
+else if(isset($_REQUEST["store"])){
 
     // Se i campi necessari non sono settati tutti, rimanda ad un errore
     if(!(isset($_REQUEST["firstname"]) && isset($_REQUEST["lastname"]) && isset($_REQUEST["email_address"]) &&
@@ -63,7 +92,6 @@ if(isset($_REQUEST["store"])){
     $new_order->setAddress($new_address);
     $new_order->setPayment($paymentDAO->getPaymentById($_REQUEST["payment_method"]));
     $new_order->setUser($userDAO->getUserById($_SESSION["id"]));
-    $new_order->setDelivery($deliveryDAO->getDeliveryById(1));  
 
     $new_order = $orderDAO->storeOrder($new_order); // Inserisco nel db
 
@@ -76,6 +104,7 @@ if(isset($_REQUEST["store"])){
     header("Location: ". $query_string_builder->build());
 
 }
+
 
 
 // Se non viene inserita una parola per capire 

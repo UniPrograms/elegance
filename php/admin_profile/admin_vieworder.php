@@ -21,16 +21,26 @@ $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
 
 
 // Setto i fati dell'ordine
+
 $admin_vieworder_page->setContent("order_id",$order->getId());
-$admin_vieworder_page->setContent("order_creation_date",$order->getId());
-$admin_vieworder_page->setContent("order_delivery_date",$order->getId());
-$admin_vieworder_page->setContent("order_country",$order->getId());
-$admin_vieworder_page->setContent("order_town",$order->getId());
-$admin_vieworder_page->setContent("order_address",$order->getId());
-$admin_vieworder_page->setContent("order_cap",$order->getId());
-$admin_vieworder_page->setContent("order_status",$order->getId());
-$admin_vieworder_page->setContent("order_payment",$order->getId());
-$admin_vieworder_page->setContent("order_number_phone",$order->getId());
-$admin_vieworder_page->setContent("order_email",$order->getId());
+$admin_vieworder_page->setContent("order_date",$order->getOrderDate());
+$admin_vieworder_page->setContent("order_arrival_date",$order->getStatus() != "CONSEGNATO" ? "" : $order->getDeliveryDate());
+$admin_vieworder_page->setContent("order_address",$order->getAddress()->toString());
+$admin_vieworder_page->setContent("order_payment",$order->getPayment()->getName());
+$admin_vieworder_page->setContent("order_number_phone",$order->getAddress()->getPhoneNumber());
+$admin_vieworder_page->setContent("order_email",$order->getAddress()->getEmail());
+$admin_vieworder_page->setContent("order_customer",$order->getAddress()->getName()." ".$order->getAddress()->getSurname());
+$admin_vieworder_page->setContent("order_price",$order->getPrice());
+
+// Setto la select per definire gli stati dell'ordine
+$order_status = ["IN_LAVORAZIONE" => "in progress", 
+                 "SPEDITO" => "shipped", 
+                 "CONSEGNATO" => "delivered"];
+
+foreach($order_status as $key => $value){
+    $admin_vieworder_page->setContent("order_status_key", $key);
+    $admin_vieworder_page->setContent("order_status_value", $value);
+
+}
 
 ?>

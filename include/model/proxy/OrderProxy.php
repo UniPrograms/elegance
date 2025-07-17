@@ -7,7 +7,6 @@ class OrderProxy extends Order{
     private ?DataLayer $dataLayer;
     private int $userId;
     private int $paymentId;
-    private int $deliveryId;
     private int $addressId;
 
     public function __construct(?DataLayer $dataLayer){
@@ -20,13 +19,11 @@ class OrderProxy extends Order{
 
     public function getUserId(): int {return $this->userId;}
     public function getPaymentId(): int {return $this->paymentId;}
-    public function getDeliveryId(): int {return $this->deliveryId;}
     public function getAddressId(): int {return $this->addressId;}
     
     
     public function setUserId(int $userId): void { $this->userId = $userId; }
     public function setPaymentId(int $paymentId): void { $this->paymentId = $paymentId; }
-    public function setDeliveryId(int $deliveryId): void { $this->deliveryId = $deliveryId; }
     public function setAddressId(int $addressId): void { $this->addressId = $addressId; }
 
 
@@ -44,13 +41,6 @@ class OrderProxy extends Order{
             parent::setPayment((($this->dataLayer)->getPaymentDAO())->getPaymentById($this->paymentId));
         }
         return parent::getPayment();
-    }
-
-    public function getDelivery(): ?Delivery{
-        if(parent::getDelivery() == null && $this->deliveryId > 0){
-            parent::setDelivery((($this->dataLayer)->getDeliveryDAO())->getDeliveryById($this->deliveryId));
-        }
-        return parent::getDelivery();
     }
 
 

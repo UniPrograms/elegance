@@ -35,7 +35,6 @@ $order_details_page->setContent("order_id",$order->getId());
 $order_details_page->setContent("order_date",$order->getOrderDate());
 $order_details_page->setContent("order_status",$order->getStatus() != "CONSEGNATO" ? $order->getStatus() : $order->getStatus() ."(".$order->getDeliveryDate().")");
 $order_details_page->setContent("order_total_price",$order->getPrice());
-$order_details_page->setContent("order_delivery",$order->getDelivery()->getNAme());
 $order_details_page->setContent("order_payment",$order->getPayment()->getName());
 $order_details_page->setContent("order_recipient",$order->getAddress()->getName()." ".$order->getAddress()->getSurname());
 $order_details_page->setContent("order_address",$order->getAddress()->toString());

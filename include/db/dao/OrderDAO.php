@@ -31,8 +31,8 @@ class OrderDAO extends DAO {
         $this->stmtGetOrderById = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ?;");
         $this->stmtGetAllOrders = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO;");
         $this->stmtGetOrderByUser = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID_UTENTE = ?;");
-        $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (ID_INDIRIZZO, ID_UTENTE, ID_PAGAMENTO, ID_SPEDIZIONE) VALUES (?,?,?,?);");
-        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
+        $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (ID_INDIRIZZO, ID_UTENTE, ID_PAGAMENTO) VALUES (?,?,?);");
+        $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, ID_INDIRIZZO = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ? WHERE ID = ?;");
         $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
         $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ? AND ID_UTENTE = ?;");
         $this->stmtGetAllOrdersCount = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM ORDINE_COMPLETO; ");
@@ -172,13 +172,11 @@ class OrderDAO extends DAO {
         if ($order->getId() !== null) { 
             $this->stmtUpdateOrder->bindValue(1, $order->getOrderDate(), PDO::PARAM_STR);
             $this->stmtUpdateOrder->bindValue(2, $order->getDeliveryDate(), PDO::PARAM_STR);
-            $this->stmtUpdateOrder->bindValue(3, $order->getPrice(), PDO::PARAM_STR);
-            $this->stmtUpdateOrder->bindValue(4, $order->getAddress()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateOrder->bindValue(5, $order->getStatus(), PDO::PARAM_STR);
-            $this->stmtUpdateOrder->bindValue(6, $order->getUser()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateOrder->bindValue(7, $order->getPayment()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateOrder->bindValue(8, $order->getDelivery()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateOrder->bindValue(9, $order->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateOrder->bindValue(3, $order->getAddress()->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateOrder->bindValue(4, $order->getStatus(), PDO::PARAM_STR);
+            $this->stmtUpdateOrder->bindValue(5, $order->getUser()->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateOrder->bindValue(6, $order->getPayment()->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateOrder->bindValue(7, $order->getId(), PDO::PARAM_INT);
             
             if($this->stmtUpdateOrder->execute()){
                 return $order;
@@ -187,7 +185,6 @@ class OrderDAO extends DAO {
             $this->stmtInsertOrder->bindValue(1, $order->getAddress()->getId(), PDO::PARAM_INT);
             $this->stmtInsertOrder->bindValue(2, $order->getUser()->getId(), PDO::PARAM_INT);
             $this->stmtInsertOrder->bindValue(3, $order->getPayment()->getId(), PDO::PARAM_INT);
-            $this->stmtInsertOrder->bindValue(4, $order->getDelivery()->getId(), PDO::PARAM_INT);
 
             if($this->stmtInsertOrder->execute()){
                 $order->setId($this->conn->lastInsertId());
@@ -222,7 +219,6 @@ class OrderDAO extends DAO {
         $order->setStatus($rs['STATO']);
         $order->setUserId($rs['ID_UTENTE']);
         $order->setPaymentId($rs['ID_PAGAMENTO']);
-        $order->setDeliveryId($rs['ID_SPEDIZIONE']);
         return $order;
     }
 
