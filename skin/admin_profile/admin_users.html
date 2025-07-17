@@ -8,6 +8,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Role</th>
         <th>Registered on</th>
         <th>Actions</th>
       </tr>
@@ -18,6 +19,7 @@
         <td><[user_id::idformatter library="utility"]></td>
         <td><[user_name::strformatter type="title" library="utility"]></td>
         <td><[user_email]></td>
+        <td><[user_role::strformatter type="title" library="utility"]></td>
         <td><[user_registration_date]></td>
         <td class="actions">
           <button class="view admin-details-user" value=<[user_value]>>View</button>

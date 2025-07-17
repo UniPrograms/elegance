@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function(){
       }).done(function (response) { 
 
           if(response.status == "OK"){
-            alert("fatto");
+            window.location.href = "admin_viewuser.php?user_id=" + userId;
           }else{
             alert("Errore: " + response.text_message);
           }
