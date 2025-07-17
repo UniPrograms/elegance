@@ -77,6 +77,19 @@
   color: #333;
   background: #f8f9fa;
 }
+
+.user-profile .info-list li select {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #333;
+  background: #f8f9fa;
+}
+
+
 .user-profile .info-list li input[readonly] {
   background: #f8f9fa;
   color: #555;

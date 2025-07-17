@@ -32,7 +32,7 @@ class UserDAO extends DAO{
         $this->stmtGetAllUsersCount = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM UTENTE WHERE RUOLO = ?;");
         $this->stmtGetAllUsersByRole = $this->conn->prepare("SELECT * FROM UTENTE WHERE RUOLO = ?;");
         $this->stmtInsertUser = $this->conn->prepare("INSERT INTO UTENTE (NOME, COGNOME, EMAIL, PASSWORD, RUOLO, URL_IMAGE, NUMERO_TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);");
-        $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ?, URL_IMAGE = ?, NUMERO_TELEFONO = ? WHERE ID = ?;");
+        $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ?, URL_IMAGE = ?, NUMERO_TELEFONO = ?, RUOLO = ? WHERE ID = ?;");
         $this->stmtDeleteUser = $this->conn->prepare("DELETE FROM UTENTE WHERE ID = ?;");
     }
 
@@ -130,7 +130,8 @@ class UserDAO extends DAO{
             $this->stmtUpdateUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(5, $user->getImage(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(6, $user->getPhoneNumber(), PDO::PARAM_STR);
-            $this->stmtUpdateUser->bindValue(7, $user->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateUser->bindValue(7, $user->getRole(), PDO::PARAM_STR);
+            $this->stmtUpdateUser->bindValue(8, $user->getId(), PDO::PARAM_INT);
 
             if($this->stmtUpdateUser->execute()){
                 return $user;

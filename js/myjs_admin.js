@@ -168,3 +168,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+// Aggiornamento dati utente admin
+document.addEventListener('DOMContentLoaded', function(){
+
+    const updateBtn = document.querySelector("#admin-update-user");
+    
+    updateBtn.addEventListener("click", function(btn){
+
+      const userId = document.getElementById("user-id").value;
+      const userName = document.getElementById("user-name").value;
+      const userSurname = document.getElementById("user-surname").value;
+      const userEmail = document.getElementById("user-email").value;
+      const userRole = document.getElementById("user-role-input").value;
+      const userPhone = document.getElementById("user-phone").value;
+      const userDate = document.getElementById("user-date").value;
+
+
+       $.ajax({
+        type: "POST",
+        url: "user_operation.php",
+        data: {
+          user_id: userId,
+          user_name: userName,
+          user_surname: userSurname,
+          user_email: userEmail,
+          user_role: userRole,
+          user_phone_number: userPhone,
+          user_registration_date: userDate,
+          operation: "admin-update",
+        },
+        dataType: "json",
+      }).done(function (response) { 
+
+          if(response.status == "OK"){
+            alert("fatto");
+          }else{
+            alert("Errore: " + response.text_message);
+          }
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.error("Errore AJAX:", textStatus, errorThrown);
+      });
+      
+    });
+
+});
+
+
+
+// Aggiornamento dati ordine admin
+
+
+
+
+// Aggiornamento dati prodotto admin

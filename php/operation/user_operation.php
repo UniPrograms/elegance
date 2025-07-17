@@ -108,4 +108,39 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     exit;
 }
 
+
+
+// Aggiornamento di un utente da parte dell'amministratore
+else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
+
+
+    if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && isset($_REQUEST["user_email"]) && 
+         isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]) && isset($_REQUEST["user_registration_date"]))){
+            echo AjaxResponse::genericServerError()->build();
+            exit;
+        }
+
+    // Costruisco l'utente
+    $user = $userDAO->getUserById($_REQUEST["user_id"]);
+
+    $user->setName($_REQUEST["user_name"]);
+    $user->setSurname($_REQUEST["user_surname"]);
+    $user->setRole($_REQUEST["user_role"]);
+    $user->setPhoneNumber($_REQUEST["user_phone_number"]);
+
+    // Eseguo l'operazione sul db
+    $user = $userDAO->storeUser($user);
+
+    // Se qualcosa è andato storto
+    if($user == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Se è andato tutto bene
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+    
+}
 ?>
