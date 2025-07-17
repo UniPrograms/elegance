@@ -1,143 +1,30 @@
-<html lang="en"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/mycss_admin.css">
-</head>
-<body>
-
-  <aside class="sidebar">
-    <img src="https://fv5-5.files.fm/thumb_show.php?i=fumh79bxsj&amp;view&amp;v=1&amp;PHPSESSID=9835c3f9a2fd8e3786e1a2675517cd5c6dd9be1d" alt="User Profile" class="profile-img">
-    <div class="user-name">Mario Rossi</div>
-    <ul>
-      <li class="" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-      <li onclick="showSection('products')" class=""><i class="fas fa-box-open"></i> Products</li>
-      <li onclick="showSection('orders')" class=""><i class="fas fa-shopping-cart"></i> Orders</li>
-      <li onclick="showSection('users')" class="active"><i class="fas fa-users"></i> Users</li>
-    </ul>
-  </aside>
-
-  <main class="main">
-    <div class="header">
-      <h1>Users</h1>
-      <a href="../../profile.php" class="profile-link">Profile</a>
-    </div>
-
-    <section id="dashboard" class="">
-      <div class="cards">
-        <div class="card">
-          <div>
-            <h4>Registered Users</h4>
-            <div class="number">152</div>
-          </div>
-          <i class="fas fa-user"></i>
-        </div>
-
-        <div class="card">
-          <div>
-            <h4>Orders Placed</h4>
-            <div class="number">89</div>
-          </div>
-          <i class="fas fa-shopping-bag"></i>
-        </div>
-
-        <div class="card">
-          <div>
-            <h4>Products in Stock</h4>
-            <div class="number">325</div>
-          </div>
-          <i class="fas fa-boxes"></i>
-        </div>
-
-        <div class="card">
-          <div>
-            <h4>Orders in Progress</h4>
-            <div class="number">12</div>
-          </div>
-          <i class="fas fa-clock"></i>
-        </div>
-
-        <div class="card">
-          <div>
-            <h4>Revenue Last 30 Days</h4>
-            <div class="number">€3,200.00</div>
-          </div>
-          <i class="fas fa-euro-sign"></i>
-        </div>
-      </div>
-    </section>
-
-    <section id="products" class="">
-      <div class="search-box">
-        <input type="text" placeholder="Search products...">
-      </div>
-      <table id="products-table">
-        <thead>
-          <tr>
-            <th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>001</td><td>Men's Jacket</td><td>Clothing</td><td>€99.90</td><td>15</td>
-            <td class="actions">
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="orders" class="">
-      <div class="search-box">
-        <input type="text" placeholder="Search orders...">
-      </div>
-      <table id="orders-table">
-        <thead>
-          <tr>
-            <th>Order ID</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>#1023</td><td>Luca Bianchi</td><td>2025-07-15</td><td>€149.90</td><td>Shipped</td>
-            <td class="actions">
-              <button class="view">View</button>
-              <button class="delete">Cancel</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="users" class="active">
-      <div class="search-box">
-        <input type="text" placeholder="Search users...">
-      </div>
-      <table id="users-table">
-        <thead>
-          <tr>
-            <th>ID</th><th>Name</th><th>Email</th><th>Registered on</th><th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>U1001</td><td>Giulia Verdi</td><td>giulia@email.com</td><td>2025-06-10</td>
-            <td class="actions">
-              <button class="view">View</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
-
-  <script>
-  </script>
-  <script src="../../js/myjs_admin.js"></script>
-  
-
-
-
-</body></html>
+<section id="users" class="active">
+  <div class="search-box">
+    <input type="text" placeholder="Search users..." />
+  </div>
+  <table id="users-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Registered on</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <[foreach]>
+      <tr>
+        <td><[user_id::idformatter library="utility"]></td>
+        <td><[user_name::strformatter type="title" library="utility"]></td>
+        <td><[user_email]></td>
+        <td><[user_registration_date]></td>
+        <td class="actions">
+          <button class="view">View</button>
+          <button class="delete">Delete</button>
+        </td>
+      </tr>
+      <[/foreach]>
+    </tbody>
+  </table>
+</section>

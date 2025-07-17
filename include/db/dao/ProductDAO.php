@@ -49,6 +49,8 @@ class ProductDAO extends DAO{
         $this->stmtGetPopularProductInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA LIMIT ? OFFSET ?;");
         $this->stmtGetPopularProductBySex= $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ?;");
         $this->stmtGetPopularProductBySexInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ? LIMIT ? OFFSET ?;");
+        
+        
         $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
@@ -235,53 +237,53 @@ class ProductDAO extends DAO{
                                    ?int $sizeId = null, ?int $productorId = null, ?float $minPrice = null, ?float $maxPrice = null, 
                                    ?int $limit = null, ?int $offset = null): array {
 
-    if ($limit === null && $offset === null) {
-        $stmt = $this->stmtGetProductFiltered;
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $name === null ? null : "%" . $name . "%");
-        $stmt->bindValue(3, $categoryId);
-        $stmt->bindValue(4, $categoryId);
-        $stmt->bindValue(5, $sexId);
-        $stmt->bindValue(6, $sexId);
-        $stmt->bindValue(7, $colorId);
-        $stmt->bindValue(8, $colorId);
-        $stmt->bindValue(9, $sizeId);
-        $stmt->bindValue(10, $sizeId);
-        $stmt->bindValue(11, $productorId);
-        $stmt->bindValue(12, $productorId);
-        $stmt->bindValue(13, $minPrice);
-        $stmt->bindValue(14, $minPrice);
-        $stmt->bindValue(15, $maxPrice);
-        $stmt->bindValue(16, $maxPrice);
-    } else {
-        $stmt = $this->stmtGetProductFilteredInRange;
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $name === null ? null : "%" . $name . "%");
-        $stmt->bindValue(3, $categoryId);
-        $stmt->bindValue(4, $categoryId);
-        $stmt->bindValue(5, $sexId);
-        $stmt->bindValue(6, $sexId);
-        $stmt->bindValue(7, $colorId);
-        $stmt->bindValue(8, $colorId);
-        $stmt->bindValue(9, $sizeId);
-        $stmt->bindValue(10, $sizeId);
-        $stmt->bindValue(11, $productorId);
-        $stmt->bindValue(12, $productorId);
-        $stmt->bindValue(13, $minPrice);
-        $stmt->bindValue(14, $minPrice);
-        $stmt->bindValue(15, $maxPrice);
-        $stmt->bindValue(16, $maxPrice);
-        $stmt->bindValue(17, $limit, PDO::PARAM_INT);
-        $stmt->bindValue(18, $offset, PDO::PARAM_INT);
-    }
+        if ($limit === null && $offset === null) {
+            $stmt = $this->stmtGetProductFiltered;
+            $stmt->bindValue(1, $name);
+            $stmt->bindValue(2, $name === null ? null : "%" . $name . "%");
+            $stmt->bindValue(3, $categoryId);
+            $stmt->bindValue(4, $categoryId);
+            $stmt->bindValue(5, $sexId);
+            $stmt->bindValue(6, $sexId);
+            $stmt->bindValue(7, $colorId);
+            $stmt->bindValue(8, $colorId);
+            $stmt->bindValue(9, $sizeId);
+            $stmt->bindValue(10, $sizeId);
+            $stmt->bindValue(11, $productorId);
+            $stmt->bindValue(12, $productorId);
+            $stmt->bindValue(13, $minPrice);
+            $stmt->bindValue(14, $minPrice);
+            $stmt->bindValue(15, $maxPrice);
+            $stmt->bindValue(16, $maxPrice);
+        } else {
+            $stmt = $this->stmtGetProductFilteredInRange;
+            $stmt->bindValue(1, $name);
+            $stmt->bindValue(2, $name === null ? null : "%" . $name . "%");
+            $stmt->bindValue(3, $categoryId);
+            $stmt->bindValue(4, $categoryId);
+            $stmt->bindValue(5, $sexId);
+            $stmt->bindValue(6, $sexId);
+            $stmt->bindValue(7, $colorId);
+            $stmt->bindValue(8, $colorId);
+            $stmt->bindValue(9, $sizeId);
+            $stmt->bindValue(10, $sizeId);
+            $stmt->bindValue(11, $productorId);
+            $stmt->bindValue(12, $productorId);
+            $stmt->bindValue(13, $minPrice);
+            $stmt->bindValue(14, $minPrice);
+            $stmt->bindValue(15, $maxPrice);
+            $stmt->bindValue(16, $maxPrice);
+            $stmt->bindValue(17, $limit, PDO::PARAM_INT);
+            $stmt->bindValue(18, $offset, PDO::PARAM_INT);
+        }
 
-    $stmt->execute();
+        $stmt->execute();
     
-    $result = [];
-    while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $result[] = $this->getProductById($rs["ID_PRODOTTO"]);
-    }
-    return $result;
+        $result = [];
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->getProductById($rs["ID_PRODOTTO"]);
+        }
+        return $result;
 }
     /**
     * 

@@ -1,5 +1,11 @@
-1. numero utenti registrati
+1. numero utenti registrati 
 2. numero ordini effettuati (totali)
+
+
+
+-------------------------------------------------------------
+
+
 3. prodotti in stock (totali)
 4. ordini in elaborazione (tutti quelli IN_LAVORAZIONE)
 5. ricavi ultimi 30 giorni

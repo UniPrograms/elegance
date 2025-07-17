@@ -15,8 +15,9 @@ class OrderDAO extends DAO {
     private PDOStatement $stmtUpdateOrder;
     private PDOStatement $stmtDeleteOrder;
     private PDOStatement $stmtGetOrderByIdAndUserId;
-
-
+    private PDOStatement $stmtGetAllOrdersCount;
+    private PDOStatement $stmtGetAllOrdersCountByStatus;
+    private PDOStatement $stmtGetOrderRevanueFromMonthAndYear;
 
     // Costruttore
     public function __construct(?DataLayer $dataLayer) {
@@ -34,6 +35,10 @@ class OrderDAO extends DAO {
         $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, PREZZO = ?, INDIRIZZO_CONSEGNA = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ?, ID_SPEDIZIONE = ? WHERE ID = ?;");
         $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
         $this->stmtGetOrderByIdAndUserId = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ? AND ID_UTENTE = ?;");
+        $this->stmtGetAllOrdersCount = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM ORDINE_COMPLETO; ");
+        $this->stmtGetAllOrdersCountByStatus = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM ORDINE_COMPLETO WHERE STATO = ?;");
+        $this->stmtGetOrderRevanueFromMonthAndYear = $this->conn->prepare("SELECT COALESCE(SUM(PREZZO_TOTALE), 0) AS TOTAL FROM ORDINE_COMPLETO WHERE MONTH(DATA_ORDINE) = ? AND YEAR(DATA_ORDINE) = ?;");
+    
     }
 
 
@@ -111,6 +116,22 @@ class OrderDAO extends DAO {
      * 
      * 
      */
+     public function getOrderRevanueFromMonthAndYear(?int $month, ?int $year): float {
+        $this->stmtGetOrderRevanueFromMonthAndYear->bindValue(1, $month, PDO::PARAM_INT);
+        $this->stmtGetOrderRevanueFromMonthAndYear->bindValue(2, $year, PDO::PARAM_INT);
+        $this->stmtGetOrderRevanueFromMonthAndYear->execute();
+        
+        $rs = $this->stmtGetOrderRevanueFromMonthAndYear->fetch(PDO::FETCH_ASSOC);
+        
+        return $rs["TOTAL"];
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
     public function getOrderByIdAndUserId(int $id_order, int $id_user): ?Order{
         $this->stmtGetOrderByIdAndUserId->bindValue(1, $id_order, PDO::PARAM_INT);
         $this->stmtGetOrderByIdAndUserId->bindValue(2, $id_user, PDO::PARAM_INT);
@@ -120,7 +141,27 @@ class OrderDAO extends DAO {
 
         return $rs ? $this->createOrder($rs) : null;
     }
- /**
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllOrdersCount(?string $status = null): ?int{
+        if($status == null){
+            $stmt = $this->stmtGetAllOrdersCount;
+        }else{
+            $stmt = $this->stmtGetAllOrdersCountByStatus;
+            $stmt->bindValue(1, strtoupper($status), PDO::PARAM_STR);
+        }
+
+        $stmt->execute();
+        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $rs["COUNTER"];
+    }
+    /**
      * 
      * 
      * 

@@ -10,6 +10,8 @@ class UserDAO extends DAO{
     private PDOStatement $stmtGetUserById;
     private PDOStatement $stmtGetAllUsers;
     private PDOStatement $stmtGetUserByEmail;
+    private PDOStatement $stmtGetAllUsersByRole;
+    private PDOStatement $stmtGetAllUsersCount;
     private PDOStatement $stmtInsertUser;
     private PDOStatement $stmtUpdateUser;
     private PDOStatement $stmtDeleteUser;
@@ -27,6 +29,8 @@ class UserDAO extends DAO{
         $this->stmtGetUserById = $this->conn->prepare("SELECT * FROM UTENTE WHERE ID = ?;");
         $this->stmtGetAllUsers = $this->conn->prepare("SELECT * FROM UTENTE;");
         $this->stmtGetUserByEmail = $this->conn->prepare("SELECT * FROM UTENTE WHERE EMAIL = ?;");
+        $this->stmtGetAllUsersCount = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM UTENTE WHERE RUOLO = ?;");
+        $this->stmtGetAllUsersByRole = $this->conn->prepare("SELECT * FROM UTENTE WHERE RUOLO = ?;");
         $this->stmtInsertUser = $this->conn->prepare("INSERT INTO UTENTE (NOME, COGNOME, EMAIL, PASSWORD, RUOLO, URL_IMAGE, NUMERO_TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);");
         $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ?, URL_IMAGE = ?, NUMERO_TELEFONO = ? WHERE ID = ?;");
         $this->stmtDeleteUser = $this->conn->prepare("DELETE FROM UTENTE WHERE ID = ?;");
@@ -79,6 +83,37 @@ class UserDAO extends DAO{
         $rs = $this->stmtGetUserByEmail->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createUser($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getUserByRole(string $role): array {
+        $this->stmtGetAllUsersByRole->bindValue(1, strtoupper($role), PDO::PARAM_STR);
+        $this->stmtGetAllUsersByRole->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllUsersByRole->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createUser($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllUsersCount(string $role): ?int {
+        $this->stmtGetAllUsersCount->bindValue(1, strtoupper($role), PDO::PARAM_STR);
+        $this->stmtGetAllUsersCount->execute();
+        $rs = $this->stmtGetAllUsersCount->fetch(PDO::FETCH_ASSOC);
+
+        return $rs['COUNTER'];
     }
      /**
      * 
