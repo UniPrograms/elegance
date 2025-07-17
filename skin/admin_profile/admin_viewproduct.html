@@ -1,1 +1,37 @@
-<div>ciccia</div>
+<div class="product-admin-flexbox">
+  <div class="user-profile">
+    <div class="header">
+      <div>
+        <h2 id="product-name"><[product_name]></h2>
+        <h4 id="product-brand"><[product_brand]></h4>
+      </div>
+    </div>
+    <ul class="info-list">
+      <li><span class="label">ID:</span> <input type="text" id="product-id" value="<[product_id]>" readonly /></li>
+      <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name]>" /></li>
+      <li><span class="label">Prezzo:</span> <input type="text" id="product-price" value="<[product_price]>" /></li>
+      <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3" style="width:67.5%;resize:vertical;"><[product_description]></textarea></li>
+      <li><span class="label">Carica Immagine:</span> <input type="file" id="product-cover-img-file" accept="image/*" style="width:100%"></li>
+      <li><span class="label">Brand:</span> <input type="text" id="product-brand-input" value="<[product_brand]>" /></li>
+      <li><span class="label">Categoria:</span> <input type="text" id="product-category" value="<[product_category]>" /></li>
+      <li><span class="label">Sesso:</span>
+        <select id="product-gender" name="product-gender">
+          <option value="UOMO" <[product_gender_selected_uomo]> >Uomo</option>
+          <option value="DONNA" <[product_gender_selected_donna]> >Donna</option>
+          <option value="UNISEX" <[product_gender_selected_unisex]> >Unisex</option>
+        </select>
+      </li>
+      <li style="display: flex; align-items: center; justify-content: space-between;">
+        <button class="add-article-button" id="admin-add-article" type="button">Aggiungi articolo</button>
+        <button class="save-button" id="admin-update-product">Save</button>
+      </li>
+    </ul>
+  </div>
+  <div class="product-image-panel">
+    <div class="product-image-preview-wrapper">
+      <img id="product-image-preview" src="https://fv5-5.files.fm/thumb_show.php?i=fumh79bxsj" alt="Preview immagine prodotto" />
+    </div>
+    <input type="file" id="product-image-file-input" accept="image/*" style="display:none;" />
+    <button class="edit-image-button" id="admin-edit-product-image" type="button" onclick="document.getElementById('product-image-file-input').click();">Modifica immagine</button>
+  </div>
+</div>
