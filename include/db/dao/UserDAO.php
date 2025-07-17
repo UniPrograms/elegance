@@ -152,15 +152,26 @@ class UserDAO extends DAO{
         }
         return null;
     }
-     /**
-     * 
-     * 
-     * 
-     * 
-     * 
-     */
-     public function deleteUser(User $user): bool {
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function deleteUser(User $user): bool {
         $this->stmtDeleteUser->bindValue(1, $user->getId(), PDO::PARAM_INT);
+        return $this->stmtDeleteUser->execute();
+    }
+    /*
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function deleteUserById(int $id): bool {
+        $this->stmtDeleteUser->bindValue(1, $id, PDO::PARAM_INT);
         return $this->stmtDeleteUser->execute();
     }
 

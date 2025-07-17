@@ -77,11 +77,35 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-passw
 // Eliminazione di un utente
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
+    header("Content-Type: application/json;");
+
+
+    // Se non è stato passato l'id
+    if(!isset($_REQUEST["user_id"])){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message", "Errore del server.");
+        $ajax_response->add("text_message","Non è stato possibile eliminare l'utente.");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    // Eseguo la query
+    $result = $userDAO->deleteUser($_REQUEST["user_id"]);
+
+    // Se non è andata a buon fine
+    if(!$result){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("title_message", "Errore del server.");
+        $ajax_response->add("text_message","Non è stato possibile eliminare l'utente.");
+        echo $ajax_response->build();
+        exit;
+    }
+
+
+    // Se è andato tutto bene
+    $ajax_response = new AjaxResponse("OK");
+    echo $ajax_response->build();
+    exit;
 }
 
-
-// Altrimenti
-else{
-
-}
 ?>

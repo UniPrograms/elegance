@@ -26,6 +26,9 @@ foreach($users as $user){
     $admin_users_page->setContent("user_email",$user->getEmail());
     $admin_users_page->setContent("user_registration_date",$user->getRegistrationDate());
 
+
+    $admin_users_page->setContent("user_value", $user->getId());
+
 }
 
 ?>

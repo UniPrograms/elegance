@@ -17,3 +17,39 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+
+// Controllo delete eliminazione utente
+document.addEventListener('DOMContentLoaded', function(){
+  
+  // Selettore per tutti i bottoni "Sposta nel carrello" dalla wishlist
+  document.querySelectorAll('.admin-delete-user').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var userId = this.getAttribute("value");
+      
+      $.ajax({
+        type: "POST",
+        url: "user_operation.php",
+        data: {
+          user_id: userId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        alert("ciccia");
+
+        if(response.status == "OK"){
+          alert("Utente eliminato con successo.");
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+  console.error("Errore AJAX:", textStatus, errorThrown);
+});
+
+    });
+  });
+});
