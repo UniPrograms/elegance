@@ -27,6 +27,7 @@ foreach($products as $product){
     $admin_products_page->setContent("product_brand",$product->getProductor()->getName());
     $admin_products_page->setContent("product_price",$product->getPrice());
 
+    $admin_products_page->setContent("product_value",$product->getId());
 }
 
 ?>

@@ -27,6 +27,7 @@ foreach($orders as $order){
     $admin_orders_page->setContent("order_price",$order->getPrice());
     $admin_orders_page->setContent("order_status",$order->getStatus() != "CONSEGNATO" ? $order->getStatus() : $order->getStatus() ."(".$order->getDeliveryDate().")");
 
+    $admin_orders_page->setContent("order_value", $order->getId());
 }
 
 ?>

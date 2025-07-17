@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Controllo delete eliminazione utente
 document.addEventListener('DOMContentLoaded', function(){
-  
-  // Selettore per tutti i bottoni "Sposta nel carrello" dalla wishlist
   document.querySelectorAll('.admin-delete-user').forEach(function(btn) {
     btn.addEventListener('click', function() {
 
@@ -52,6 +50,121 @@ document.addEventListener('DOMContentLoaded', function(){
   console.error("Errore AJAX:", textStatus, errorThrown);
 });
 
+    });
+  });
+});
+
+
+// Reindirizzamento alla pagina dei dettagli utente
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-user').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var userId = this.getAttribute("value");
+      window.location.href = "admin_viewuser.php?user_id="+userId;
+      
+    });
+  });
+});
+
+
+// Controllo delete eliminazione ordine
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-order').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var orderId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "order_operation.php",
+        data: {
+          order_id: orderId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.error("Errore AJAX:", textStatus, errorThrown);
+      });
+
+    });
+  });
+});
+
+
+// Reindirizzamento alla pagina dei dettagli dell'ordine
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-order').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var orderId = this.getAttribute("value");
+      window.location.href = "admin_vieworder.php?order_id="+orderId;
+      
+    });
+  });
+});
+
+
+
+// Controllo delete eliminazione prodotto
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-product').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var productId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "product_operation.php",
+        data: {
+          product_id: productId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.error("Errore AJAX:", textStatus, errorThrown);
+      });
+
+    });
+  });
+});
+
+
+// Reindirizzamento alla pagina dei dettagli del prodotto
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-product').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var productId = this.getAttribute("value");
+      window.location.href = "admin_viewproduct.php?product_id="+productId;
+      
     });
   });
 });
