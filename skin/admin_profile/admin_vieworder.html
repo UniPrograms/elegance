@@ -1,1 +1,27 @@
-<div>Ciccia</div>
+<div class="user-profile">
+  <div class="header">
+    <div>
+      <h2 id="order-id">Ordine #<[order_id]></h2>
+      <h4 id="order-status"><[order_status]></h4>
+    </div>
+  </div>
+  <ul class="info-list">
+    <li><span class="label">ID:</span> <input type="text" id="order-id-input" value="<[order_id]>" readonly /></li>
+    <li><span class="label">Data ordine:</span> <input type="text" id="order-date" value="<[order_date]>" readonly /></li>
+    <li><span class="label">Data arrivo:</span> <input type="text" id="order-arrival-date" value="<[order_arrival_date]>" readonly /></li>
+    <li><span class="label">Via + Civico:</span> <input type="text" id="order-address" value="<[order_address]>" readonly /></li>
+    <li><span class="label">Stato:</span>
+      <select id="order-status-input" name="order-status">
+        <option value="IN ATTESA" <[order_status_selected_attesa]> >In attesa</option>
+        <option value="IN CONSEGNA" <[order_status_selected_consegna]> >In consegna</option>
+        <option value="CONSEGNATO" <[order_status_selected_consegnato]> >Consegnato</option>
+        <option value="ANNULLATO" <[order_status_selected_annullato]> >Annullato</option>
+      </select>
+    </li>
+    <li><span class="label">Tipo Pagamento:</span> <input type="text" id="order-payment-type" value="<[order_payment_type]>" readonly /></li>
+    <li><span class="label">Email:</span> <input type="text" id="order-email" value="<[order_email]>" readonly /></li>
+    <li><span class="label">Numero di telefono:</span> <input type="text" id="order-phone" value="<[order_phone]>" readonly /></li>
+    <li><span class="label">Nome utente:</span> <input type="text" id="order-username" value="<[order_username]>" readonly /></li>
+    <li class="last-element"><button class="save-button" id="admin-update-order">Save</button></li>
+  </ul>
+</div>
