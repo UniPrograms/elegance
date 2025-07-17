@@ -2,8 +2,8 @@
   <div class="header">
     <img src="<[user_img_url]>" alt="User Image" id="user-image">
     <div>
-      <h2 id="user-fullname">Giovanni</h2>
-      <h4 id="user-role"><[user_role]></h4>
+      <h2 id="user-fullname"><[user_name::strformatter type="title" library="utility"]></h2>
+      <h4 id="user-role"><[user_role::strformatter type="title" library="utility"]></h4>
     </div>
   </div>
   <ul class="info-list">
@@ -19,7 +19,7 @@
     </li>
     <li><span class="label">Phone:</span> <input type="text" id="user-phone" value="<[user_phone]>"/></li>
     <li><span class="label">Registration Date:</span> <input type="text" id="user-date" value="<[user_registration_date]>" readonly /></li>
-    <li><button class="save-button" id="admin-update-user">Save</button></li>
+    <li class="last-element"><button class="save-button" id="admin-update-user">Save</button></li>
   </ul>
   
 </div>
