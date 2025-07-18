@@ -1,5 +1,5 @@
-<div class="product-admin-flexbox">
-  <div class="user-profile">
+<div class="product-admin-flexbox" style="display:flex; gap:2rem; align-items:stretch;">
+  <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; justify-content:flex-start;">
     <div class="header">
       <div>
         <h2 id="product-name"><[product_name]></h2>
@@ -10,7 +10,7 @@
       <li><span class="label">ID:</span> <input type="text" id="product-id" value="<[product_id]>" readonly /></li>
       <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name]>" /></li>
       <li><span class="label">Prezzo:</span> <input type="text" id="product-price" value="<[product_price]>" /></li>
-      <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3" style="width:67.5%;resize:vertical;"><[product_description]></textarea></li>
+      <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3"><[product_description]></textarea></li>
       <li style="display: flex; align-items: center;">
         <span class="label" style="flex:1;">Carica Immagine:</span>
         <div style="flex:2; display:flex; gap:0.5rem; align-items:center;">
@@ -46,12 +46,16 @@
       </li>
     </ul>
   </div>
-  <div class="product-image-panel">
-    <div class="product-images-gallery" id="product-images-gallery">
-      <!-- Qui verranno mostrate le anteprime delle immagini caricate -->
+  <div class="product-image-panel" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:2rem 2rem 1.5rem 2rem; border:1px solid #e0e0e0;">
+    <div style="width:100%; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:1.5rem; align-items:center; justify-items:center; flex:1;">
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
     </div>
     <input type="file" id="product-images-input" accept="image/*" multiple style="display:none;" />
     <button class="edit-image-button" id="admin-add-product-images" type="button">Aggiungi foto prodotto</button>
   </div>
-  
 </div>
