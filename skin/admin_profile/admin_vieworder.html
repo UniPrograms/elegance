@@ -1,26 +1,44 @@
-<div class="user-profile">
-  <div class="header">
-    <div>
-      <h2 id="order-id">Ordine (<[order_id::idformatter library="utility"]>)</h2>
+<div class="order-admin-flexbox" style="display:flex; gap:2rem; align-items:stretch;">
+  <!-- Box ordine -->
+  <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; justify-content:flex-start;">
+    <div class="header">
+      <div>
+        <h2 id="order-id">Ordine (<[order_id::idformatter library="utility"]>)</h2>
+      </div>
     </div>
+    <ul class="info-list">
+      <li><span class="label">ID:</span> <input type="text" id="order-id-input" value="<[order_id]>" readonly /></li>
+      <li><span class="label">Order Date:</span> <input type="text" id="order-date" placeholder="YYYY-MM-DD" value="<[order_date]>" readonly /></li>
+      <li><span class="label">Delivery Date:</span> <input type="text" id="order-arrival-date"  placeholder="YYYY-MM-DD" value="<[order_arrival_date]>" readonly/>  </li>
+      <li><span class="label">Price:</span> <input type="text" id="order-price" value="<[order_price]> $" readonly /></li>
+      <li><span class="label">Status:</span>
+        <select id="order-status-input" name="order-status">
+          <[foreach]>
+          <option value=<[order_status_key]>><[order_status_value::strformatter type="title" library="utility"]></option>
+          <[/foreach]>
+        </select>
+      </li>
+      <li><span class="label">Payment Method:</span> <input type="text" id="order-payment-type" value="<[order_payment::strformatter type="title" library="utility"]>" readonly /></li>
+      <li class="last-element"><button class="save-button" id="admin-update-order">Save</button></li>
+    </ul>
   </div>
-  <ul class="info-list">
-    <li><span class="label">ID:</span> <input type="text" id="order-id-input" value="<[order_id]>" readonly /></li>
-    <li><span class="label">Customer:</span> <input type="text" id="order-username" value="<[order_customer::strformatter type="title" library="utility"]>" readonly /></li>
-    <li><span class="label">Email:</span> <input type="text" id="order-email" value="<[order_email]>" readonly /></li>
-    <li><span class="label">Order Date:</span> <input type="text" id="order-date" placeholder="YYYY-MM-DD" value="<[order_date]>" readonly /></li>
-    <li><span class="label">Delivery Date:</span> <input type="text" id="order-arrival-date"  placeholder="YYYY-MM-DD" value="<[order_arrival_date]>" readonly/>  </li>
-    <li><span class="label">Address:</span> <input type="text" id="order-address" value="<[order_address::strformatter type="title" library="utility"]>" readonly /></li>
-    <li><span class="label">Price:</span> <input type="text" id="order-price" value="<[order_price]> $" readonly /></li>
-    <li><span class="label">Status:</span>
-      <select id="order-status-input" name="order-status">
-        <[foreach]>
-        <option value=<[order_status_key]>><[order_status_value::strformatter type="title" library="utility"]></option>
-        <[/foreach]>
-      </select>
-    </li>
-    <li><span class="label">Payment Method:</span> <input type="text" id="order-payment-type" value="<[order_payment::strformatter type="title" library="utility"]>" readonly /></li>
-    <li><span class="label">Phone Number:</span> <input type="text" id="order-phone" value="<[order_number_phone]>" readonly /></li>
-    <li class="last-element"><button class="save-button" id="admin-update-order">Save</button></li>
-  </ul>
+  <!-- Box utente -->
+  <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; align-items:left; justify-content:flex-start;">
+    <div class="header">
+      <div>
+        <h2 id="user-title">Dati Cliente</h2>
+      </div>
+    </div>
+    <ul class="info-list" style="width:100%; background:transparent; border:none; padding:0;">
+      <li><span class="label">Customer:</span> <input type="text" id="order-username" value="<[order_customer::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">Email:</span> <input type="text" id="order-email" value="<[order_email]>" readonly /></li>
+      <li><span class="label">Phone Number:</span> <input type="text" id="order-phone" value="<[order_number_phone]>" readonly /></li>
+      <li><span class="label">Street:</span> <input type="text" value="<[order_address_via]>" readonly /></li>
+      <li><span class="label">Street Number:</span> <input type="text" value="<[order_address_civico]>" readonly /></li>
+      <li><span class="label">ZIP Code:</span> <input type="text" value="<[order_address_cap]>" readonly /></li>
+      <li><span class="label">City:</span> <input type="text" value="<[order_address_citta]>" readonly /></li>
+      <li><span class="label">Province:</span> <input type="text" value="<[order_address_provincia]>" readonly /></li>
+      <li><span class="label">Country:</span> <input type="text" value="<[order_address_nazione]>" readonly /></li>
+    </ul>
+  </div>
 </div>
