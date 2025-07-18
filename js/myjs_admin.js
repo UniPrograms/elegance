@@ -433,19 +433,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-/*
+
 // Controllo delete eliminazione di un articolo
 document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.admin-delete-product').forEach(function(btn) {
+  document.querySelectorAll('.admin-delete-article').forEach(function(btn) {
     btn.addEventListener('click', function() {
 
-      var productId = this.getAttribute("value");
+      var articleId = this.getAttribute("value");
       var row = this.closest("tr");
       $.ajax({
         type: "POST",
-        url: "product_operation.php",
+        url: "article_operation.php",
         data: {
-          product_id: productId,
+          article_id: articleId,
           operation: "delete",
         },
         dataType: "json",
@@ -467,4 +467,4 @@ document.addEventListener('DOMContentLoaded', function(){
 
     });
   });
-});*/
+});

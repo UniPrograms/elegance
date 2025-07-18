@@ -8,31 +8,18 @@ require_once("include/model/CartItem.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    // Reindirizzamento di una pagina di errore o login
+    echo AjaxResponse::genericServerError()->build();
+    exit;
 }
-
 
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
 $articleDAO = $factory->getArticleDAO();
 
-// Inserimento di un articolo all'interno del carrello
-if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
-    echo "operazione di store";
-    exit;
-}
-
-
-// Rimozione di un articolo all'interno del carrello
-else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
-    echo "operazione di delete";
-    exit;
-}
-
 
 // Conta il numero di elementi all'interno del carrello
-else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
+if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 
     header("ContentType: application/json");
 
@@ -45,13 +32,11 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
         $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"]);
     }
     else{
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Operazione non valida");
-        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError()->build();
+        exit;
     }
 
-    
+    // Se tutto è andato a buon fine
     $ajax_response = new AjaxResponse("OK");
     $ajax_response->add("article_qty",$article->getQuantity());
     echo $ajax_response->build();
@@ -65,10 +50,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
 
     // Se non è stato passato l'id dell'articolo
     if(!isset($_REQUEST["article_id"])){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Operazione non valida");
-        $ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -76,10 +58,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
 
     // Se non è stato trovato l'articolo (id sbagliato)
     if($article == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Operazione non valida");
-        $ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -91,11 +70,29 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
     exit;
 }
 
+// Rimozione di un articolo
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
-$ajax_response = new AjaxResponse("ERROR");
-$ajax_response->add("title_message","Operazione non valida");
-$ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
-echo $ajax_response->build();
+    if(!isset($_REQUEST["article_id"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Elimino l'articolo dal db
+    $result = $articleDAO->deleteArticleById($_REQUEST["article_id"]);
+
+    if(!$result){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+}
+
+
+// Nel caso non venga selezionata nessuna operazione
+echo AjaxResponse::genericServerError()->build();
 exit;
 
 ?>

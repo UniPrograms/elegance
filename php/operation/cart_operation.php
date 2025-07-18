@@ -8,7 +8,8 @@ require_once("include/model/CartItem.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    // Reindirizzamento di una pagina di errore o login
+    echo AjaxResponse::genericServerError()->build();
+    exit;
 }
 
 

@@ -43,9 +43,9 @@ class ArticleDAO extends DAO{
         $this->stmtGetArticleByProductorInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ? LIMIT ? OFFSET ?;");
         $this->stmtGetArticleByProductSizeColor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ? AND ID_TAGLIA = ? AND ID_COLORE = ?;");
         $this->stmtGetArticleTotalQuantity = $this->conn->prepare("SELECT SUM(QUANTITA) AS TOTAL FROM ARTICOLO_COMPLETO;");
-        $this->stmtInsertArticle = $this->conn->prepare("INSERT INTO ARTICOLO_PRODOTTO_COMPLETO (ID_PRODOTTO, ID_TAGLIA, ID_COLORE, QUANTITA) VALUES (?, ?, ?, ?);");
-        $this->stmtUpdateArticle = $this->conn->prepare("UPDATE ARTICOLO_PRODOTTO_COMPLETO SET ID_PRODOTTO = ?, ID_TAGLIA = ?, ID_COLORE = ?, QUANTITA = ? WHERE ID = ?;");
-        $this->stmtDeleteArticle = $this->conn->prepare("DELETE FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID = ?;");
+        $this->stmtInsertArticle = $this->conn->prepare("INSERT INTO ARTICOLO (ID_PRODOTTO, ID_TAGLIA, ID_COLORE, QUANTITA) VALUES (?, ?, ?, ?);");
+        $this->stmtUpdateArticle = $this->conn->prepare("UPDATE ARTICOLO SET ID_PRODOTTO = ?, ID_TAGLIA = ?, ID_COLORE = ?, QUANTITA = ? WHERE ID = ?;");
+        $this->stmtDeleteArticle = $this->conn->prepare("DELETE FROM ARTICOLO WHERE ID = ?;");
 
     }
 
@@ -243,7 +243,17 @@ class ArticleDAO extends DAO{
         $this->stmtDeleteArticle->bindValue(1, $article->getId(), PDO::PARAM_INT);
         return $this->stmtDeleteArticle->execute();
     }
-
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function deleteArticleById(int $id): bool {
+        $this->stmtDeleteArticle->bindValue(1, $id, PDO::PARAM_INT);
+        return $this->stmtDeleteArticle->execute();
+    }
 
     // Metodi privati
     private function createArticle(array $rs): Article{
