@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-
+/*
 // Aggiornamento dati prodotto admin
 document.addEventListener('DOMContentLoaded', function () {
   // Bottone custom per Carica Immagine (copertina)
@@ -325,18 +325,48 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 });
-
-
+*/
 
 
 // Reindirizzamento alla pagina per gestire gli articoli
 document.addEventListener('DOMContentLoaded', function () {  
-
-
   var goToBtn = document.querySelector("#admin-go-to-article");
 
   goToBtn.addEventListener("click", function(btn){
     var productId = this.getAttribute("value");
     window.location.href = "admin_viewarticle.php?product_id="+productId;
   });
+});
+
+
+
+// Aggiornamento table degli ordini tramite search bar order
+document.addEventListener('DOMContentLoaded', function(){
+
+  const searchBar = document.getElementById('searchbar-order');
+
+    searchBar.addEventListener('keydown',  function(e) {
+      if (e.key === 'Enter') {
+        const value = e.target.value;
+        window.location.href = "admin_orders.php?filter_string="+value;
+      }
+    });
+
+});
+
+
+
+
+// Aggiornamento table degli utenti tramite search bar utente
+document.addEventListener('DOMContentLoaded', function(){
+
+  const searchBar = document.getElementById('searchbar-user');
+
+    searchBar.addEventListener('keydown',  function(e) {
+      if (e.key === 'Enter') {
+        const value = e.target.value;
+        window.location.href = "admin_users.php?filter_string="+value;
+      }
+    });
+
 });
