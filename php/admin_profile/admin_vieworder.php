@@ -24,7 +24,7 @@ $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
 
 $admin_vieworder_page->setContent("order_id",$order->getId());
 $admin_vieworder_page->setContent("order_date",$order->getOrderDate());
-$admin_vieworder_page->setContent("order_arrival_date",$order->getStatus() != "CONSEGNATO" ? "" : $order->getDeliveryDate());
+$admin_vieworder_page->setContent("order_arrival_date",$order->getStatus());
 $admin_vieworder_page->setContent("order_address",$order->getAddress()->toString());
 $admin_vieworder_page->setContent("order_payment",$order->getPayment()->getName());
 $admin_vieworder_page->setContent("order_number_phone",$order->getAddress()->getPhoneNumber());

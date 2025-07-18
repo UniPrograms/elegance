@@ -112,7 +112,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
 // Aggiornamento di un utente da parte dell'amministratore
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
-
+    
 
     if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && 
          isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]))){

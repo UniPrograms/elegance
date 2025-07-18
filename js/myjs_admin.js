@@ -213,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
-
 // Aggiornamento dati ordine admin
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -352,7 +351,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-
 // Aggiornamento table degli utenti tramite search bar utente
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -485,5 +483,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-// Controllo dell'inserimento di un nuovo articolo
