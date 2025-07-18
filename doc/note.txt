@@ -1,6 +1,5 @@
-1. Bisogna fare il codice js per inserire un nuovo prodotto;
+1. Button per aggiungere un nuovo prodotto;
 
-3. Bisogna alzare il box delle schermate di dettaglio utente;
+2. Aggiustare colonna nome e categoria nella tabella dei prodotti;
 
-4. Bisogna aggiustare order_details.html in quanto è stata eliminata la spedizione
-
+3. 

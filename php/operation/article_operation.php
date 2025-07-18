@@ -16,6 +16,9 @@ if(!isset($_SESSION["auth"])){
 //DAO 
 $factory = new DataLayer(new DB_Connection());
 $articleDAO = $factory->getArticleDAO();
+$productDAO = $factory->getProductDAO();
+$sizeDAO = $factory->getSizeDAO();
+$colorDAO = $factory->getColorDAO();
 
 
 // Conta il numero di elementi all'interno del carrello
@@ -90,6 +93,37 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     exit;
 }
 
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
+
+
+    // Se qualche dato non è stato inviato
+    if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Se tutti i dati sono stati inviati, procedi alla creazione/aggiornamento dell'articolo
+    // Prendo l'articolo se già esiste
+    $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"],$_REQUEST["size_id"],$_REQUEST["color_id"]);
+
+    $new_article = $article != null ? $article : new Article();
+
+    $new_article->setProduct($productDAO->getProductById($_REQUEST["product_id"]));
+    $new_article->setSize($sizeDAO->getSizeById($_REQUEST["size_id"]));
+    $new_article->setColor($colorDAO->getColorById($_REQUEST["color_id"]));
+    $new_article->setQuantity(isset($_REQUEST["qty"]) ? $_REQUEST["qty"] : 0);
+    
+    ;
+    
+    // Se qualcosa va storto
+    if(($new_article = $articleDAO->storeArticle($new_article)) == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+}
 
 // Nel caso non venga selezionata nessuna operazione
 echo AjaxResponse::genericServerError()->build();

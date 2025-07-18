@@ -415,16 +415,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Per andare a modificare un articolo già esistente
 document.addEventListener('DOMContentLoaded', function () {  
-  var goToBtn = document.getElementById('admin-update-article');
 
-  goToBtn.addEventListener("click", function(btn){
-    var params = new URLSearchParams(window.location.search);
+  document.querySelectorAll('.admin-update-article').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var params = new URLSearchParams(window.location.search);
     var productId = params.get("product_id");
     var articleId = this.getAttribute("value");
     window.location.href = "admin_viewarticle.php?product_id="+productId+"&article_id="+articleId;
+      
+    });
   });
 });
-
 
 
 
@@ -482,4 +484,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// Controllo del tasto per inserire un nuovo articolo
+document.addEventListener('DOMContentLoaded', function () {  
+    var goToBtn = document.getElementById('admin-store-article');
 
+    goToBtn.addEventListener("click", function () {
+
+      
+
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get("product_id");
+      const sizeId = document.getElementById("article-add-size").value;
+      const colorId = document.getElementById("article-add-color").value;
+      const quantity = document.getElementById("article-add-quantity").value;
+
+    
+
+        $.ajax({
+          type: "POST",
+          url: "article_operation.php",
+          data: {
+            product_id: productId,
+            size_id: sizeId,
+            color_id:colorId,
+            qty:quantity,
+            operation: "store",
+          },
+          dataType: "json",
+        }).done(function(response){
+            if(response.status == "OK"){
+              window.location.href = "admin_viewarticlestable.php?product_id="+productId;
+            }
+            else{
+              alert("Errore: " + response.text_message);
+            }
+
+        }).fail(function(){
+          alert("Errore, qualcosa è andato storto");
+        });
+    });
+});
+
+
+
+// Inserisco i dati giusti al caricamento della pagina per modificare l'articolo
+document.addEventListener('DOMContentLoaded', function () {  
+
+   // Prendo il nome della pagina corrente
+  var current_page = window.location.pathname.split("/").pop();
+
+  // Se la pagina non è quella giusta, non fa niente
+  if (current_page !== 'admin_viewarticle.php') return;
+
+  // Se non è stato passato l'id dell'articolo, non fa nulla
+  const params = new URLSearchParams(window.location.search);
+  var articleId = params.get("article_id");
+  if(articleId == null) return;
+
+  // Forza i valori dell'articolo
+  alert("Adesso di forza bruta mi trombo tua mamma quella ladra puttana");
+
+
+});
