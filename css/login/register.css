@@ -12,7 +12,6 @@ body {
 .login-box {
     max-width: 400px;
     width: 100%;
-    border-radius: 12px;
     background: rgba(255,255,255,0.97);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
@@ -24,13 +23,12 @@ body {
 }
 
 .login-box .form-control {
-    border-radius: 6px;
     border: 1px solid #e1e1e1;
     font-size: 1rem;
 }
 
 .login-box .btn-primary {
-    background: #7fad39;
+    background: #0315ff;
     border: none;
     border-radius: 6px;
     font-weight: 600;
@@ -38,11 +36,11 @@ body {
 }
 
 .login-box .btn-primary:hover {
-    background: #5e8c2a;
+    background: #dc0345;
 }
 
 .login-box a {
-    color: #7fad39;
+    color: #0315ff;
     text-decoration: none;
     font-size: 0.95rem;
 }

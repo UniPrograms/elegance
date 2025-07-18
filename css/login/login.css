@@ -30,7 +30,7 @@ body {
 }
 
 .login-box .btn-primary {
-    background: #7fad39;
+    background: #0315ff;
     border: none;
     border-radius: 6px;
     font-weight: 600;
@@ -38,11 +38,11 @@ body {
 }
 
 .login-box .btn-primary:hover {
-    background: #5e8c2a;
+    background: #dc0345;
 }
 
 .login-box a {
-    color: #7fad39;
+    color: #0315ff;
     text-decoration: none;
     font-size: 0.95rem;
 }
