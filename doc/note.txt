@@ -1,11 +1,3 @@
-1. numero utenti registrati 
-2. numero ordini effettuati (totali)
-
-
-
--------------------------------------------------------------
-
-
-3. prodotti in stock (totali)
-4. ordini in elaborazione (tutti quelli IN_LAVORAZIONE)
-5. ricavi ultimi 30 giorni
+1.  Bisogna gestire tramite javascript in riempimento automatico del campo
+    quantità dell'articolo all'interno di admin_viewarticle.html, sia al
+    caricamento della pagina che alla selezione di una taglia o di un colore

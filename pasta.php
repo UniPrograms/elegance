@@ -5,11 +5,7 @@ require_once("include/db/DataLayer.php");
 
 $factory = new DataLayer(new DB_Connection());
 
-$cartDAO = $factory->getCartDAO();
+$articleDAO = $factory->getArticleDAO();
 
-$wishlistDAO = $factory->getWishlistDAO();
 
-$wishlist = $wishlistDAO->getWishlistById(1);
-
-echo $wishlist == null ? "è null" : "non è null";
-echo $wishlist->getSize();
+echo count($articleDAO->getAllArticleByProductId(1));

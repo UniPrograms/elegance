@@ -11,25 +11,48 @@ if(!isset($_SESSION["auth"])){
 }
 
 // Template
-$admin_articles_page = new Template("skin/admin_profile/admin_viewarticle.html");
+$admin_viewarticle_page = new Template("skin/admin_profile/admin_viewarticle.html");
 
 //DAO
 $factory = new DataLayer(new DB_Connection);
 $articleDAO = $factory->getArticleDAO();
-
-$articles = $articleDAO->getAllArticles();
-
-foreach($articles as $article){
-
-    $admin_articles_page->setContent("user_id",$user->getId());
-    $admin_articles_page->setContent("user_name",$user->toString());
-    $admin_articles_page->setContent("user_email",$user->getEmail());
-    $admin_articles_page->setContent("user_role",$user->getRole());
-    $admin_articles_page->setContent("user_registration_date",$user->getRegistrationDate());
+$colorDAO = $factory->getColorDAO();
+$sizeDAO = $factory->getSizeDAO();
 
 
-    $admin_articles_page->setContent("user_value", $user->getId());
+// SEZIONE: AGGIUNGI PRODOTTO
 
+// Inserisco tutte le taglie
+foreach($sizeDAO->getAllSizes() AS $size){
+    $admin_viewarticle_page->setContent("size_name",$size->getSize());
+    $admin_viewarticle_page->setContent("size_value", $size->getId());
 }
+
+// Inserisco tutti colori
+foreach($colorDAO->getAllColors() AS $color){
+    $admin_viewarticle_page->setContent("color_name",$color->getColor());
+    $admin_viewarticle_page->setContent("color_value", $color->getId());
+}
+
+
+// SEZIONE: MODIFICA/RIMOZIONE PRODOTTO
+
+// Modifica 
+foreach($sizeDAO->getAvailableSizeFromProductId($_REQUEST["product_id"]) as $size){
+    $admin_viewarticle_page->setContent("size_name_available",$size->getSize());
+    $admin_viewarticle_page->setContent("size_value_available", $size->getId());
+}
+
+// Inserisco tutti colori
+foreach($colorDAO->getAvailableColorFromProductId($_REQUEST["product_id"]) AS $color){
+    $admin_viewarticle_page->setContent("color_name_available",$color->getColor());
+    $admin_viewarticle_page->setContent("color_value_available", $color->getId());
+}
+
+
+
+
+// Sezione degli articoli che già esistono
+
 
 ?>

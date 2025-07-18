@@ -9,6 +9,7 @@ class ArticleDAO extends DAO{
 
     private PDOStatement $stmtGetArticleById;
     private PDOStatement $stmtGetAllArticles;
+    private PDOStatement $stmtGetAllArticleByProductId;
     private PDOStatement $stmtGetArticleByName;
     private PDOStatement $stmtGetArticleByNameInRange;
     private PDOStatement $stmtGetArticleByCategory;
@@ -33,6 +34,7 @@ class ArticleDAO extends DAO{
     public function init(): void {
         $this->stmtGetArticleById = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_ARTICOLO = ?;");
         $this->stmtGetAllArticles = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO;");
+        $this->stmtGetAllArticleByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ?;");
         $this->stmtGetArticleByName = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ?;");
         $this->stmtGetArticleByNameInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? LIMIT ? OFFSET ?;");
         $this->stmtGetArticleByCategory = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_CATEGORIA = ?;");
@@ -73,6 +75,23 @@ class ArticleDAO extends DAO{
         }
         return $result;
 
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getAllArticleByProductId(int $id): array {
+        $this->stmtGetAllArticleByProductId->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetAllArticleByProductId->execute();
+
+        $result = [];
+        while ($rs = $this->stmtGetAllArticleByProductId->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->getArticleById($rs["ID_ARTICOLO"]);
+        }
+        return $result;
     }
     /**
     * 

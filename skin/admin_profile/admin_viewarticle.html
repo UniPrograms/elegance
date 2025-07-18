@@ -11,18 +11,22 @@
         <li>
           <span class="label">Taglia:</span>
           <select id="article-add-size" name="article-add-size">
-            <!-- [size_options] -->
+            <[foreach]>
+            <option value=<[size_value]>><[size_name]></option>
+            <[/foreach]>
           </select>
         </li>
         <li>
           <span class="label">Colore:</span>
           <select id="article-add-color" name="article-add-color">
-            <!-- [color_options] -->
+            <[foreach]>
+            <option value=<[color_value]>><[color_name]></option>
+            <[/foreach]>
           </select>
         </li>
         <li>
           <span class="label">Quantità:</span>
-          <input type="number" id="article-add-quantity" min="1" value="1" />
+          <input type="number" id="article-add-quantity" min="1" value="0" />
         </li>
         <li class="info-list-actions">
           <div class="action-left">
@@ -40,13 +44,17 @@
         <li>
           <span class="label">Taglia:</span>
           <select id="article-edit-size" name="article-edit-size">
-            <!-- [size_options] -->
+            <[foreach]>
+            <option value=<[size_value_available]>><[size_name_available]></option>
+            <[/foreach]>
           </select>
         </li>
         <li>
           <span class="label">Colore:</span>
           <select id="article-edit-color" name="article-edit-color">
-            <!-- [color_options] -->
+            <[foreach]>
+            <option value=<[color_value_available]>><[color_name_available]></option>
+            <[/foreach]>
           </select>
         </li>
         <li>

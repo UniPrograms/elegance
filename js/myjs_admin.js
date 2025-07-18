@@ -325,3 +325,18 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 });
+
+
+
+
+// Reindirizzamento alla pagina per gestire gli articoli
+document.addEventListener('DOMContentLoaded', function () {  
+
+
+  var goToBtn = document.querySelector("#admin-go-to-article");
+
+  goToBtn.addEventListener("click", function(btn){
+    var productId = this.getAttribute("value");
+    window.location.href = "admin_viewarticle.php?product_id="+productId;
+  });
+});
