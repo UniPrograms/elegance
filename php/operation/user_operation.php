@@ -114,8 +114,8 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
 
 
-    if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && isset($_REQUEST["user_email"]) && 
-         isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]) && isset($_REQUEST["user_registration_date"]))){
+    if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && 
+         isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]))){
             echo AjaxResponse::genericServerError()->build();
             exit;
         }

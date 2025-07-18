@@ -173,17 +173,15 @@ document.addEventListener('DOMContentLoaded', function () {
 // Aggiornamento dati utente admin
 document.addEventListener('DOMContentLoaded', function(){
 
-    const updateBtn = document.querySelector("#admin-update-user");
+    const updateBtn = document.getElementById("admin-update-user");
     
     updateBtn.addEventListener("click", function(btn){
 
       const userId = document.getElementById("user-id").value;
       const userName = document.getElementById("user-name").value;
       const userSurname = document.getElementById("user-surname").value;
-      const userEmail = document.getElementById("user-email").value;
       const userRole = document.getElementById("user-role-input").value;
       const userPhone = document.getElementById("user-phone").value;
-      const userDate = document.getElementById("user-date").value;
 
 
        $.ajax({
@@ -193,10 +191,8 @@ document.addEventListener('DOMContentLoaded', function(){
           user_id: userId,
           user_name: userName,
           user_surname: userSurname,
-          user_email: userEmail,
           user_role: userRole,
           user_phone_number: userPhone,
-          user_registration_date: userDate,
           operation: "admin-update",
         },
         dataType: "json",
@@ -468,3 +464,26 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
+
+
+// Controllo de tasto per tornare indietro nella schermata degli articoli
+document.addEventListener('DOMContentLoaded', function () {  
+    var goToBtn = document.getElementById('admin-cancel-article');
+
+    goToBtn.addEventListener("click", function () {
+
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get("product_id");
+
+      // Esegui redirect solo se productId è presente
+      window.location.href = "admin_viewarticlestable.php?product_id=" + productId;
+      
+    });
+});
+
+
+
+
+
+// Controllo dell'inserimento di un nuovo articolo
