@@ -6,23 +6,22 @@
       <h4 id="user-role"><[user_role::strformatter type="title" library="utility"]></h4>
     </div>
   </div>
-  <form id="admin-user-form">
-    <ul class="info-list">
-      <li><span class="label">ID:</span> <input type="text" id="user-id" name="user_id" value="<[user_id::idformatter library="utility"]>" readonly /></li>
-      <li><span class="label">Name:</span> <input type="text" id="user-name" name="user_name" value="<[user_name::strformatter type="title" library="utility"]>"/></li>
-      <li><span class="label">Surname:</span> <input type="text" id="user-surname" name="user_surname" value="<[user_surname::strformatter type="title" library="utility"]>" /></li>
-      <li><span class="label">Email:</span> <input type="text" id="user-email" name="user_email" value="<[user_email]>" readonly /></li>
-      <li><span class="label">Role:</span>
-        <select id="user-role-input" name="user_role">
-          <option value="UTENTE">User</option>
-          <option value="AMMINISTRATORE">Admin</option>
-        </select>
-      </li>
-      <li><span class="label">Phone:</span> <input type="text" id="user-phone" name="user_phone_number" value="<[user_phone]>"/></li>
-      <li><span class="label">Registration Date:</span> <input type="text" id="user-date" name="user_registration_date" value="<[user_registration_date]>" readonly /></li>
-      <li class="last-element" style="display: flex; justify-content: flex-end; align-items: center;">
-        <button class="save-button" id="admin-update-user" type="submit">Save</button>
-      </li>
-    </ul>
-  </form>
+  <ul class="info-list">
+    <li><span class="label">ID:</span> <input type="text" id="user-id" value="<[user_id::idformatter library="utility"]>" readonly /></li>
+    <li><span class="label">Name:</span> <input type="text" id="user-name" value="<[user_name::strformatter type="title" library="utility"]>"/></li>
+    <li><span class="label">Surname:</span> <input type="text" id="user-surname" value="<[user_surname::strformatter type="title" library="utility"]>" /></li>
+    <li><span class="label">Email:</span> <input type="text" id="user-email" value="<[user_email]>" readonly /></li>
+    <li><span class="label">Role:</span>
+      <select id="user-role-input" name="user-role">
+        <option value="UTENTE">User</option>
+        <option value="AMMINISTRATORE">Admin</option>
+      </select>
+    </li>
+    <li><span class="label">Phone:</span> <input type="text" id="user-phone" value="<[user_phone]>"/></li>
+    <li><span class="label">Registration Date:</span> <input type="text" id="user-date" value="<[user_registration_date]>" readonly /></li>
+    <li class="last-element" style="display: flex; justify-content: flex-end; align-items: center;">
+      <button class="save-button" id="admin-update-user">Save</button>
+    </li>
+  </ul>
+  
 </div>
