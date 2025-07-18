@@ -1,3 +1,8 @@
-1.  Bisogna gestire tramite javascript in riempimento automatico del campo
-    quantità dell'articolo all'interno di admin_viewarticle.html, sia al
-    caricamento della pagina che alla selezione di una taglia o di un colore
+1. Bisogna fare il codice js per inserire un nuovo prodotto;
+
+2. Bisogna aggiustare graficamente lo spazio inferiore delle schermate di dettaglio utente;
+
+3. Bisogna alzare il box delle schermate di dettaglio utente;
+
+4. Bisogna aggiustare order_details.html in quanto è stata eliminata la spedizione
+
