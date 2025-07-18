@@ -1,15 +1,16 @@
 <div class="product-admin-flexbox">
   <div class="user-profile" style="width: 100%;">
-    <div class="header">
+    <div class="header" style="display: flex; justify-content: flex-start; align-items: center;">
+      <button class="admin-back-button" id="admin-back" type="button" style="margin-right: 1rem;">Back</button>
       <div>
         <h2 id="article-product-name"><[article_product_name]></h2>
       </div>
     </div>
     <div class="admin-article-section" style="margin-bottom:2rem;">
-      <h4>Gestione articolo: aggiungi/rimuovi</h4>
+      <h4>Article management: add/remove</h4>
       <ul class="info-list">
         <li>
-          <span class="label">Taglia:</span>
+          <span class="label">Size:</span>
           <select id="article-add-size" name="article-add-size">
             <[foreach]>
             <option value=<[size_value]>><[size_name]></option>
@@ -17,7 +18,7 @@
           </select>
         </li>
         <li>
-          <span class="label">Colore:</span>
+          <span class="label">Color:</span>
           <select id="article-add-color" name="article-add-color">
             <[foreach]>
             <option value=<[color_value]>><[color_name]></option>
@@ -25,46 +26,17 @@
           </select>
         </li>
         <li>
-          <span class="label">Quantità:</span>
+          <span class="label">Quantity:</span>
           <input type="number" id="article-add-quantity" min="1" value="0" />
         </li>
         <li class="info-list-actions">
           <div class="action-left">
-            <button class="add-article-button" id="admin-add-article" type="button">Aggiungi</button>
+            <button class="remove-article-button" id="admin-remove-article" type="button">Remove</button>
           </div>
           <div class="action-right">
-            <button class="remove-article-button" id="admin-remove-article" type="button">Rimuovi</button>
+            <button class="add-article-button" id="admin-add-article" type="button">Add</button>
           </div>
         </li>
       </ul>
-    </div>
-    <div class="admin-article-section">
-      <h4>Modifica quantità articolo</h4>
-      <ul class="info-list">
-        <li>
-          <span class="label">Taglia:</span>
-          <select id="article-edit-size" name="article-edit-size">
-            <[foreach]>
-            <option value=<[size_value_available]>><[size_name_available]></option>
-            <[/foreach]>
-          </select>
-        </li>
-        <li>
-          <span class="label">Colore:</span>
-          <select id="article-edit-color" name="article-edit-color">
-            <[foreach]>
-            <option value=<[color_value_available]>><[color_name_available]></option>
-            <[/foreach]>
-          </select>
-        </li>
-        <li>
-          <span class="label">Nuova quantità:</span>
-          <input type="number" id="article-edit-quantity" min="0" value="0" />
-        </li>
-        <li class="info-list-actions">
-          <button class="save-button" id="admin-update-article-quantity" type="button">Aggiorna</button>
-        </li>
-      </ul>
-    </div>
   </div>
-</div> 
+</div>
