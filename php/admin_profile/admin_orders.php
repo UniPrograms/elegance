@@ -17,7 +17,13 @@ $admin_orders_page = new Template("skin/admin_profile/admin_orders.html");
 $factory = new DataLayer(new DB_Connection);
 $orderDAO = $factory->getOrderDAO();
 
-$orders = $orderDAO->getAllOrders();
+if(!isset($_REQUEST["filter_string"])){
+    $orders = $orderDAO->getAllOrders();
+}
+else{
+    $strings = explode(' ', $_REQUEST['filter_string']);
+    $orders = $orderDAO->getAllOrdersByGenericStrings($strings);
+}
 
 foreach($orders as $order){
 

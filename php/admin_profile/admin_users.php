@@ -17,7 +17,17 @@ $admin_users_page = new Template("skin/admin_profile/admin_users.html");
 $factory = new DataLayer(new DB_Connection);
 $userDAO = $factory->getUserDAO();
 
-$users = $userDAO->getAllUsers();
+// Controllo se è stato inserito una stringa come filtro
+// Se NON è stato passato nessun filtro
+if(!isset($_REQUEST["filter_string"])){
+    $users = $userDAO->getAllUsers();
+}
+// Se è stato passato un filtro
+else{
+    $strings = explode(' ', $_REQUEST['filter_string']);
+    $users = $userDAO->getAllUsersByGenericStrings($strings);
+}
+
 
 foreach($users as $user){
 

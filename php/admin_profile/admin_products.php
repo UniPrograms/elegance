@@ -17,8 +17,13 @@ $admin_products_page = new Template("skin/admin_profile/admin_products.html");
 $factory = new DataLayer(new DB_Connection);
 $productDAO = $factory->getProductDAO();
 
-$products = $productDAO->getAllProduct();
-
+if(!isset($_REQUEST["filter_string"])){
+    $products = $productDAO->getAllProduct();
+}
+else{
+    $strings = explode(' ', $_REQUEST["filter_string"]);
+    $products = $productDAO->getAllProductsByGenericStrings($strings);
+}
 foreach($products as $product){
 
     $admin_products_page->setContent("product_id",$product->getId());

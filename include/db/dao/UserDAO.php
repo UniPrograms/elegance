@@ -12,6 +12,7 @@ class UserDAO extends DAO{
     private PDOStatement $stmtGetUserByEmail;
     private PDOStatement $stmtGetAllUsersByRole;
     private PDOStatement $stmtGetAllUsersCount;
+    private PDOStatement $stmtGetAllUsersByGenericString;
     private PDOStatement $stmtInsertUser;
     private PDOStatement $stmtUpdateUser;
     private PDOStatement $stmtDeleteUser;
@@ -31,6 +32,7 @@ class UserDAO extends DAO{
         $this->stmtGetUserByEmail = $this->conn->prepare("SELECT * FROM UTENTE WHERE EMAIL = ?;");
         $this->stmtGetAllUsersCount = $this->conn->prepare("SELECT COUNT(*) AS COUNTER FROM UTENTE WHERE RUOLO = ?;");
         $this->stmtGetAllUsersByRole = $this->conn->prepare("SELECT * FROM UTENTE WHERE RUOLO = ?;");
+        $this->stmtGetAllUsersByGenericString = $this->conn->prepare("SELECT * FROM UTENTE WHERE NOME LIKE ? OR COGNOME LIKE ? OR EMAIL LIKE ?");
         $this->stmtInsertUser = $this->conn->prepare("INSERT INTO UTENTE (NOME, COGNOME, EMAIL, PASSWORD, RUOLO, URL_IMAGE, NUMERO_TELEFONO) VALUES (?, ?, ?, ?, ?, ?, ?);");
         $this->stmtUpdateUser = $this->conn->prepare("UPDATE UTENTE SET NOME = ?, COGNOME = ?, EMAIL = ?, PASSWORD = ?, URL_IMAGE = ?, NUMERO_TELEFONO = ?, RUOLO = ? WHERE ID = ?;");
         $this->stmtDeleteUser = $this->conn->prepare("DELETE FROM UTENTE WHERE ID = ?;");
@@ -114,6 +116,42 @@ class UserDAO extends DAO{
         $rs = $this->stmtGetAllUsersCount->fetch(PDO::FETCH_ASSOC);
 
         return $rs['COUNTER'];
+    }
+     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllUsersByGenericString(string $string): array {
+        $this->stmtGetAllUsersByGenericString->bindValue(1, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllUsersByGenericString->bindValue(2, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllUsersByGenericString->bindValue(3, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllUsersByGenericString->execute();
+        
+        $result = [];
+        while ($rs = $this->stmtGetAllUsersByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createUser($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllUsersByGenericStrings(array $strings): array {
+        $result = [];
+        foreach($strings as $string){
+            foreach($this->getAllUsersByGenericString($string) as $user){
+                $result[$user->getId()] = $user;
+            }
+        }
+    
+        return array_values($result);
     }
      /**
      * 

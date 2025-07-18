@@ -11,6 +11,7 @@ class OrderDAO extends DAO {
     private PDOStatement $stmtGetOrderById;
     private PDOStatement $stmtGetAllOrders;
     private PDOStatement $stmtGetOrderByUser;
+    private PDOStatement $stmtGetAllOrdersByGenericString;
     private PDOStatement $stmtInsertOrder;
     private PDOStatement $stmtUpdateOrder;
     private PDOStatement $stmtDeleteOrder;
@@ -31,6 +32,9 @@ class OrderDAO extends DAO {
         $this->stmtGetOrderById = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID = ?;");
         $this->stmtGetAllOrders = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO;");
         $this->stmtGetOrderByUser = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE ID_UTENTE = ?;");
+        $this->stmtGetAllOrdersByGenericString = $this->conn->prepare("SELECT * FROM ORDINE_COMPLETO WHERE NOME_DESTINATARIO LIKE ? OR COGNOME_DESTINATARIO LIKE ? OR 
+                                                                                                            NAZIONE LIKE ? OR CITTA LIKE ? OR VIA LIKE ? OR
+                                                                                                            PROVINCIA LIKE ? OR EMAIL LIKE ?;");
         $this->stmtInsertOrder = $this->conn->prepare("INSERT INTO ORDINE (ID_INDIRIZZO, ID_UTENTE, ID_PAGAMENTO) VALUES (?,?,?);");
         $this->stmtUpdateOrder = $this->conn->prepare("UPDATE ORDINE SET DATA_ORDINE = ?, DATA_ARRIVO = ?, ID_INDIRIZZO = ?, STATO = ?, ID_UTENTE = ?, ID_PAGAMENTO = ? WHERE ID = ?;");
         $this->stmtDeleteOrder = $this->conn->prepare("DELETE FROM ORDINE WHERE ID = ?;");
@@ -42,7 +46,7 @@ class OrderDAO extends DAO {
     }
 
 
-    // Statemetn
+    // STATEMENT
 
     /**
      * 
@@ -140,6 +144,45 @@ class OrderDAO extends DAO {
         $rs = $this->stmtGetOrderByIdAndUserId->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createOrder($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllOrdersByGenericString(string $string): array{
+        $this->stmtGetAllOrdersByGenericString->bindValue(1, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(2, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(3, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(4, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(5, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(6, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->bindValue(7, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllOrdersByGenericString->execute();
+
+        $result = [];
+        while ($rs = $this->stmtGetAllOrdersByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createOrder($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllOrdersByGenericStrings(array $strings): array{
+        $result = [];
+        foreach($strings as $string){
+            foreach($this->getAllOrdersByGenericString($string) as $order){
+                $result[$order->getId()] = $order;
+            }
+        }
+        return $result;
     }
     /**
      * 

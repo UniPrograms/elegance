@@ -20,6 +20,7 @@ class ProductDAO extends DAO{
     private PDOStatement $stmtGetPopularProductInRange;
     private PDOStatement $stmtGetPopularProductBySex;
     private PDOStatement $stmtGetPopularProductBySexInRange;
+    private PDOStatement $stmtGetAllProductsByGenericString;
     private PDOStatement $stmtInsertProduct;
     private PDOStatement $stmtUpdateProduct;
     private PDOStatement $stmtDeleteProduct;
@@ -49,7 +50,8 @@ class ProductDAO extends DAO{
         $this->stmtGetPopularProductInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA LIMIT ? OFFSET ?;");
         $this->stmtGetPopularProductBySex= $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ?;");
         $this->stmtGetPopularProductBySexInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ? LIMIT ? OFFSET ?;");
-        
+        $this->stmtGetAllProductsByGenericString = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? OR NOME_CATEGORIA LIKE ? OR 
+                                                                                                               NOME_PRODUTTORE LIKE ?;");
         
         $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
@@ -284,7 +286,42 @@ class ProductDAO extends DAO{
             $result[] = $this->getProductById($rs["ID_PRODOTTO"]);
         }
         return $result;
-}
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+     public function getAllProductsByGenericString(string $string): array {
+        $this->stmtGetAllProductsByGenericString->bindValue(1, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllProductsByGenericString->bindValue(2, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllProductsByGenericString->bindValue(3, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllProductsByGenericString->execute();
+        
+        $result = [];
+        while ($rs = $this->stmtGetAllProductsByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createProduct($rs);
+        }
+        return $result;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getAllProductsByGenericStrings(array $strings): array {
+        $result = [];
+        foreach($strings as $string){
+            foreach($this->getAllProductsByGenericString($string) as $product){
+                $result[$product->getId()] = $product;
+            }
+        }
+        return array_values($result);
+    }
     /**
     * 
     * 
