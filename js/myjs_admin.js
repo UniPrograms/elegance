@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   goToBtn.addEventListener("click", function(btn){
     var productId = this.getAttribute("value");
-    window.location.href = "admin_viewarticle.php?product_id="+productId;
+    window.location.href = "admin_viewarticlestable.php?product_id="+productId;
   });
 });
 
@@ -370,3 +370,101 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
 });
+
+
+// Aggiornamento table dei prodotto tramite search bar prodotto
+document.addEventListener('DOMContentLoaded', function(){
+
+  const searchBar = document.getElementById('searchbar-product');
+
+    searchBar.addEventListener('keydown',  function(e) {
+      if (e.key === 'Enter') {
+        const value = e.target.value;
+        window.location.href = "admin_products.php?filter_string="+value;
+      }
+    });
+
+});
+
+
+
+// Aggiornamento table degli articoli tramite search bar articoli
+document.addEventListener('DOMContentLoaded', function(){
+
+  const searchBar = document.getElementById('searchbar-article');
+
+    searchBar.addEventListener('keydown',  function(e) {
+      if (e.key === 'Enter') {
+        var params = new URLSearchParams(window.location.search);
+        var productId = params.get("product_id");
+        const value = e.target.value;
+        window.location.href = "admin_viewarticlestable.php?product_id="+productId+"&filter_string="+value;
+      }
+    });
+
+});
+
+
+
+// Per andare ad aggiungere un nuovo articolo
+document.addEventListener('DOMContentLoaded', function () {  
+  var goToBtn = document.getElementById('admin-add-article');
+
+  goToBtn.addEventListener("click", function(btn){
+    var params = new URLSearchParams(window.location.search);
+    var productId = params.get("product_id");
+    window.location.href = "admin_viewarticle.php?product_id="+productId;
+  });
+});
+
+
+
+// Per andare a modificare un articolo già esistente
+document.addEventListener('DOMContentLoaded', function () {  
+  var goToBtn = document.getElementById('admin-update-article');
+
+  goToBtn.addEventListener("click", function(btn){
+    var params = new URLSearchParams(window.location.search);
+    var productId = params.get("product_id");
+    var articleId = this.getAttribute("value");
+    window.location.href = "admin_viewarticle.php?product_id="+productId+"&article_id="+articleId;
+  });
+});
+
+
+
+/*
+// Controllo delete eliminazione di un articolo
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-product').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var productId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "product_operation.php",
+        data: {
+          product_id: productId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else{
+          alert("Errore: " + response.text_message);
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.error("Errore AJAX:", textStatus, errorThrown);
+      });
+
+    });
+  });
+});*/

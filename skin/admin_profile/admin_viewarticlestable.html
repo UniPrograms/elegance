@@ -1,6 +1,6 @@
 <section id="articles" class="active">
   <div class="search-box">
-    <input type="text" placeholder="Search articles..." />
+    <input type="text" id="searchbar-article" placeholder="Search articles..."/>
     <button class="add-article-button" id="admin-add-article" type="button" style="margin-left: 1rem;">Add Article</button>
   </div>
   <table id="articles-table">
@@ -23,8 +23,8 @@
         <td><[article_color]></td>
         <td><[article_quantity]></td>
         <td class="actions">
-          <button class="edit admin-details-article" value=<[article_value]>>Edit</button>
-          <button class="delete admin-delete-article" value=<[article_value]>>Delete</button>
+          <button class="edit admin-details-article" id="admin-update-article" value=<[article_value]>>Edit</button>
+          <button class="delete admin-delete-article" id="admin-delete-article" value=<[article_value]>>Delete</button>
         </td>
       </tr>
       <[/foreach]>
