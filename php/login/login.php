@@ -33,7 +33,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
             
         // Se l'utente è un amministratore, allora lo rimanda alla schermata principale
         if(strtoupper($user->getRole()) == "AMMINISTRATORE")  { 
-            header("Location: admin_dashboard.php");
+            header("Location: profile.php");
             exit;
         } 
 
