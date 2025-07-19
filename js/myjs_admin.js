@@ -630,3 +630,46 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
+
+
+// Controllo del tasto per aggiungere un nuovo prodotto
+document.addEventListener('DOMContentLoaded', function(){
+
+  const addNewProductBtn = document.getElementById('admin-add-new-product');
+
+  addNewProductBtn.addEventListener("click", function(btn){
+    window.location.href = "admin_viewproduct.php";
+  });
+
+});
+
+
+
+// Quando viene caricata la pagina per admin_viewproduct, disabilita eventualmente il tasto per gli articoli
+document.addEventListener('DOMContentLoaded', function(){
+  // Controlla se siamo nella pagina admin_viewproduct.php
+  if (window.location.pathname.includes('admin_viewproduct.php')) {
+    const goToArticleBtn = document.getElementById('admin-go-to-article');
+    
+    if (goToArticleBtn) {
+      // Ottieni il product_id dalla query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('product_id');
+      
+      // Se non c'è product_id, disabilita il button
+      if (!productId) {
+        goToArticleBtn.disabled = true;
+        goToArticleBtn.style.opacity = '0.5';
+        goToArticleBtn.style.cursor = 'not-allowed';
+        goToArticleBtn.title = 'Impossibile visualizzare articoli: prodotto non selezionato';
+      } else {
+        // Se c'è product_id, assicurati che il button sia abilitato
+        goToArticleBtn.disabled = false;
+        goToArticleBtn.style.opacity = '1';
+        goToArticleBtn.style.cursor = 'pointer';
+        goToArticleBtn.title = 'Visualizza articoli del prodotto';
+      }
+    }
+  }
+});

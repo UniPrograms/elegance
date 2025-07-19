@@ -49,7 +49,7 @@ if(isset($_REQUEST["product_id"])){
 }
 
 // Inserimento all'interno del button per andare alla gestione degli articoli
-$admin_viewproduct_page->setContent("product_value",$product->getId());
+$admin_viewproduct_page->setContent("product_value",isset($product) ? $product->getId() : "");
 
 
 ?>
