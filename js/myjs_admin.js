@@ -264,78 +264,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-/*
-// Aggiornamento dati prodotto admin
-document.addEventListener('DOMContentLoaded', function () {
-  // Bottone custom per Carica Immagine (copertina)
-  var chooseCoverBtn = document.getElementById('choose-cover-img-btn');
-  var coverImgFile = document.getElementById('product-cover-img-file');
-  var coverImgFilePath = document.getElementById('cover-img-file-path');
-  if (chooseCoverBtn && coverImgFile && coverImgFilePath) {
-    chooseCoverBtn.onclick = function() {
-      coverImgFile.click();
-    };
-    coverImgFile.onchange = function(e) {
-      if (e.target.files.length > 0) {
-        coverImgFilePath.value = e.target.files[0].name;
-      } else {
-        coverImgFilePath.value = '';
-      }
-    };
-  }
-
-  // Gestione anteprima immagini multiple
-  var addProductImagesBtn = document.getElementById('admin-add-product-images');
-  var productImagesInput = document.getElementById('product-images-input');
-  var productImagesGallery = document.getElementById('product-images-gallery');
-  if (addProductImagesBtn && productImagesInput && productImagesGallery) {
-    addProductImagesBtn.onclick = function() {
-      productImagesInput.click();
-    };
-    productImagesInput.onchange = function(event) {
-      var gallery = productImagesGallery;
-      var currentCount = gallery.querySelectorAll('img').length;
-      var files = Array.from(event.target.files);
-      if (currentCount >= 6) {
-        alert('Puoi caricare al massimo 6 immagini.');
-        event.target.value = '';
-        return;
-      }
-      var filesToAdd = files.slice(0, 6 - currentCount);
-      filesToAdd.forEach(function(file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var wrapper = document.createElement('div');
-          wrapper.className = 'product-gallery-thumb-wrapper';
-          wrapper.style.position = 'relative';
-          var img = document.createElement('img');
-          img.src = e.target.result;
-          img.className = 'product-gallery-thumb';
-          // Bottone elimina
-          var delBtn = document.createElement('button');
-          delBtn.type = 'button';
-          delBtn.className = 'delete-thumb-btn';
-          delBtn.innerHTML = '&times;';
-          delBtn.title = 'Elimina immagine';
-          delBtn.onclick = function() {
-            wrapper.remove();
-          };
-          wrapper.appendChild(img);
-          wrapper.appendChild(delBtn);
-          gallery.appendChild(wrapper);
-        };
-        reader.readAsDataURL(file);
-      });
-      if (files.length > filesToAdd.length) {
-        alert('Puoi caricare al massimo 6 immagini.');
-      }
-      event.target.value = '';
-    };
-  }
-});
-*/
-
-
 // Reindirizzamento alla pagina per gestire gli articoli
 document.addEventListener('DOMContentLoaded', function () {  
   var goToBtn = document.querySelector("#admin-go-to-article");
@@ -602,17 +530,44 @@ document.addEventListener('DOMContentLoaded', function(){
     const productBrandId = document.getElementById("product-brand-input").value;
     const productCategoryId = document.getElementById("product-category").value;
     const productSexId = document.getElementById("product-gender").value;
+    
+    // Ottieni il file selezionato
+    const fileInput = document.getElementById("product-cover-img-file");
+    const selectedFile = fileInput.files[0];
 
+    // Crea FormData per inviare il file
+    const formData = new FormData();
+    
     if(productId.length != 0){
-      data = {operation:"store", product_id:productId, product_name:productName, product_price:productPrice, product_description:productDescription, brand_id:productBrandId, category_id:productCategoryId, sex_id:productSexId}
+      formData.append("operation", "store");
+      formData.append("product_id", productId);
+      formData.append("product_name", productName);
+      formData.append("product_price", productPrice);
+      formData.append("product_description", productDescription);
+      formData.append("brand_id", productBrandId);
+      formData.append("category_id", productCategoryId);
+      formData.append("sex_id", productSexId);
     }else{
-      data = {operation:"store", product_name:productName, product_price:productPrice, product_description:productDescription, brand_id:productBrandId, category_id:productCategoryId, sex_id:productSexId}
+      formData.append("operation", "store");
+      formData.append("product_name", productName);
+      formData.append("product_price", productPrice);
+      formData.append("product_description", productDescription);
+      formData.append("brand_id", productBrandId);
+      formData.append("category_id", productCategoryId);
+      formData.append("sex_id", productSexId);
+    }
+    
+    // Aggiungi il file se è stato selezionato
+    if(selectedFile){
+      formData.append("product_image", selectedFile);
     }
 
     $.ajax({
       type: "POST",
       url: "product_operation.php",
-      data: data,
+      data: formData,
+      processData: false,
+      contentType: false,
       dataType: "json",
     }).done(function(response){
       if(response.status == "OK"){
@@ -675,6 +630,58 @@ document.addEventListener('DOMContentLoaded', function(){
         goToArticleBtn.style.cursor = 'pointer';
         goToArticleBtn.title = 'Visualizza articoli del prodotto';
       }
+    }
+  }
+});
+
+
+// Gestione selezione immagine in admin_viewproduct
+document.addEventListener('DOMContentLoaded', function(){
+  // Controlla se siamo nella pagina admin_viewproduct.php
+  if (window.location.pathname.includes('admin_viewproduct.php')) {
+    
+    const chooseFileBtn = document.getElementById('choose-cover-img-btn');
+    const fileInput = document.getElementById('product-cover-img-file');
+    
+    if (chooseFileBtn && fileInput) {
+      
+      // Gestione click sul pulsante "Scegli il file"
+      chooseFileBtn.addEventListener('click', function() {
+        fileInput.click(); // Apre il file dialog
+      });
+      
+      // Gestione selezione file
+      fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        
+        if (file) {
+          // Validazione tipo file (solo immagini)
+          if (!file.type.startsWith('image/')) {
+            alert('Seleziona solo file immagine (JPG, PNG, GIF, etc.)');
+            this.value = ''; // Pulisce la selezione
+            return;
+          }
+          
+          // Validazione dimensione file (max 5MB)
+          const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+          if (file.size > maxSize) {
+            alert('Il file è troppo grande. Dimensione massima: 5MB');
+            this.value = '';
+            return;
+          }
+          
+          // Popola l'input con il nome del file
+          const pathInput = document.getElementById('cover-img-file-path');
+          if (pathInput) {
+            pathInput.value = file.name;
+          }
+          
+          
+        } else {
+          // Nessun file selezionato
+          alert('Nessun file selezionato');
+        }
+      });
     }
   }
 });

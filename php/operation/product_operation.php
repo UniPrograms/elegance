@@ -3,6 +3,7 @@
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/AjaxResponse.php");
+require_once("include/utility/ImagePathManager.php");
 require_once("include/model/Product.php");
 
 // Se la sessione non è attiva
@@ -47,10 +48,30 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     $product->setCategory($categoryDAO->getCategoryById($_REQUEST["category_id"]));
     $product->setSex($sexDAO->getSexById($_REQUEST["sex_id"]));
     
-    // Se qualcosa non ha funzionato
+    // Salvo prima il prodotto per ottenere l'ID
     if(($product = $productDAO->storeProduct($product)) == null){
         echo AjaxResponse::genericServerError()->build();
         exit;
+    }
+    
+    // Gestione upload immagine
+    if(isset($_FILES["product_image"]) && $_FILES["product_image"]["error"] == 0){
+        $new_path = "cover/";
+        $new_image_name = "cover_img_" . $product->getId() . ".jpg";
+        
+        $image_path = new ImagePathManager(
+            $_FILES["product_image"]["tmp_name"],
+            $new_path,
+            $new_image_name
+        );
+        
+        $final_path = $image_path->moveUploadedFile();
+        
+        if($final_path != null){
+            // Aggiorna il prodotto con il path dell'immagine
+            $product->setCopertina($final_path);
+            $productDAO->storeProduct($product);
+        }
     }
 
     $ajax_response = new AjaxResponse("OK");

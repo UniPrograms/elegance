@@ -66,7 +66,7 @@ foreach($colors as $color){
 
 
 // Bisogna inserire qui la prima imamgine da presentare, quindi la copertina
-//$product_page->setContent("product_copertina", $product->getCopertina());
+$product_page->setContent("product_copertina", $product->getCopertina());
 
 // Inserisco le immagini secondarie da alternare alla copertina
 $images = $imageDAO->getImageByProduct($product);
