@@ -694,3 +694,23 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+
+// Validazione numero di telefono nel form personal info
+document.addEventListener('DOMContentLoaded', function() {
+  var personalInfoForm = document.querySelector('.ct-profile-info-form');
+  if (!personalInfoForm) return;
+  
+  personalInfoForm.addEventListener('submit', function(e) {
+    var phoneField = document.getElementById('user_phone');
+    if (phoneField && phoneField.value.trim() !== '') {
+      var phoneValue = phoneField.value.replace(/\s/g, ''); // Rimuovi spazi
+      if (phoneValue.length !== 10) {
+        e.preventDefault();
+        alert('Il numero di telefono deve essere di 10 cifre o lasciato vuoto.');
+        return false;
+      }
+    }
+    // Se la validazione passa, lascia proseguire il submit normale
+  });
+});
+

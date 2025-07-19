@@ -184,6 +184,14 @@ document.addEventListener('DOMContentLoaded', function(){
       const userRole = document.getElementById("user-role-input").value;
       const userPhone = document.getElementById("user-phone").value;
 
+      // Validazione numero di telefono (deve essere 0 o 10 cifre)
+      if (userPhone && userPhone.trim() !== '') {
+        var phoneValue = userPhone.replace(/\s/g, ''); // Rimuovi spazi
+        if (phoneValue.length !== 10) {
+          alert('Il numero di telefono deve essere di 10 cifre o lasciato vuoto.');
+          return false;
+        }
+      }
 
        $.ajax({
         type: "POST",
