@@ -16,10 +16,31 @@ $admin_viewproduct_page = new Template("skin/admin_profile/admin_viewproduct.htm
 //DAO
 $factory = new DataLayer(new DB_Connection);
 $productDAO = $factory->getProductDAO();
+$categoryDAO = $factory->getCategoryDAO();
+$sexDAO = $factory->getSexDAO();
+
+// Inizializzo le categorie
+foreach($categoryDAO->getAllCategories() as $category){
+    $admin_viewproduct_page->setContent("category_id", $category->getId());
+    $admin_viewproduct_page->setContent("category_name", $category->getName());
+}
+
+// Inizializzo i sessi
+foreach($sexDAO->getAllSexs() as $sex){
+    $admin_viewproduct_page->setContent("sex_id", $sex->getId());
+    $admin_viewproduct_page->setContent("sex_name", $sex->getSex());
+}
 
 
-$product = $productDAO->getProductById($_REQUEST["product_id"]);
-
+// Se il prodotto è stato passato, allora inizializzo i dati del prodotto
+if(isset($_REQUEST["product_id"])){
+    $product = $productDAO->getProductById($_REQUEST["product_id"]);
+    $admin_viewproduct_page->setContent("product_id", $product->getId());
+    $admin_viewproduct_page->setContent("product_name", $product->getName());
+    $admin_viewproduct_page->setContent("product_brand", $product->getProductor()->getName());
+    $admin_viewproduct_page->setContent("product_price", $product->getPrice());
+    $admin_viewproduct_page->setContent("product_description", $product->getDescription());
+}
 
 // Inserimento all'interno del button per andare alla gestione degli articoli
 $admin_viewproduct_page->setContent("product_value",$product->getId());

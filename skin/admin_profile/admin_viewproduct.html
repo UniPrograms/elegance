@@ -2,13 +2,11 @@
   <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; justify-content:flex-start;">
     <div class="header">
       <div>
-        <h2 id="product-name"><[product_name]></h2>
-        <h4 id="product-brand"><[product_brand]></h4>
       </div>
     </div>
     <ul class="info-list">
       <li><span class="label">ID:</span> <input type="text" id="product-id" value="<[product_id]>" readonly /></li>
-      <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name]>" /></li>
+      <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name::strformatter type="title" library="utility"]>" /></li>
       <li><span class="label">Prezzo:</span> <input type="text" id="product-price" value="<[product_price]>" /></li>
       <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3"><[product_description]></textarea></li>
       <li style="display: flex; align-items: center;">
@@ -27,18 +25,19 @@
       </li>
       <li><span class="label">Categoria:</span>
         <select id="product-category" name="product-category">
-          <option value="">Seleziona categoria</option>
-          <!-- [category_options] -->
+          <[foreach]>
+          <option value=<[category_id]>><[category_name::strformatter type="title" library="utility"]></option>
+          <[/foreach]>
         </select>
       </li>
       <li><span class="label">Sesso:</span>
         <select id="product-gender" name="product-gender">
-          <option value="UOMO" <[product_gender_selected_uomo]> >Uomo</option>
-          <option value="DONNA" <[product_gender_selected_donna]> >Donna</option>
-          <option value="UNISEX" <[product_gender_selected_unisex]> >Unisex</option>
+          <[foreach]>
+          <option value=<[sex_id]>><[sex_name::strformatter type="title" library="utility"]></option>
+          <[/foreach]>
         </select>
       </li>
-      <li class="info-list-actions">
+      <li class="last-element info-list-actions">
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
           <button class="add-article-button" id="admin-go-to-article" value=<[product_value]> type="button">Add Article</button>
           <button class="save-button" id="admin-update-product">Save</button>
