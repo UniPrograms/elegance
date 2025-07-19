@@ -1,42 +1,28 @@
 <div class="container profile-container">
   <div class="orders-section">
     <h2 class="ct-profile-title">Order details</h2>
-    <div class="order-summary-box">
-    <div class="order-summary-col">
-      <div class="order-summary-label">Order ID</div>
-      <div class="order-summary-value"><[order_id::idformatter library=utility]></div>
-    </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Order date</div>
-      <div class="order-summary-value"><[order_date]></div>
-    </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Status</div>
-      <div class="order-summary-value delivered"><[order_status::enumformatter library=utility]></div>
-    </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Total</div>
-      <div class="order-summary-value total">
-         <[order_total_price]> $
+    <div class="order-details-flex" style="display:flex; gap:2.5rem; align-items:flex-start; margin-bottom:2.5rem;">
+      <div class="order-details-col" style="flex:1; min-width:220px;">
+        <div class="order-details-field"><div class="order-summary-label">Order ID</div>
+        <div class="order-summary-value"><[order_id::idformatter library=utility]></div></div>
+        <div class="order-details-field"><div class="order-summary-label">Order date</div>
+        <div class="order-summary-value"><[order_date]></div></div>
+        <div class="order-details-field"><div class="order-summary-label">Status</div>
+        <div class="order-summary-value delivered"><[order_status::enumformatter library=utility]></div></div>
+        <div class="order-details-field"><div class="order-summary-label">Total</div>
+        <div class="order-summary-value total">
+           <[order_total_price]> $
+        </div></div>
+      </div>
+      <div class="order-details-col" style="flex:1; min-width:220px;">
+        <div class="order-details-field"><div class="order-summary-label">Recipient</div>
+        <div class="order-summary-value"><[order_recipient::strformatter type="title" library=utility]></div></div>
+        <div class="order-details-field"><div class="order-summary-label">Address</div>
+        <div class="order-summary-value"><[order_address::strformatter type="title" library=utility]></div></div>
+        <div class="order-details-field"><div class="order-summary-label">Payment</div>
+        <div class="order-summary-value"><[order_payment::strformatter type="title" library=utility]></div></div>
       </div>
     </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Payment</div>
-      <div class="order-summary-value"><[order_payment::strformatter type="title" library=utility]></div>
-    </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Delivery</div>
-      <div class="order-summary-value"><[order_delivery::strformatter type="title" library=utility]></div>
-    </div>
-    <div class="order-summary-col">
-      <div class="order-summary-label">Recipient</div>
-      <div class="order-summary-value"><[order_recipient::strformatter type="title" library=utility]></div>
-    </div>
-    <div class="order-summary-col address">
-      <div class="order-summary-label">Address</div>
-      <div class="order-summary-value"><[order_address::strformatter type="title" library=utility]></div>
-    </div>
-  </div>
     <div class="order-products-list-cards">
       <h3>Order items</h3>
       <[foreach]>

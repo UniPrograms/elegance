@@ -1752,3 +1752,11 @@ img {
 /* ##### The End ##### */
 
 /*# sourceMappingURL=core-style.css.map */
+
+.order-details-field {
+  margin-bottom: 2rem;
+}
+
+.order-details-field-large-padding {
+  padding: 1.2rem 0.5rem;
+}
