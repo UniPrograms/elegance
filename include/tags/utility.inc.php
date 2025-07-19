@@ -26,10 +26,22 @@ class utility extends TagLibrary
             case "title":
                 $result = ucwords(strtolower($data));
                 break;
+            case "phone":
+                $result = substr($data, 0, 3) . " " . substr($data, 3, 3) . " " . substr($data, 6, 4);
+                break;
             default:
                 $result = $data;
                 break;
         }
+        
+        // Gestione del parametro truncate
+        if (isset($pars["truncate"]) && is_numeric($pars["truncate"])) {
+            $maxLength = (int)$pars["truncate"];
+            if (strlen($result) > $maxLength) {
+                $result = substr($result, 0, $maxLength) . "...";
+            }
+        }
+        
         return $result;
     }
 

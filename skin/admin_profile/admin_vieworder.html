@@ -8,8 +8,8 @@
     </div>
     <ul class="info-list">
       <li><span class="label">ID:</span> <input type="text" id="order-id-input" value="<[order_id]>" readonly /></li>
-      <li><span class="label">Order Date:</span> <input type="text" id="order-date" placeholder="YYYY-MM-DD" value="<[order_date]>" readonly /></li>
-      <li><span class="label">Delivery Date:</span> <input type="text" id="order-arrival-date"  placeholder="YYYY-MM-DD" value="<[order_arrival_date]>" readonly/>  </li>
+      <li><span class="label">Order Date:</span> <input type="text" id="order-date" value="<[order_date]>" readonly /></li>
+      <li><span class="label">Delivery Date:</span> <input type="text" id="order-arrival-date"  placeholder="-" value="<[order_arrival_date]>" readonly/>  </li>
       <li><span class="label">Price:</span> <input type="text" id="order-price" value="<[order_price]> $" readonly /></li>
       <li><span class="label">Status:</span>
         <select id="order-status-input" name="order-status">
@@ -32,13 +32,13 @@
     <ul class="info-list" style="width:100%; background:transparent; border:none; padding:0;">
       <li><span class="label">Customer:</span> <input type="text" id="order-username" value="<[order_customer::strformatter type="title" library="utility"]>" readonly /></li>
       <li><span class="label">Email:</span> <input type="text" id="order-email" value="<[order_email]>" readonly /></li>
-      <li><span class="label">Phone Number:</span> <input type="text" id="order-phone" value="<[order_number_phone]>" readonly /></li>
-      <li><span class="label">Street:</span> <input type="text" value="<[order_address_via]>" readonly /></li>
-      <li><span class="label">Street Number:</span> <input type="text" value="<[order_address_civico]>" readonly /></li>
-      <li><span class="label">ZIP Code:</span> <input type="text" value="<[order_address_cap]>" readonly /></li>
-      <li><span class="label">City:</span> <input type="text" value="<[order_address_citta]>" readonly /></li>
-      <li><span class="label">Province:</span> <input type="text" value="<[order_address_provincia]>" readonly /></li>
-      <li><span class="label">Country:</span> <input type="text" value="<[order_address_nazione]>" readonly /></li>
+      <li><span class="label">Phone Number:</span> <input type="text" id="order-phone" value="<[order_number_phone::strformatter type="phone" library="utility"]>" readonly /></li>
+      <li><span class="label">Street:</span> <input type="text" value="<[order_address_via::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">Street Number:</span> <input type="text" value="<[order_address_civico::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">ZIP Code:</span> <input type="text" value="<[order_address_cap::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">City:</span> <input type="text" value="<[order_address_citta::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">Province:</span> <input type="text" value="<[order_address_provincia::strformatter type="upper" library="utility"]>" readonly /></li>
+      <li><span class="label">Country:</span> <input type="text" value="<[order_address_nazione::strformatter type="title" library="utility"]>" readonly /></li>
     </ul>
   </div>
 </div>

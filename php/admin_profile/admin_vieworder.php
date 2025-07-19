@@ -20,11 +20,15 @@ $orderDAO = $factory->getOrderDAO();
 $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
 
 
-// Setto i fati dell'ordine
+// Setto i dati dell'ordine
 
 $admin_vieworder_page->setContent("order_id",$order->getId());
 $admin_vieworder_page->setContent("order_date",$order->getOrderDate());
-$admin_vieworder_page->setContent("order_arrival_date",$order->getStatus());
+
+// Gestione data di arrivo: se null o vuota, mostra stringa vuota, altrimenti mostra la data
+$deliveryDate = $order->getDeliveryDate();
+$admin_vieworder_page->setContent("order_arrival_date", ($deliveryDate == null || $deliveryDate == "") ? "" : $deliveryDate);
+
 $admin_vieworder_page->setContent("order_address",$order->getAddress()->toString());
 $admin_vieworder_page->setContent("order_payment",$order->getPayment()->getName());
 $admin_vieworder_page->setContent("order_number_phone",$order->getAddress()->getPhoneNumber());

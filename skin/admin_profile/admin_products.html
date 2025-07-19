@@ -17,9 +17,9 @@
       <[foreach]>
       <tr>
         <td><[product_id::idformatter library="utility"]></td>
-        <td><[product_name]></td>
-        <td><[product_category]></td>
-        <td><[product_brand]></td>
+        <td><[product_name::strformatter type="title" library="utility"]></td>
+        <td><[product_category::strformatter type="title" library="utility"]></td>
+        <td><[product_brand::strformatter type="title" library="utility"]></td>
         <td><[product_price]> $</td>
         <td class="actions">
           <button class="edit admin-details-product" value=<[product_value]>>Edit</button>
