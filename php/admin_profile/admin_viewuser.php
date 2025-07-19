@@ -26,7 +26,14 @@ $admin_viewuser_page->setContent("user_surname",$user->getSurname());
 $admin_viewuser_page->setContent("user_email",$user->getEmail());
 $admin_viewuser_page->setContent("user_role",$user->getRole());
 $admin_viewuser_page->setContent("user_phone",$user->getPhoneNumber());
-$admin_viewuser_page->setContent("user_url_image",$user->getImage());
 $admin_viewuser_page->setContent("user_registration_date",$user->getRegistrationDate());
+
+// Controllo dell'immagine
+if($user->getUrlImage() == null || strlen($user->getUrlImage()) == 0){
+    $admin_viewuser_page->setContent("user_image","img/core-img/user.svg");
+}
+else{
+    $admin_viewuser_page->setContent("user_image",$user->getUrlImage());
+}
 
 ?>

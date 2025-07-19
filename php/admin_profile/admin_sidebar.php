@@ -20,4 +20,13 @@ $userDAO = $factory->getUserDAO();
 $user = $userDAO->getUserById($_SESSION["id"]);
 $admin_sidebar_page->setContent("user_name", $user->toString());
 
+// Controllo dell'immagine
+if($user->getUrlImage() == null || strlen($user->getUrlImage()) == 0){
+    $admin_sidebar_page->setContent("user_image","img/core-img/user.svg");
+}
+else{
+    $admin_sidebar_page->setContent("user_image",$user->getUrlImage());
+}
+
+
 ?>

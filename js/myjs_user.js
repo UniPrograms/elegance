@@ -255,6 +255,22 @@ document.addEventListener('DOMContentLoaded', function() {
         el.classList.remove('is-invalid');
       }
     });
+    // Validazione numero di telefono (deve essere 0 o 10 cifre)
+    var phoneField = document.getElementById('phone_number');
+    var phoneError = '';
+    if (phoneField && phoneField.value.trim() !== '') {
+      var phoneValue = phoneField.value.replace(/\s/g, ''); // Rimuovi spazi
+      if (phoneValue.length !== 10) {
+        valid = false;
+        phoneField.classList.add('is-invalid');
+        phoneError = 'Il numero di telefono deve essere di 10 cifre o lasciato vuoto.';
+      } else {
+        phoneField.classList.remove('is-invalid');
+      }
+    } else {
+      phoneField.classList.remove('is-invalid');
+    }
+    
     // Metodo di pagamento obbligatorio
     var payment = document.querySelector('input[name="payment_method"]:checked');
     if (!payment) {
@@ -265,9 +281,15 @@ document.addEventListener('DOMContentLoaded', function() {
       var opts = document.querySelectorAll('.payment-method-option');
       opts.forEach(function(opt) { opt.classList.remove('is-invalid'); });
     }
+    
     if (!valid) {
       e.preventDefault();
-      alert('Compila tutti i campi obbligatori.');
+      // Mostra il primo errore incontrato
+      if (phoneError) {
+        alert(phoneError);
+      } else {
+        alert('Compila tutti i campi obbligatori.');
+      }
       return false;
     }
     // Se tutti i campi sono validi, lascia proseguire il submit normale
@@ -339,6 +361,7 @@ if(upload && preview) {
       reader.onload = function(ev) {
         preview.src = ev.target.result;
         // Invio AJAX a user_operation.php con l'URL base64 dell'immagine
+      
         $.ajax({
           type: 'POST',
           url: 'user_operation.php',
@@ -349,13 +372,11 @@ if(upload && preview) {
           dataType: "json",
         }).done(function(response){
             if(response.status == "OK"){
-              alert(response.content);
+              // Non succede nulla
             }
             else{
               alert("Error: " + response.text_message);
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-          console.error('AJAX upload-image fail:', textStatus, errorThrown, jqXHR.responseText);
         });
       };
       reader.readAsDataURL(upload.files[0]);

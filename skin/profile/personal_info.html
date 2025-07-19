@@ -4,7 +4,7 @@
       <h2 class="ct-profile-title">Personal Information</h2>
       <div class="ct-profile-fields-vertical">
         <div class="ct-profile-img-field-vertical">
-          <img id="ct-profile-img-preview" class="ct-profile-avatar-img-vertical" src="img/core-img/user.svg" alt="Avatar preview">
+          <img id="ct-profile-img-preview" class="ct-profile-avatar-img-vertical" src=<[user_image]> alt="Avatar preview">
           <input type="file" id="ct-profile-upload" name="avatar" accept="image/*" style="display:none;">
           <label for="ct-profile-upload" class="ct-profile-avatar-upload-btn-vertical" title="Upload avatar">
             Upload photo
@@ -25,7 +25,7 @@
           </div>
           <div class="form-group-vertical">
             <label for="user_phone">Phone number</label>
-            <input type="tel" id="user_phone" name="user_phone" pattern="[0-9+ ]*" value=<[user_phone]> >
+            <input type="tel" id="user_phone" name="user_phone" pattern="[0-9+ ]*" value=<[user_phone::strformatter type="phone" library="utility"]> >
           </div>
         </div>
       </div>
