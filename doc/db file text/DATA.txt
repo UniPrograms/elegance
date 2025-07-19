@@ -6,7 +6,7 @@ USE TDW_PROGETTO;
 INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("gabriele","pasqualone","gab@gmail.com","gab","utente");
 INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("lorenzo","feula","lor@gmail.com","lor","utente");
 INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("luigi","di sciascio","lui@gmail.com","lui","amministratore");
-INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("prova","prova","pro@gmail.com","pro","utente");
+INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("alessandro","casasanta","ale@gmail.com","ale","amministratore");
 
 -- Inserimento pagamento --
 INSERT INTO PAGAMENTO(NOME) VALUES("paypal");
