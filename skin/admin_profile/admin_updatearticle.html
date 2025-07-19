@@ -1,0 +1,33 @@
+<div class="product-admin-flexbox">
+  <div class="user-profile" style="width: 100%;">
+    <div class="header" style="display: flex; justify-content: flex-start; align-items: center;">
+      <div>
+        <h2 id="article-product-name"><[article_product_name]></h2>
+      </div>
+    </div>
+    <div class="admin-article-section" style="margin-bottom:2rem;">
+      <h4>Article management: update</h4>
+      <ul class="info-list">
+        <li>
+          <span class="label">Size:</span>
+          <input type="text" id="article-update-size" name="article-update-size" value="<[size_name]>" data-value="<[size_id]>" readonly />
+        </li>
+        <li>
+          <span class="label">Color:</span>
+          <input type="text" id="article-update-color" name="article-update-color" value="<[color_name]>" data-value="<[color_id]>" readonly />
+        </li>
+        <li>
+          <span class="label">Quantity:</span>
+          <input type="number" id="article-update-quantity" min="0" value="<[article_quantity]>" />
+        </li>
+        <li class="info-list-actions">
+          <div class="action-left">
+            <button class="remove-article-button" id="admin-cancel-article" type="button" value=<[product_value]>>Cancel</button>
+          </div>
+          <div class="action-right">
+            <button class="add-article-button" id="admin-update-article" type="button">Update</button>
+          </div>
+        </li>
+      </ul>
+  </div>
+</div>

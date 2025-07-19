@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
   goToBtn.addEventListener("click", function(btn){
     var params = new URLSearchParams(window.location.search);
     var productId = params.get("product_id");
-    window.location.href = "admin_viewarticle.php?product_id="+productId;
+    window.location.href = "admin_addarticle.php?product_id="+productId;
   });
 });
 
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var params = new URLSearchParams(window.location.search);
     var productId = params.get("product_id");
     var articleId = this.getAttribute("value");
-    window.location.href = "admin_viewarticle.php?product_id="+productId+"&article_id="+articleId;
+    window.location.href = "admin_updatearticle.php?product_id="+productId+"&article_id="+articleId;
       
     });
   });
@@ -497,8 +497,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const sizeId = document.getElementById("article-add-size").value;
       const colorId = document.getElementById("article-add-color").value;
       const quantity = document.getElementById("article-add-quantity").value;
-
-    
+ 
 
         $.ajax({
           type: "POST",
@@ -527,22 +526,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// Inserisco i dati giusti al caricamento della pagina per modificare l'articolo
+// Controllo del tasto per aggiornare un articolo esistente
 document.addEventListener('DOMContentLoaded', function () {  
+    var updateBtn = document.getElementById('admin-update-article');
 
-   // Prendo il nome della pagina corrente
-  var current_page = window.location.pathname.split("/").pop();
-
-  // Se la pagina non è quella giusta, non fa niente
-  if (current_page !== 'admin_viewarticle.php') return;
-
-  // Se non è stato passato l'id dell'articolo, non fa nulla
-  const params = new URLSearchParams(window.location.search);
-  var articleId = params.get("article_id");
-  if(articleId == null) return;
-
-  // Forza i valori dell'articolo
-  alert("Adesso di forza bruta mi trombo tua mamma quella ladra puttana");
+    if (updateBtn) {
+        updateBtn.addEventListener("click", function () {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get("product_id");
+            
+            // Prendi gli ID dagli attributi data-value
+            const sizeId = document.getElementById("article-update-size").getAttribute("data-value");
+            const colorId = document.getElementById("article-update-color").getAttribute("data-value");
+            const quantity = document.getElementById("article-update-quantity").value;
 
 
+            $.ajax({
+                type: "POST",
+                url: "article_operation.php",
+                data: {
+                    product_id: productId,
+                    size_id: sizeId,
+                    color_id: colorId,
+                    qty: quantity,
+                    operation: "store",
+                },
+                dataType: "json",
+            }).done(function(response){
+                if(response.status == "OK"){
+                    window.location.href = "admin_viewarticlestable.php?product_id="+productId;
+                }
+                else{
+                    alert("Errore: " + response.text_message);
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                console.error("Errore AJAX (update article):", {
+                    status: jqXHR.status,
+                    statusText: jqXHR.statusText,
+                    responseText: jqXHR.responseText,
+                    textStatus: textStatus,
+                    errorThrown: errorThrown
+                });
+                alert("Errore AJAX: " + textStatus + " - " + errorThrown);
+            });
+        });
+    }
 });
+
+

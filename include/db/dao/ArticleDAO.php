@@ -215,22 +215,29 @@ class ArticleDAO extends DAO{
     * 
     * 
     */
-    public function storeArticle(Article $article): bool {
-        if ($article->getId() !== null) { // Aggiorno il prodotto
+    public function storeArticle(Article $article): ?Article {
+        if ($article->getId() !== null) { // Aggiorno l'articolo
             $this->stmtUpdateArticle->bindValue(1, $article->getProduct()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateArticle->bindValue(2, $article->getSize()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateArticle->bindValue(3, $article->getColor()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateArticle->bindValue(4, $article->getQuantity(), PDO::PARAM_INT);
-            $this->stmtUpdateArticle->bindValue(6, $article->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateArticle->bindValue(5, $article->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateArticle->execute();
-        } else {   // Inserisco il prodotto
+            if($this->stmtUpdateArticle->execute()){
+                return $article;
+            }
+        } else {   // Inserisco l'articolo
             $this->stmtInsertArticle->bindValue(1, $article->getProduct()->getId(), PDO::PARAM_INT);
             $this->stmtInsertArticle->bindValue(2, $article->getSize()->getId(), PDO::PARAM_INT);
             $this->stmtInsertArticle->bindValue(3, $article->getColor()->getId(), PDO::PARAM_INT);
             $this->stmtInsertArticle->bindValue(4, $article->getQuantity(), PDO::PARAM_INT);
-            return $this->stmtInsertArticle->execute();
+            
+            if($this->stmtInsertArticle->execute()){
+                $article->setId($this->conn->lastInsertId());
+                return $article;
+            }
         }
+        return null;
     }
     /**
     * 

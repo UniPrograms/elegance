@@ -4,7 +4,7 @@ require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
 require_once("include/utility/AjaxResponse.php");
-require_once("include/model/CartItem.php");
+require_once("include/model/Article.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
@@ -73,6 +73,33 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
     exit;
 }
 
+// Ritorna tutti i dati dell'articolo per la modifica
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get"){
+
+    header("ContentType: application/json");
+
+    // Se non è stato passato l'id dell'articolo
+    if(!isset($_REQUEST["article_id"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    $article = $articleDAO->getArticleById($_REQUEST["article_id"]);
+
+    // Se non è stato trovato l'articolo (id sbagliato)
+    if($article == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Se è andato tutto bene
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("size_id",$article->getSize()->getId());
+    $ajax_response->add("color_id", $article->getColor()->getId());
+    echo $ajax_response->build();
+    exit;
+}
+
 // Rimozione di un articolo
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
@@ -102,9 +129,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         exit;
     }
 
+
+
     // Se tutti i dati sono stati inviati, procedi alla creazione/aggiornamento dell'articolo
     // Prendo l'articolo se già esiste
-    $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"],$_REQUEST["size_id"],$_REQUEST["color_id"]);
+    $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"]);
+
 
     $new_article = $article != null ? $article : new Article();
 
@@ -113,8 +143,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     $new_article->setColor($colorDAO->getColorById($_REQUEST["color_id"]));
     $new_article->setQuantity(isset($_REQUEST["qty"]) ? $_REQUEST["qty"] : 0);
     
-    ;
-    
+
     // Se qualcosa va storto
     if(($new_article = $articleDAO->storeArticle($new_article)) == null){
         echo AjaxResponse::genericServerError()->build();
