@@ -336,7 +336,28 @@ if(upload && preview) {
   upload.addEventListener('change', function(e) {
     if (upload.files && upload.files[0]) {
       const reader = new FileReader();
-      reader.onload = function(ev) { preview.src = ev.target.result;};
+      reader.onload = function(ev) {
+        preview.src = ev.target.result;
+        // Invio AJAX a user_operation.php con l'URL base64 dell'immagine
+        $.ajax({
+          type: 'POST',
+          url: 'user_operation.php',
+          data: { 
+            image_url: ev.target.result,
+            operation: 'upload-image',
+          },
+          dataType: "json",
+        }).done(function(response){
+            if(response.status == "OK"){
+              alert(response.content);
+            }
+            else{
+              alert("Error: " + response.text_message);
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          console.error('AJAX upload-image fail:', textStatus, errorThrown, jqXHR.responseText);
+        });
+      };
       reader.readAsDataURL(upload.files[0]);
     }
   });

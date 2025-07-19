@@ -166,7 +166,7 @@ class UserDAO extends DAO{
             $this->stmtUpdateUser->bindValue(2, $user->getSurname(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(3, $user->getEmail(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
-            $this->stmtUpdateUser->bindValue(5, $user->getImage(), PDO::PARAM_STR);
+            $this->stmtUpdateUser->bindValue(5, $user->getUrlImage(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(6, $user->getPhoneNumber(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(7, $user->getRole(), PDO::PARAM_STR);
             $this->stmtUpdateUser->bindValue(8, $user->getId(), PDO::PARAM_INT);
@@ -181,7 +181,7 @@ class UserDAO extends DAO{
             $this->stmtInsertUser->bindValue(3, $user->getEmail(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(4, $user->getPassword(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(5, $user->getRole(), PDO::PARAM_STR);
-            $this->stmtInsertUser->bindValue(6, $user->getImage(), PDO::PARAM_STR);
+            $this->stmtInsertUser->bindValue(6, $user->getUrlImage(), PDO::PARAM_STR);
             $this->stmtInsertUser->bindValue(7, $user->getPhoneNumber(), PDO::PARAM_STR);
             
             if($this->stmtInsertUser->execute()){

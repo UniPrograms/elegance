@@ -33,7 +33,7 @@ class User{
     public function getEmail(): ?string {return $this->email;}
     public function getPassword(): ?string {return $this->password;}
     public function getRole(): ?string {return $this->role;}
-    public function getImage(): ?string {return $this->urlImage;}
+    public function getUrlImage(): ?string {return $this->urlImage;}
     public function getPhoneNumber(): ?string {return $this->phoneNumber;}
     public function getRegistrationDate(): ?string {return $this->registrationDate;}
 

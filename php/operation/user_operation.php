@@ -3,7 +3,9 @@
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/AjaxResponse.php");
-require_once("include/model/WishlistItem.php");
+require_once("include/model/User.php");
+require_once("include/utility/ImagePathManager.php");
+
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
@@ -167,4 +169,51 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
     exit;
     
 }
+
+// Upload dell'immagine utente
+else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image'){
+    if(!isset($_REQUEST['image_url'])){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("text_message", "Errore nel passaggio dell'immagine");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $user = $userDAO->getUserById($_SESSION["id"]);
+    if($user == null){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("text_message", "Utente non trovato");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $new_path = "user_profile/";
+    $new_image_name = "img_" . $user->getId() . ".jpg";
+
+    // Gestione base64
+    require_once("include/utility/ImagePathManager.php");
+    $image_path = ImagePathManager::fromBase64($_REQUEST["image_url"], $new_path, $new_image_name);
+    $final_path = $image_path->moveBase64();
+
+    if($final_path == null){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("text_message", "Errore nella creazione del path (base64)");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $user->setUrlImage($final_path);
+    if(($userDAO->storeUser($user)) == null){
+        $ajax_response = new AjaxResponse("ERROR");
+        $ajax_response->add("text_message", "Errore nella scrittura nel db");
+        echo $ajax_response->build();
+        exit;
+    }
+
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("content", "Immagine salvata correttamente!");
+    echo $ajax_response->build();
+    exit;
+}
+
 ?>

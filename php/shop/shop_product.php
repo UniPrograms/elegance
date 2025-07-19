@@ -48,14 +48,16 @@ foreach ($paginatedproducts as $product) {
     $buffer .= '<img class="hover-img" src="'.$product->getCopertina().'" alt="" />';
     $buffer .= '</div>';
     $buffer .= '<div class="product-description">';
-    $buffer .= '<span>Non so che metterci</span>';
+    $buffer .= '<span>'.$product->getProductor()->getName().'</span>';
     $buffer .= '<a href="'.$query_string_builder->build().'">';
     $buffer .= '<h6>'.$product->getName().'</h6>';
     $buffer .= '</a>';
     $buffer .= '<p class="product-price">'.$product->getPrice().' $</p>';
     $buffer .= '<div class="hover-content">';
     $buffer .= '<div class="add-to-cart-btn">';
-    $buffer .= '<a href="#" class="btn essence-btn">Add to Cart</a>';
+    $query_string_builder->refresh("product.php");
+    $query_string_builder->add("product_id", $product->getId());
+    $buffer .= '<a href="'.$query_string_builder->build().'" class="btn essence-btn">View Product</a>';
     $buffer .= '</div>';
     $buffer .= '</div>';
     $buffer .= '</div>';
