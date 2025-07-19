@@ -28,5 +28,6 @@ $user = $userDAO->getUserById($_SESSION["id"]);
 $personal_info_page->setContent("user_email",$user->getEmail());
 $personal_info_page->setContent("user_name",$user->getName());
 $personal_info_page->setContent("user_surname",$user->getSurname());
+$personal_info_page->setContent("user_phone",$user->getPhoneNumber());
 
 ?>

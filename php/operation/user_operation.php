@@ -19,14 +19,14 @@ $userDAO = $factory->getUserDAO();
 
 // Aggiornamento di un utente (info personali)
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "personal-info"){
-        
+
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
 
     // Controllo se sono stati modificati i campi e gli aggiorno
     if(isset($_REQUEST["user_name"]) && !empty($_REQUEST["user_name"])){ $user->setName($_REQUEST["user_name"]);}
     if(isset($_REQUEST["user_surname"]) && !empty($_REQUEST["user_surname"])) { $user->setSurname($_REQUEST["user_surname"]);}
-    if(isset($_REQUEST["user_phone"]) && !empty($_REQUEST["user_phone"])){ $user->setPhoneNumber($_REQUEST["user_phone"]);}
+    if(isset($_REQUEST["user_phone"])){ $user->setPhoneNumber($_REQUEST["user_phone"]);}
     // Manca qui il controllo dell'immagine
     
     // Aggiorno l'utente
