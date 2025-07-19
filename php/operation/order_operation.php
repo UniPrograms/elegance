@@ -104,15 +104,25 @@ else if(isset($_REQUEST["store"])){
     header("Location: ". $query_string_builder->build());
 
 }
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
+    
+    // Se non è stato fornito l'id dell'ordine
+    if(!isset($_REQUEST["order_id"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
 
+    // Effettuo la cancellazione dell'ordine
+    if(($result = $orderDAO->deleteOrderById($_REQUEST["order_id"])) == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
 
+    // Se tutto è andato bene
+    echo AjaxResponse::okNoContent()->build();
+    exit;
 
-// Se non viene inserita una parola per capire 
-// l'operazione da effettuare, bisogna decidere
-// se rimandare ad una pagina di errore.
-// Nel frattempo inserisco una stampa per capire
-// Se si entra in questo campo
-echo "Non è stata inserita alcuna operazione in order_operation.php";
+}
 
 
 ?>

@@ -1,11 +1,12 @@
 <div class="product-admin-flexbox" style="display:flex; gap:2rem; align-items:stretch;">
   <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; justify-content:flex-start;">
-    <div class="header">
-      <div>
+    <div class="header" style="display: flex; align-items: flex-start;">
+      <div style="flex:1; text-align:left;">
+        <h2 style="margin:0; font-size:1.4em; font-weight:600;"><[product_title::strformatter type="title" library="utility"]> <[product_id::idformatter library="utility"]></h2>
       </div>
     </div>
     <ul class="info-list">
-      <li><span class="label">ID:</span> <input type="text" id="product-id" value="<[product_id]>" readonly /></li>
+      <li style="display: none;"><span class="label">ID:</span> <input type="text" id="product-id" value="<[product_id]>" readonly /></li>
       <li><span class="label">Nome:</span> <input type="text" id="product-name-input" value="<[product_name::strformatter type="title" library="utility"]>" /></li>
       <li><span class="label">Prezzo:</span> <input type="text" id="product-price" value="<[product_price]>" /></li>
       <li><span class="label">Descrizione:</span> <textarea id="product-description" rows="3"><[product_description]></textarea></li>
@@ -40,7 +41,7 @@
       </li>
       <li class="last-element info-list-actions">
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-          <button class="add-article-button" id="admin-go-to-article" value=<[product_value]> type="button">View Articles</button>
+          <button class="add-article-button" id="admin-go-to-article" value= <[product_value]> type="button">View Articles</button>
           <button class="save-button" id="admin-update-product">Save</button>
         </div>
       </li>

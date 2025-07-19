@@ -40,16 +40,29 @@ foreach($productorDAO->getAllProductores() as $productor){
 
 // Se il prodotto è stato passato, allora inizializzo i dati del prodotto
 if(isset($_REQUEST["product_id"])){
-    $product = $productDAO->getProductById($_REQUEST["product_id"]);
+    // Dati specifici del prodotto
+    $product = $productDAO->getProductById((int)$_REQUEST["product_id"]);
     $admin_viewproduct_page->setContent("product_id", $product->getId());
     $admin_viewproduct_page->setContent("product_name", $product->getName());
     $admin_viewproduct_page->setContent("product_brand", $product->getProductor()->getName());
     $admin_viewproduct_page->setContent("product_price", $product->getPrice());
     $admin_viewproduct_page->setContent("product_description", $product->getDescription());
+
+    // Titolo della pagina
+    $admin_viewproduct_page->setContent("product_title", "product:");
+
+    // Valore del prodotto per andare nella pagina degli articoli
+    $admin_viewproduct_page->setContent("product_value", $product->getId());
+}else{
+    // Titolo della pagina
+    $admin_viewproduct_page->setContent("product_title", "new product");
+    // Valore del prodotto per andare nella pagina degli articoli
+    $admin_viewproduct_page->setContent("product_value", "");
 }
 
 // Inserimento all'interno del button per andare alla gestione degli articoli
-$admin_viewproduct_page->setContent("product_value",isset($product) ? $product->getId() : "");
+
+
 
 
 ?>

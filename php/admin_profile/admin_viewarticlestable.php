@@ -16,7 +16,13 @@ $factory = new DataLayer(new DB_Connection);
 $articleDAO = $factory->getArticleDAO();
 
 
-$articles = $articleDAO->getAllArticleByProductId($_REQUEST["product_id"]);
+
+// Ottieni gli articoli solo se product_id è valido
+if (isset($_REQUEST["product_id"]) && is_numeric($_REQUEST["product_id"]) && $_REQUEST["product_id"] > 0) {
+    $articles = $articleDAO->getAllArticleByProductId((int)$_REQUEST["product_id"]);
+} else {
+    $articles = [];
+}
 
 foreach($articles as $article){
     $product = $article->getProduct();
@@ -26,7 +32,6 @@ foreach($articles as $article){
     $admin_viewarticlestable_page->setContent("article_size", $article->getSize()->getSize());
     $admin_viewarticlestable_page->setContent("article_color", $article->getColor()->getColor());
     $admin_viewarticlestable_page->setContent("article_quantity", $article->getQuantity());
-
 
     $admin_viewarticlestable_page->setContent("article_value", $article->getId());
 }

@@ -329,7 +329,7 @@ class ProductDAO extends DAO{
     * 
     * 
     */
-    public function storeProduct(Product $product): bool {
+    public function storeProduct(Product $product): ?Product {
         if ($product->getId() !== null) { // Aggiorno il prodotto
             $this->stmtUpdateProduct->bindValue(1, $product->getName(), PDO::PARAM_STR);
             $this->stmtUpdateProduct->bindValue(2, $product->getPrice(), PDO::PARAM_STR);
@@ -339,17 +339,23 @@ class ProductDAO extends DAO{
             $this->stmtUpdateProduct->bindValue(6, $product->getSex()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateProduct->bindValue(7, $product->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateProduct->execute();
+            if($this->stmtUpdateProduct->execute()){
+                return $product;
+            }
         } else {   // Inserisco il prodotto
             $this->stmtInsertProduct->bindValue(1, $product->getName(), PDO::PARAM_STR);
             $this->stmtInsertProduct->bindValue(2, $product->getPrice(), PDO::PARAM_STR);
             $this->stmtInsertProduct->bindValue(3, $product->getDescription(), PDO::PARAM_STR);
             $this->stmtInsertProduct->bindValue(4, $product->getProductor()->getId(), PDO::PARAM_INT);
             $this->stmtInsertProduct->bindValue(5, $product->getCategory()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateProduct->bindValue(6, $product->getSex()->getId(), PDO::PARAM_INT);
+            $this->stmtInsertProduct->bindValue(6, $product->getSex()->getId(), PDO::PARAM_INT);
 
-            return $this->stmtInsertProduct->execute();
+            if($this->stmtInsertProduct->execute()){
+                $product->setId($this->conn->lastInsertId());
+                return $product;
+            }
         }
+        return null;
     }
     /**
     * 

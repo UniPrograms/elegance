@@ -89,7 +89,10 @@ class ArticleDAO extends DAO{
 
         $result = [];
         while ($rs = $this->stmtGetAllArticleByProductId->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = $this->getArticleById($rs["ID_ARTICOLO"]);
+            $article_id = $rs["ID_ARTICOLO"];
+            if($article_id != null){
+               $result[] = $this->getArticleById($rs["ID_ARTICOLO"]); 
+            }
         }
         return $result;
     }

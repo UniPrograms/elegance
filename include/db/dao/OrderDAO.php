@@ -247,6 +247,18 @@ class OrderDAO extends DAO {
         $this->stmtDeleteOrder->bindValue(1, $Order->getId(), PDO::PARAM_INT);
         return $this->stmtDeleteOrder->execute();
     }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteOrderById(int $id): bool {
+        $this->stmtDeleteOrder->bindValue(1, $id, PDO::PARAM_INT);
+        return $this->stmtDeleteOrder->execute();
+    }
+
 
 
 

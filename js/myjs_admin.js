@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('.admin-delete-order').forEach(function(btn) {
     btn.addEventListener('click', function() {
 
+
       var orderId = this.getAttribute("value");
       var row = this.closest("tr");
       $.ajax({
@@ -594,24 +595,20 @@ document.addEventListener('DOMContentLoaded', function(){
     const productCategoryId = document.getElementById("product-category").value;
     const productSexId = document.getElementById("product-gender").value;
 
+    if(productId.length != 0){
+      data = {operation:"store", product_id:productId, product_name:productName, product_price:productPrice, product_description:productDescription, brand_id:productBrandId, category_id:productCategoryId, sex_id:productSexId}
+    }else{
+      data = {operation:"store", product_name:productName, product_price:productPrice, product_description:productDescription, brand_id:productBrandId, category_id:productCategoryId, sex_id:productSexId}
+    }
+
     $.ajax({
       type: "POST",
       url: "product_operation.php",
-      data:{
-        operation: "store",
-        product_id: productId,
-        product_name: productName,
-        product_price: productPrice,
-        product_description: productDescription,
-        brand_id: productBrandId,
-        category_id: productCategoryId,
-        sex_id: productSexId
-      },
+      data: data,
       dataType: "json",
     }).done(function(response){
       if(response.status == "OK"){
-        alert("Prodotto aggiornato con successo!");
-        window.location.href = "admin_viewproduct.php?product_id="+productId;
+        window.location.href = "admin_viewproduct.php?product_id="+response.product_id;
       }else{
         alert("Errore: " + response.text_message);
       }

@@ -31,10 +31,11 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         exit;
     } 
 
+
     
     // Se è stato passato l'id del prodotto, allora lo aggiorno
     if(isset($_REQUEST["product_id"])){
-        $product = $productDAO->getProductById($_REQUEST["product_id"]);
+        $product = $productDAO->getProductById((int)$_REQUEST["product_id"]);
     }else{
         $product = new Product();
     }
@@ -47,12 +48,14 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     $product->setSex($sexDAO->getSexById($_REQUEST["sex_id"]));
     
     // Se qualcosa non ha funzionato
-    if(($result = $productDAO->storeProduct($product)) == null){
+    if(($product = $productDAO->storeProduct($product)) == null){
         echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
-    echo AjaxResponse::okNoContent()->build();
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("product_id", $product->getId());
+    echo $ajax_response->build();
     exit;
 
 }
