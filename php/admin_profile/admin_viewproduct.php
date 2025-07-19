@@ -20,24 +20,6 @@ $categoryDAO = $factory->getCategoryDAO();
 $sexDAO = $factory->getSexDAO();
 $productorDAO = $factory->getProductorDAO();
 
-// Inizializzo le categorie
-foreach($categoryDAO->getAllCategories() as $category){
-    $admin_viewproduct_page->setContent("category_id", $category->getId());
-    $admin_viewproduct_page->setContent("category_name", $category->getName());
-}
-
-// Inizializzo i sessi
-foreach($sexDAO->getAllSexs() as $sex){
-    $admin_viewproduct_page->setContent("sex_id", $sex->getId());
-    $admin_viewproduct_page->setContent("sex_name", $sex->getSex());
-}
-
-// Inizializzo i produttori
-foreach($productorDAO->getAllProductores() as $productor){
-    $admin_viewproduct_page->setContent("brand_id", $productor->getId());
-    $admin_viewproduct_page->setContent("brand_name", $productor->getName());
-}
-
 // Se il prodotto è stato passato, allora inizializzo i dati del prodotto
 if(isset($_REQUEST["product_id"])){
     // Dati specifici del prodotto
@@ -58,6 +40,45 @@ if(isset($_REQUEST["product_id"])){
     $admin_viewproduct_page->setContent("product_title", "new product");
     // Valore del prodotto per andare nella pagina degli articoli
     $admin_viewproduct_page->setContent("product_value", "");
+}
+
+// Inizializzo le categorie
+foreach($categoryDAO->getAllCategories() as $category){
+    $admin_viewproduct_page->setContent("category_id", $category->getId());
+    $admin_viewproduct_page->setContent("category_name", $category->getName());
+    
+    // Seleziona automaticamente la categoria corrente del prodotto
+    if(isset($product) && $category->getId() == $product->getCategory()->getId()){
+        $admin_viewproduct_page->setContent("category_selected", "selected");
+    } else {
+        $admin_viewproduct_page->setContent("category_selected", "");
+    }
+}
+
+// Inizializzo i sessi
+foreach($sexDAO->getAllSexs() as $sex){
+    $admin_viewproduct_page->setContent("sex_id", $sex->getId());
+    $admin_viewproduct_page->setContent("sex_name", $sex->getSex());
+    
+    // Seleziona automaticamente il sesso corrente del prodotto
+    if(isset($product) && $sex->getId() == $product->getSex()->getId()){
+        $admin_viewproduct_page->setContent("sex_selected", "selected");
+    } else {
+        $admin_viewproduct_page->setContent("sex_selected", "");
+    }
+}
+
+// Inizializzo i produttori
+foreach($productorDAO->getAllProductores() as $productor){
+    $admin_viewproduct_page->setContent("brand_id", $productor->getId());
+    $admin_viewproduct_page->setContent("brand_name", $productor->getName());
+    
+    // Seleziona automaticamente il brand corrente del prodotto
+    if(isset($product) && $productor->getId() == $product->getProductor()->getId()){
+        $admin_viewproduct_page->setContent("brand_selected", "selected");
+    } else {
+        $admin_viewproduct_page->setContent("brand_selected", "");
+    }
 }
 
 // Inserimento all'interno del button per andare alla gestione degli articoli

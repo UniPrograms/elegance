@@ -104,6 +104,7 @@ else if(isset($_REQUEST["store"])){
     header("Location: ". $query_string_builder->build());
 
 }
+// Eliminazione di un ordine
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato fornito l'id dell'ordine
@@ -123,6 +124,36 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     exit;
 
 }
+// Informazioni di un ordine
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
+    // Se non è stato fornito l'id dell'ordine
+    if(!isset($_REQUEST["order_id"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Recupero l'ordine
+    $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
+
+    // Se l'ordine non è stato trovato
+    if($order == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Ritorno tutte le informazioni necessarie
+    $ajax_response = new AjaxResponse("OK");
+
+    $ajax_response->add("order_id",$order->getId());
+    $ajax_response->add("order_status",$order->getStatus());
+
+    echo $ajax_response->build();
+    exit;
+    
+
+}
 
 ?>

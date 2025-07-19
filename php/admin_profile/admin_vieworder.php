@@ -50,7 +50,13 @@ $order_status = ["IN_LAVORAZIONE" => "in progress",
 foreach($order_status as $key => $value){
     $admin_vieworder_page->setContent("order_status_key", $key);
     $admin_vieworder_page->setContent("order_status_value", $value);
-
+    
+    // Seleziona automaticamente lo stato corrente dell'ordine
+    if($key == $order->getStatus()){
+        $admin_vieworder_page->setContent("order_status_selected", "selected");
+    } else {
+        $admin_vieworder_page->setContent("order_status_selected", "");
+    }
 }
 
 ?>

@@ -13,8 +13,9 @@
     <li><span class="label">Email:</span> <input type="text" id="user-email" value="<[user_email]>" readonly /></li>
     <li><span class="label">Role:</span>
       <select id="user-role-input" name="user-role">
-        <option value="UTENTE">User</option>
-        <option value="AMMINISTRATORE">Admin</option>
+        <[foreach]>
+        <option value="<[user_role_key]>" <[user_role_selected]>><[user_role_value::strformatter type="title" library="utility"]></option>
+        <[/foreach]>
       </select>
     </li>
     <li><span class="label">Phone:</span> <input type="text" id="user-phone" value="<[user_phone::strformatter type="phone" library="utility"]>"/></li>

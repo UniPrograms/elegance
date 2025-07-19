@@ -14,7 +14,7 @@
       <li><span class="label">Status:</span>
         <select id="order-status-input" name="order-status">
           <[foreach]>
-          <option value=<[order_status_key]>><[order_status_value::strformatter type="title" library="utility"]></option>
+          <option value="<[order_status_key]>" <[order_status_selected]>><[order_status_value::strformatter type="title" library="utility"]></option>
           <[/foreach]>
         </select>
       </li>

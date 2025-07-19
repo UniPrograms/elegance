@@ -111,7 +111,6 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 }
 
 
-
 // Ottenimento informazioni utente
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
     
@@ -216,4 +215,37 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image
     exit;
 }
 
+// Informazioni di un utente
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
+
+    // Se non è stato fornito l'id dell'utente
+    if(!isset($_REQUEST["user_id"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Recupero l'utente
+    $user = $userDAO->getUserById($_REQUEST["user_id"]);
+
+    // Se l'utente' non è stato trovato
+    if($user == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Ritorno tutte le informazioni necessarie
+    $ajax_response = new AjaxResponse("OK");
+
+    $ajax_response->add("user_id",$user->getId());
+    $ajax_response->add("user_name",$user->getName());
+    $ajax_response->add("user_surname", $user->getSurname());
+    $ajax_response->add("user_role",$user->getRole());
+
+    echo $ajax_response->build();
+    exit;
+    
+
+}
 ?>

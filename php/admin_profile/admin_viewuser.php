@@ -20,6 +20,7 @@ $userDAO = $factory->getUserDAO();
 
 $user = $userDAO->getUserById($_REQUEST["user_id"]);
 
+// Inizializzo i campi base
 $admin_viewuser_page->setContent("user_id",$user->getId());
 $admin_viewuser_page->setContent("user_name",$user->getName());
 $admin_viewuser_page->setContent("user_surname",$user->getSurname());
@@ -35,5 +36,22 @@ if($user->getUrlImage() == null || strlen($user->getUrlImage()) == 0){
 else{
     $admin_viewuser_page->setContent("user_image",$user->getUrlImage());
 }
+
+// Setto la select per definire i ruoli utente
+$user_roles = ["UTENTE" => "user", 
+               "AMMINISTRATORE" => "admin"];
+
+foreach($user_roles as $key => $value){
+    $admin_viewuser_page->setContent("user_role_key", $key);
+    $admin_viewuser_page->setContent("user_role_value", $value);
+   
+    // Seleziona automaticamente il ruolo corrente dell'utente
+    if($key == $user->getRole()){
+        $admin_viewuser_page->setContent("user_role_selected", "selected");
+    } else {
+        $admin_viewuser_page->setContent("user_role_selected", "");
+    }
+}
+
 
 ?>

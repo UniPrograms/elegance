@@ -51,7 +51,7 @@ class ProductDAO extends DAO{
         $this->stmtGetPopularProductBySex= $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ?;");
         $this->stmtGetPopularProductBySexInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ? LIMIT ? OFFSET ?;");
         $this->stmtGetAllProductsByGenericString = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? OR NOME_CATEGORIA LIKE ? OR 
-                                                                                                               NOME_PRODUTTORE LIKE ?;");
+                                                                                                               NOME_PRODUTTORE LIKE ? OR SESSO LIKE ?;");
         
         $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT ID_PRODOTTO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
@@ -298,6 +298,7 @@ class ProductDAO extends DAO{
         $this->stmtGetAllProductsByGenericString->bindValue(1, '%' . $string . '%', PDO::PARAM_STR);
         $this->stmtGetAllProductsByGenericString->bindValue(2, '%' . $string . '%', PDO::PARAM_STR);
         $this->stmtGetAllProductsByGenericString->bindValue(3, '%' . $string . '%', PDO::PARAM_STR);
+        $this->stmtGetAllProductsByGenericString->bindValue(4, '%' . $string . '%', PDO::PARAM_STR);
         $this->stmtGetAllProductsByGenericString->execute();
         
         $result = [];

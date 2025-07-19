@@ -21,21 +21,21 @@
       <li><span class="label">Brand:</span>
         <select id="product-brand-input" name="product-brand">
           <[foreach]>
-          <option value=<[brand_id]>><[brand_name::strformatter type="title" library="utility"]></option>
+          <option value="<[brand_id]>" <[brand_selected]>><[brand_name::strformatter type="title" library="utility"]></option>
           <[/foreach]>
         </select>
       </li>
       <li><span class="label">Categoria:</span>
         <select id="product-category" name="product-category">
           <[foreach]>
-          <option value=<[category_id]>><[category_name::strformatter type="title" library="utility"]></option>
+          <option value="<[category_id]>" <[category_selected]>><[category_name::strformatter type="title" library="utility"]></option>
           <[/foreach]>
         </select>
       </li>
       <li><span class="label">Sesso:</span>
         <select id="product-gender" name="product-gender">
           <[foreach]>
-          <option value=<[sex_id]>><[sex_name::strformatter type="title" library="utility"]></option>
+          <option value="<[sex_id]>" <[sex_selected]>><[sex_name::strformatter type="title" library="utility"]></option>
           <[/foreach]>
         </select>
       </li>

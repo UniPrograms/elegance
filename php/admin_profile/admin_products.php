@@ -29,6 +29,7 @@ foreach($products as $product){
     $admin_products_page->setContent("product_id",$product->getId());
     $admin_products_page->setContent("product_name",$product->getName());
     $admin_products_page->setContent("product_category",$product->getCategory()->getName());
+    $admin_products_page->setContent("product_sex",$product->getSex()->getSex());
     $admin_products_page->setContent("product_brand",$product->getProductor()->getName());
     $admin_products_page->setContent("product_price",$product->getPrice());
 
