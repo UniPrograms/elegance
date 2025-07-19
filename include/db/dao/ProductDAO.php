@@ -53,7 +53,7 @@ class ProductDAO extends DAO{
         $this->stmtGetAllProductsByGenericString = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? OR NOME_CATEGORIA LIKE ? OR 
                                                                                                                NOME_PRODUTTORE LIKE ?;");
         
-        $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
+        $this->stmtGetProductFiltered = $this->conn->prepare("SELECT DISTINCT ID_PRODOTTO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
                                                                                                                     (? IS NULL OR ID_COLORE = ?) AND
@@ -61,7 +61,7 @@ class ProductDAO extends DAO{
                                                                                                                     (? IS NULL OR ID_PRODUTTORE = ?) AND
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO >= ?) AND 
                                                                                                                     (? IS NULL OR PREZZO_PRODOTTO <= ?);");
-        $this->stmtGetProductFilteredInRange = $this->conn->prepare("SELECT DISTINCT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
+        $this->stmtGetProductFilteredInRange = $this->conn->prepare("SELECT DISTINCT ID_PRODOTTO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE (? IS NULL OR NOME_PRODOTTO LIKE ?) AND 
                                                                                                                     (? IS NULL OR ID_CATEGORIA = ?) AND 
                                                                                                                     (? IS NULL OR ID_SESSO = ?) AND
                                                                                                                     (? IS NULL OR ID_COLORE = ?) AND

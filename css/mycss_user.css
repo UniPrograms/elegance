@@ -709,6 +709,24 @@
   min-height: 150px;
   position: relative;
 }
+.account-dashboard-block-hidden {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+  border-radius: 12px;
+  border: 2px solid #e3e3e3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 32px 14px 22px 14px;
+  text-decoration: none;
+  color: #222;
+  transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  min-height: 150px;
+  position: relative;
+}
+
+
 
 .account-dashboard-block-hidden {
   display: flex;
@@ -815,6 +833,12 @@
 .pagination {
     margin-top: 30px;
     text-align: center;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #dc0345;
+    border-color: #dc0345;
+    color: #fff;
 }
 .profile-container {
     margin-top: 40px;

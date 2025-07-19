@@ -25,12 +25,18 @@ $min_price = isset($_GET["min_price"]) ? (float) $_GET["min_price"] : null;
 $max_price = isset($_GET["max_price"]) ? (float) $_GET["max_price"] : null;
 
 
+// Inserisco il numero di prodotti totali trovati nella pagina
+$products = $productDAO->getProductFiltered($name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price);
+$shop_product_page->setContent("counter_products_found", count($products));
 
-// Prendo i prodotti in base ai filtri passati
-$products = $productDAO->getProductFiltered($name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price, $limit, $offset);
+
+
+// Prendo i prodotti paginati in base ai filtri passati
+$paginatedproducts = $productDAO->getProductFiltered($name, $category_id, $sex_id, $color_id, $size_id, $productor_id, $min_price, $max_price, $limit, $offset);
+
 
 $buffer = "";
-foreach ($products as $product) {
+foreach ($paginatedproducts as $product) {
 
     $query_string_builder = new QueryStringBuilder("product.php");
     $query_string_builder->add("product_id",$product->getId());
@@ -63,6 +69,9 @@ $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
           strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
 if ($isAjax) {
-    echo $shop_product_page->get();
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("counter_products_found", count($products));
+    $ajax_response->add("content",$shop_product_page->get());
+    echo $ajax_response->build();
     exit;
 }

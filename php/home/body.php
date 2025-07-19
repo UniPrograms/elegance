@@ -18,28 +18,31 @@ $productDAO = $factory->getProductDAO();
 $sexDAO = $factory->getSexDAO();
 $productorDAO = $factory->getProductorDAO();
 
-// Id delle categorie
+// Id delle categorie nei 3 box
 $query_string_builder = new QueryStringBuilder("shop.php");
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHIRT")->getId());
+$query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
 $body_page->setContent("shirt_link", $query_string_builder->build());
 
 $query_string_builder->cleanParams();
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHOES")->getId());
+$query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
 $body_page->setContent("shoes_link", $query_string_builder->build());
 
 $query_string_builder->cleanParams();
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("ACCESSORIES")->getId());
+$query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
 $body_page->setContent("shoes_link", $query_string_builder->build());
 
 
-// Lodo dei brand (Produttori)
+// Logo dei brand (Produttori) alla fine della pagina
 $brands = $productorDAO->getAllProductores(6,0);
 foreach($brands as $brand){
     $body_page->setContent("brand_image", $brand->getLogo());
 }
 
 
-// Slider con i vestiti più venduti
+// Slider con i vestiti più venduti da donna e da uomo
 $sexes = ["WOMAN","MAN"];
 
 foreach($sexes as $current_sex){

@@ -888,6 +888,10 @@ img {
     .pagination .page-item .page-link:hover, .pagination .page-item .page-link:focus {
       color: #0315ff;
       box-shadow: none; }
+  .pagination .page-item.active .page-link {
+      background-color: #dc0345;
+      border-color: #dc0345;
+      color: #fff; }
   .pagination .page-item:first-child {
     margin-right: 15px; }
     .pagination .page-item:first-child .page-link {
