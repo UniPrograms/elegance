@@ -110,6 +110,30 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
 
 
+// Ottenimento informazioni utente
+else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
+    
+    header("Content-Type: application/json;");
+
+    // Prendo l'utente loggato
+    $user = $userDAO->getUserById($_SESSION["id"]);
+
+    // Se l'utente non esiste
+    if($user == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Restituisco le informazioni dell'utente
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("user_role", $user->getRole());
+    $ajax_response->add("user_name", $user->getName());
+    $ajax_response->add("user_surname", $user->getSurname());
+    $ajax_response->add("user_email", $user->getEmail());
+    echo $ajax_response->build();
+    exit;
+}
+
 // Aggiornamento di un utente da parte dell'amministratore
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
     

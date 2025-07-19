@@ -19,8 +19,9 @@
       </li>
       <li><span class="label">Brand:</span>
         <select id="product-brand-input" name="product-brand">
-          <option value="">Seleziona brand</option>
-          <!-- [brand_options] -->
+          <[foreach]>
+          <option value=<[brand_id]>><[brand_name::strformatter type="title" library="utility"]></option>
+          <[/foreach]>
         </select>
       </li>
       <li><span class="label">Categoria:</span>

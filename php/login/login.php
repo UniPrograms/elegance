@@ -29,6 +29,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         $_SESSION["cognome"] = $user->getSurname();
         $_SESSION["email"] = $user->getEmail();        
         $_SESSION["ruolo"] = $user->getRole();
+        $_SESSION["is_admin"] = strtoupper($user->getRole()) == "AMMINISTRATORE";   
             
         // Se l'utente è un amministratore, allora lo rimanda alla schermata principale
         if(strtoupper($user->getRole()) == "AMMINISTRATORE")  { 

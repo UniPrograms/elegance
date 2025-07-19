@@ -18,6 +18,7 @@ $factory = new DataLayer(new DB_Connection);
 $productDAO = $factory->getProductDAO();
 $categoryDAO = $factory->getCategoryDAO();
 $sexDAO = $factory->getSexDAO();
+$productorDAO = $factory->getProductorDAO();
 
 // Inizializzo le categorie
 foreach($categoryDAO->getAllCategories() as $category){
@@ -31,6 +32,11 @@ foreach($sexDAO->getAllSexs() as $sex){
     $admin_viewproduct_page->setContent("sex_name", $sex->getSex());
 }
 
+// Inizializzo i produttori
+foreach($productorDAO->getAllProductores() as $productor){
+    $admin_viewproduct_page->setContent("brand_id", $productor->getId());
+    $admin_viewproduct_page->setContent("brand_name", $productor->getName());
+}
 
 // Se il prodotto è stato passato, allora inizializzo i dati del prodotto
 if(isset($_REQUEST["product_id"])){

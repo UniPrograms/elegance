@@ -43,8 +43,8 @@ class ProductDAO extends DAO{
         $this->stmtGetProductByCategoryInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE ID_CATEGORIA = ? LIMIT ? OFFSET ?;");
         $this->stmtGetProductByProductor = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ?;");
         $this->stmtGetProductByProductorInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ? LIMIT ? OFFSET ?;");
-        $this->stmtInsertProduct = $this->conn->prepare("INSERT INTO PRODOTTO (NOME, PREZZO, DESCRIZIONE, ID_PRODUTTORE, ID_CATEGORIA) VALUES (?, ?, ?, ?, ?);");
-        $this->stmtUpdateProduct = $this->conn->prepare("UPDATE PRODOTTO SET NOME = ?, PREZZO = ?, DESCRIZIONE = ?, ID_PRODUTTORE = ?, ID_CATEGORIA = ? WHERE ID = ?;");
+        $this->stmtInsertProduct = $this->conn->prepare("INSERT INTO PRODOTTO (NOME, PREZZO, DESCRIZIONE, ID_PRODUTTORE, ID_CATEGORIA, ID_SESSO) VALUES (?, ?, ?, ?, ?, ?);");
+        $this->stmtUpdateProduct = $this->conn->prepare("UPDATE PRODOTTO SET NOME = ?, PREZZO = ?, DESCRIZIONE = ?, ID_PRODUTTORE = ?, ID_CATEGORIA = ?, ID_SESSO = ? WHERE ID = ?;");
         $this->stmtDeleteProduct = $this->conn->prepare("DELETE FROM PRODOTTO WHERE ID = ?;");
         $this->stmtGetPopularProduct = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA;");
         $this->stmtGetPopularProductInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA LIMIT ? OFFSET ?;");
@@ -336,7 +336,8 @@ class ProductDAO extends DAO{
             $this->stmtUpdateProduct->bindValue(3, $product->getDescription(), PDO::PARAM_STR);
             $this->stmtUpdateProduct->bindValue(4, $product->getProductor()->getId(), PDO::PARAM_INT);
             $this->stmtUpdateProduct->bindValue(5, $product->getCategory()->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateProduct->bindValue(6, $product->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateProduct->bindValue(6, $product->getSex()->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateProduct->bindValue(7, $product->getId(), PDO::PARAM_INT);
             
             return $this->stmtUpdateProduct->execute();
         } else {   // Inserisco il prodotto
@@ -345,6 +346,7 @@ class ProductDAO extends DAO{
             $this->stmtInsertProduct->bindValue(3, $product->getDescription(), PDO::PARAM_STR);
             $this->stmtInsertProduct->bindValue(4, $product->getProductor()->getId(), PDO::PARAM_INT);
             $this->stmtInsertProduct->bindValue(5, $product->getCategory()->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateProduct->bindValue(6, $product->getSex()->getId(), PDO::PARAM_INT);
 
             return $this->stmtInsertProduct->execute();
         }

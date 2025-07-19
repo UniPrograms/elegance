@@ -578,3 +578,55 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+// Controllo tasto per aggiornamento e inserimento di un prodotto
+document.addEventListener('DOMContentLoaded', function(){
+
+  const updateBtn = document.getElementById('admin-update-product');
+
+  updateBtn.addEventListener("click", function(){
+
+    const productId = document.getElementById("product-id").value;
+    const productName = document.getElementById("product-name-input").value;
+    const productPrice = document.getElementById("product-price").value;
+    const productDescription = document.getElementById("product-description").value;
+    const productBrandId = document.getElementById("product-brand-input").value;
+    const productCategoryId = document.getElementById("product-category").value;
+    const productSexId = document.getElementById("product-gender").value;
+
+    $.ajax({
+      type: "POST",
+      url: "product_operation.php",
+      data:{
+        operation: "store",
+        product_id: productId,
+        product_name: productName,
+        product_price: productPrice,
+        product_description: productDescription,
+        brand_id: productBrandId,
+        category_id: productCategoryId,
+        sex_id: productSexId
+      },
+      dataType: "json",
+    }).done(function(response){
+      if(response.status == "OK"){
+        alert("Prodotto aggiornato con successo!");
+        window.location.href = "admin_viewproduct.php?product_id="+productId;
+      }else{
+        alert("Errore: " + response.text_message);
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      console.error("Errore AJAX completo:", {
+        status: jqXHR.status,
+        statusText: jqXHR.statusText,
+        responseText: jqXHR.responseText,
+        responseJSON: jqXHR.responseJSON,
+        textStatus: textStatus,
+        errorThrown: errorThrown,
+        readyState: jqXHR.readyState,
+        url: jqXHR.responseURL
+      });
+      alert("Errore AJAX completo:\nStatus: " + jqXHR.status + "\nStatusText: " + jqXHR.statusText + "\nResponseText: " + jqXHR.responseText + "\nTextStatus: " + textStatus + "\nErrorThrown: " + errorThrown);
+    });
+  });
+});

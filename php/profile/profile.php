@@ -20,7 +20,7 @@ $userDAO = $factory->getUserDAO();
 $orderDAO = $factory->getOrderDAO();
 
 // Template
-$profile_page = new Template("skin/profile/profile.html");
+$profile_page = $_SESSION["is_admin"] ? new Template("skin/admin_profile/admin_profile.html") : new Template("skin/profile/profile.html");
 
 
 
