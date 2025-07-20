@@ -69,7 +69,7 @@ class ImageDAO extends DAO{
      * 
      * 
      */
-    public function getImageByProduct(Product $product): array {
+    public function getAllImagesByProduct(Product $product): array {
         $this->stmtGetImageByProduct->bindValue(1, $product->getId(), PDO::PARAM_STR);
         $this->stmtGetImageByProduct->execute();
         $result = [];
@@ -120,7 +120,6 @@ class ImageDAO extends DAO{
     private function createImage(array $rs): Image {
         $image = new ImageProxy($this->dataLayer);
         $image->setId($rs['ID']);
-        $image->setName($rs['NOME']);
         $image->setPath($rs['PATH']);
         return $image;
     }

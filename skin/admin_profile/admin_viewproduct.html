@@ -50,20 +50,17 @@
   <div class="product-image-panel" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:2rem 2rem 1.5rem 2rem; border:1px solid #e0e0e0;">
     <div style="width:100%; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:1.5rem; align-items:center; justify-items:center; flex:1;">
       
-      <!-- Placeholder con immagine -->
+      <!-- Placeholder immagine di copertina-->
       <div class="img-placeholder-upload">
         <div class="img-uploaded-wrapper">
-          <img src="img\my_img\user_profile\img_3.jpg" alt="Immagine prodotto" />
-          <button class="delete-img-btn" title="Rimuovi immagine">✖</button>
+          <img src="<[product_copertina]>" alt="Immagine prodotto" />
         </div>
       </div>
-    <!-- Fine placeholder con immagine-->
+    <!-- Fine placeholder immagine di copertina -->
 
-      <!-- Placeholder vuoto (default) -->
-      <div class="img-placeholder-upload">
-        <button class="add-img-btn" title="Aggiungi immagine">+</button>
-      </div>
-    <!-- Fine placeholder vuoto (default) -->
+      <!-- Placeholder altre immagini (anche vuote) -->
+      <[other_product_images]>
+      <!-- Fine Placeholder altre immagini (anche vuote) -->
 
 
     </div>

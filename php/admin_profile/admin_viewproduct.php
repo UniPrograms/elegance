@@ -19,6 +19,7 @@ $productDAO = $factory->getProductDAO();
 $categoryDAO = $factory->getCategoryDAO();
 $sexDAO = $factory->getSexDAO();
 $productorDAO = $factory->getProductorDAO();
+$imageDAO = $factory->getImageDAO();
 
 // Se il prodotto è stato passato, allora inizializzo i dati del prodotto
 if(isset($_REQUEST["product_id"])){
@@ -29,6 +30,7 @@ if(isset($_REQUEST["product_id"])){
     $admin_viewproduct_page->setContent("product_brand", $product->getProductor()->getName());
     $admin_viewproduct_page->setContent("product_price", $product->getPrice());
     $admin_viewproduct_page->setContent("product_description", $product->getDescription());
+    $admin_viewproduct_page->setContent("product_copertina", $product->getCopertina());
 
     // Titolo della pagina
     $admin_viewproduct_page->setContent("product_title", "product:");
@@ -81,9 +83,51 @@ foreach($productorDAO->getAllProductores() as $productor){
     }
 }
 
-// Inserimento all'interno del button per andare alla gestione degli articoli
+// Inizializzo le immagini del prodotto
+$max_images = 5;
+$buffer = "";
+$images_size = 0;
+
+if(isset($product)){
+    $images = $imageDAO->getAllImagesByProduct($product);    
+    $images_size = count($images);
+
+    for($i = 0; $i < $images_size; $i++){
+        $buffer .= '<div class="img-placeholder-upload">';
+        $buffer .= '<div class="img-uploaded-wrapper">';
+        $buffer .= '<img src="'.$images[$i]->getPath().'" alt="Immagine prodotto" />';
+        $buffer .= '<button class="delete-img-btn" title="Rimuovi immagine">✖</button>';
+        $buffer .= '</div>';
+        $buffer .= '</div>';
+    }
+}
+
+// Inserisco i placeholder
+
+for($i = 0; $i < ($max_images - $images_size); $i++){
+    $buffer .= '<div class="img-placeholder-upload">';
+    $buffer .= '<button class="add-img-btn" title="Aggiungi immagine">+</button>';
+    $buffer .= '</div>';
+}
 
 
+// Inserisco i box delle immagini
+$admin_viewproduct_page->setContent("other_product_images", $buffer);
 
+/*
+<div class="img-placeholder-upload">
+<div class="img-uploaded-wrapper">
+<img src="img\my_img\user_profile\img_3.jpg" alt="Immagine prodotto" />
+<button class="delete-img-btn" title="Rimuovi immagine">✖</button>
+</div>
+</div>
+*/
+
+
+/*
+<div class="img-placeholder-upload">
+<button class="add-img-btn" title="Aggiungi immagine">+</button>
+</div>
+*/
 
 ?>
