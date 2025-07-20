@@ -571,7 +571,14 @@ document.addEventListener('DOMContentLoaded', function(){
       dataType: "json",
     }).done(function(response){
       if(response.status == "OK"){
-        window.location.href = "admin_viewproduct.php?product_id="+response.product_id;
+        // Aggiorna la copertina forzando il refresh (se presente)
+        var coverImg = document.getElementById('product-cover-img');
+        if(coverImg) {
+          // Prendi la nuova url (stessa, ma aggiungi timestamp)
+          var baseUrl = coverImg.src.split('?')[0];
+          coverImg.src = baseUrl + '?t=' + new Date().getTime();
+        }
+        location.reload();
       }else{
         alert("Errore: " + response.text_message);
       }
