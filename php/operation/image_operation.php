@@ -8,7 +8,7 @@ require_once("include/model/Article.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError()->build();
+    echo AjaxResponse::genericServerError("Errore di sessione in image_operation.php.")->build();
     exit;
 }
 
@@ -17,5 +17,8 @@ if(!isset($_SESSION["auth"])){
 $factory = new DataLayer(new DB_Connection());
 
 
+
+echo AjaxResponse::genericServerError("Nessuna operazione selezionata image_operation.php.")->build();
+    exit;
 
 ?>
