@@ -1469,3 +1469,136 @@
   left: 0;
   border-radius: 8px;
 }
+
+/* --- Shop Filter Form Styles --- */
+.shop-filter-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 28px 18px 18px 18px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.shop-filter-label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #222;
+  font-size: 1.10em;
+  letter-spacing: 0.1px;
+}
+.shop-filter-select {
+  width: 100%;
+  padding: 0 12px;
+  border-radius: 7px;
+  border: 1.5px solid #e3e3e3;
+  background: #fafafa;
+  font-size: 1em;
+  transition: border-color 0.2s;
+  margin-bottom: 8px;
+  text-align: left;
+  text-align-last: left;
+  height: 40px;
+  line-height: 40px; /* Allinea verticalmente il testo */
+}
+.shop-filter-select:focus {
+  border-color: #0315ff;
+  outline: none;
+}
+.shop-filter-option {
+  width: 100%;
+  text-align: left;
+  padding: 0 0 0 12px;
+  background: #fafafa;
+  height: 40px;
+  line-height: 40px;
+}
+.shop-filter-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.shop-filter-price-box {
+  width: 80px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  border: 1.5px solid #e3e3e3;
+  background: #fafafa;
+  font-size: 1em;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.shop-filter-price-box:focus {
+  border-color: #0315ff;
+  outline: none;
+}
+.shop-filter-price-sep {
+  font-size: 1.2em;
+  color: #888;
+  font-weight: 600;
+}
+.shop-filter-price-currency {
+  font-size: 1em;
+  color: #222;
+  margin-left: 4px;
+}
+.shop-filter-btn-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.shop-filter-btn {
+  min-width: 140px;
+  height: 44px;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0 32px;
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 44px;
+  background-color: #0315ff;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(3,21,255,0.07);
+  transition: background 0.2s;
+}
+.shop-filter-btn:hover, .shop-filter-btn:focus {
+  background-color: #dc0345;
+  color: #fff;
+}
+/* Colore: i pallini usano .color-item, già definiti altrove per la colorazione dinamica */
+.color-item {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #e3e3e3;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.color-item:hover, .color-item:focus {
+  border-color: #0315ff;
+  box-shadow: 0 2px 8px rgba(3,21,255,0.10);
+}
+.nice-select.open .list {
+  width: 100% !important;
+}
+@media (max-width: 700px) {
+  .shop-filter-form {
+    padding: 16px 4vw 12px 4vw;
+    gap: 12px;
+  }
+  .shop-filter-btn {
+    min-width: 100px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
+  .shop-filter-price-box {
+    width: 60px;
+    font-size: 0.97em;
+  }
+}

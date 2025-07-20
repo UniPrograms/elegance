@@ -1,93 +1,58 @@
-
-        <div class="shop_sidebar_area">
-          <!-- ##### Single Widget ##### -->
-          <div class="widget catagory mb-50">
-            <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Catagories</h6>
-
-            <!--  Catagories  -->
-            <div class="catagories-menu">
-              <ul id="menu-content2" class="menu-content collapse show">
-                <!-- Single Item -->
-                <[foreach]>
-                <li data-toggle="collapse" data-target="#<[sex_value]>">
-                  <a href="#" style="font-weight:600; color:#1a1a1a; letter-spacing:0.5px; font-size:1em; text-transform:uppercase;" value=<[sex_id]>><[sex_name]></a>
-                  <ul class="sub-menu collapse show" id="<[sex_value]>">
-                    <li><a href="<[category_all_link]>" value="0" style="font-weight:500; color:#444; font-size:0.98em;">All</a></li>
-                    <[foreach]>
-                    <li><a href="<[category_link]>" value=<[category_value]> style="font-weight:500; color:#444; font-size:0.92em; letter-spacing:0.2px;"><[category_name::strformatter type="title" library="utility"]></a></li>
-                    <[/foreach]>
-                  </ul>
-                </li>
-                <[/foreach]>
-                <!-- Single Item -->
-              </ul>
-            </div>
-          </div>
-          <!-- FINE CATEGORIE -->
-
-          <!-- ##### Single Widget ##### -->
-          <div class="widget price mb-50">
-            <!-- Widget Title 2 -->
-            <h6 class="widget-title mb-30">Price</h6>
-
-            <div class="widget-desc">
-              <div class="slider-range">
-                <div
-                  data-min="0"
-                  data-max="1000"
-                  data-unit="$"
-                  class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                  data-value-min="0"
-                  data-value-max="1000"
-                  data-label-result="Range:"
-                >
-                  <div
-                    class="ui-slider-range ui-widget-header ui-corner-all"
-                  ></div>
-                  <span
-                    class="ui-slider-handle ui-state-default ui-corner-all"
-                    tabindex="0"
-                  ></span>
-                  <span
-                    class="ui-slider-handle ui-state-default ui-corner-all"
-                    tabindex="0"
-                  ></span>
-                </div>
-                <div class="range-price">Range: 00.00 $- 1000.00 $</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- INIZIO COLORE -->          
-          <!-- ##### Single Widget ##### -->
-          <div class="widget color mb-50">
-            <!-- Widget Title 2 -->
-            <h6 class="widget-title mb-30">Color</h6>
-            <div class="widget-desc">
-              <ul class="d-flex">
-                <[foreach]>
-                <li><a href="#" class="color_shop" value=<[color_value]> name=<[color_name]>></a></li>
-               <[/foreach]>
-                
-              </ul>
-            </div>
-          </div>
-          <!-- FINE COLORE -->
-
-          <!-- PRODUTTORE -->
-          <!-- ##### Single  Widget ##### -->
-          <div class="widget brands mb-50">
-            <!-- Widget Title 2 -->
-            <h6 class="widget-title mb-30">Brands</h6>
-            <div class="widget-desc">
-              <ul>
-                <[foreach]>
-                <li><a href="#" value=<[productor_value]>><[productor_name]></a></li>
-                <[/foreach]>
-              </ul>
-            </div>
-          </div>
-          <!-- FINE PRODUTTORE -->
-        </div>
+<form method="get" action="shop.php" class="shop-filter-form">
+  <!-- Sesso -->
+  <div>
+    <label for="sex_id" class="shop-filter-label">Sex</label>
+    <select class="shop-filter-select" id="sex_id" name="sex_id">
+      <option value="" class="shop-filter-option">All</option>
+      <[foreach]>
+      <option value="<[sex_value]>" class="shop-filter-option"><[sex_name]></option>
+      <[/foreach]>
+    </select>
+  </div>
+  <!-- Categoria -->
+  <div>
+    <label for="category_id" class="shop-filter-label">Category</label>
+    <select class="shop-filter-select" id="category_id" name="category_id">
+      <option value="" class="shop-filter-option">All</option>
+      <[foreach]>
+      <option value="<[category_value]>" class="shop-filter-option"><[category_name]></option>
+      <[/foreach]>
+    </select>
+  </div>
+  <!-- Brand -->
+  <div>
+    <label for="productor_id" class="shop-filter-label">Brand</label>
+    <select class="shop-filter-select" id="productor_id" name="productor_id">
+      <option value="" class="shop-filter-option">All</option>
+      <[foreach]>
+      <option value="<[productor_value]>" class="shop-filter-option"><[productor_name]></option>
+      <[/foreach]>
+    </select>
+  </div>
+  <!-- Prezzo -->
+  <div>
+    <label class="shop-filter-label">Price</label>
+    <div class="shop-filter-price-row">
+      <input type="number" min="0" max="1000" step="1" id="min_price" name="min_price" value="0" class="shop-filter-price-box" placeholder="Min">
+      <span class="shop-filter-price-sep">-</span>
+      <input type="number" min="0" max="1000" step="1" id="max_price" name="max_price" value="1000" class="shop-filter-price-box" placeholder="Max">
+      <span class="shop-filter-price-currency">$</span>
+    </div>
+  </div>
+  <!-- Colore -->
+  <div>
+    <label class="shop-filter-label">Color</label>
+    <div class="widget-desc">
+      <ul class="d-flex" style="gap: 8px; margin-top: 6px;">
+        <[foreach]>
+        <li><a href="#" class="color_shop color-item" value=<[color_value]> name=<[color_name]>></a></li>
+        <[/foreach]>
+      </ul>
+    </div>
+  </div>
+  <!-- Tasto Filter -->
+  <div class="shop-filter-btn-row">
+    <button type="submit" class="shop-filter-btn">Filter</button>
+  </div>
+</form>
    

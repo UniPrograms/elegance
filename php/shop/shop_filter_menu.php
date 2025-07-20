@@ -9,42 +9,44 @@ $sexDAO = $factory->getSexDAO();
 $productorDAO = $factory->getProductorDAO();
 $colorDAO = $factory->getColorDAO();
 
-
-// Setto le categorie (e il sesso) per il menu
-foreach($sexDAO->getAllSexs() AS $sex){
-
-    $shop_filter_menu_page->setContent("sex_name", $sex->getSex());
-    $shop_filter_menu_page->setContent("sex_value", $sex->getId());
-
-    $query_string_builder = new QueryStringBuilder("shop.php");
-    $query_string_builder->add("sex_id", $sex->getId());
-    $shop_filter_menu_page->setContent("category_all_link",$query_string_builder->build());
-   
-    foreach($categoryDAO->getAllCategories() as $category){
-        $shop_filter_menu_page->setContent("category_value", $category->getId());
-        $shop_filter_menu_page->setContent("category_name", $category->getName());
-
-        // Link della categoria e del sesso
-        $query_string_builder = new QueryStringBuilder("shop.php");
-        $query_string_builder->add("sex_id", $sex->getId());
-        $query_string_builder->add("category_id", $category->getId());
-        $shop_filter_menu_page->setContent("category_link",$query_string_builder->build());
+// Sesso
+$shop_filter_menu_page->setContent("foreach_sex", function() use ($sexDAO) {
+    $buffer = '';
+    foreach($sexDAO->getAllSexs() as $sex) {
+        $buffer .= '<[sex_value]>' . $sex->getId() . '<[/sex_value]>';
+        $buffer .= '<[sex_name]>' . htmlspecialchars($sex->getSex()) . '<[/sex_name]>';
     }
-}
+    return $buffer;
+});
 
-// Setto i colori
-foreach($colorDAO->getAllColors() as $color){
-    $shop_filter_menu_page->setContent("color_value", $color->getId());
-    $shop_filter_menu_page->setContent("color_name", $color->getColor());
-}
+// Categoria
+$shop_filter_menu_page->setContent("foreach_category", function() use ($categoryDAO) {
+    $buffer = '';
+    foreach($categoryDAO->getAllCategories() as $category) {
+        $buffer .= '<[category_value]>' . $category->getId() . '<[/category_value]>';
+        $buffer .= '<[category_name]>' . htmlspecialchars($category->getName()) . '<[/category_name]>';
+    }
+    return $buffer;
+});
 
+// Brand
+$shop_filter_menu_page->setContent("foreach_productor", function() use ($productorDAO) {
+    $buffer = '';
+    foreach($productorDAO->getAllProductores() as $productor) {
+        $buffer .= '<[productor_value]>' . $productor->getId() . '<[/productor_value]>';
+        $buffer .= '<[productor_name]>' . htmlspecialchars($productor->getName()) . '<[/productor_name]>';
+    }
+    return $buffer;
+});
 
-// Setto il brand (produttore)
-foreach($productorDAO->getAllProductores() as $productor){
-    $shop_filter_menu_page->setContent("productor_value", $productor->getId());
-    $shop_filter_menu_page->setContent("productor_name", $productor->getName());
-}
-
-
+// Colori
+$shop_filter_menu_page->setContent("foreach_color", function() use ($colorDAO) {
+    $buffer = '';
+    foreach($colorDAO->getAllColors() as $color) {
+        $buffer .= '<[color_value]>' . $color->getId() . '<[/color_value]>';
+        $buffer .= '<[color_name]>' . htmlspecialchars($color->getColor()) . '<[/color_name]>';
+    }
+    return $buffer;
+});
 
 ?>
