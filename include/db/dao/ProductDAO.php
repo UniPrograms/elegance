@@ -20,6 +20,7 @@ class ProductDAO extends DAO{
     private PDOStatement $stmtGetPopularProductInRange;
     private PDOStatement $stmtGetPopularProductBySex;
     private PDOStatement $stmtGetPopularProductBySexInRange;
+    private PDOStatement $stmtGetMaxPrice;
     private PDOStatement $stmtGetAllProductsByGenericString;
     private PDOStatement $stmtInsertProduct;
     private PDOStatement $stmtUpdateProduct;
@@ -49,6 +50,7 @@ class ProductDAO extends DAO{
         $this->stmtGetPopularProduct = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA;");
         $this->stmtGetPopularProductInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA LIMIT ? OFFSET ?;");
         $this->stmtGetPopularProductBySex= $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ?;");
+        $this->stmtGetMaxPrice = $this->conn->prepare("SELECT MAX(PREZZO_PRODOTTO) AS MAX_PRICE FROM PRODOTTO_COMPLETO;");
         $this->stmtGetPopularProductBySexInRange = $this->conn->prepare("SELECT * FROM PRODOTTO_QUANTITA_VENDUTA WHERE ID_SESSO = ? LIMIT ? OFFSET ?;");
         $this->stmtGetAllProductsByGenericString = $this->conn->prepare("SELECT * FROM PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? OR NOME_CATEGORIA LIKE ? OR 
                                                                                                                NOME_PRODUTTORE LIKE ? OR SESSO LIKE ?;");
@@ -227,6 +229,18 @@ class ProductDAO extends DAO{
             $result[] = $this->getProductById($rs["ID"]);
         }
         return $result;
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getMaxProductPrice(): float {
+        $this->stmtGetMaxPrice->execute();
+        $rs = $this->stmtGetMaxPrice->fetch(PDO::FETCH_ASSOC);
+        return $rs["MAX_PRICE"];
     }
     /**
     * 

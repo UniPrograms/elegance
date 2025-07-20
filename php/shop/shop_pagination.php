@@ -15,26 +15,34 @@ $productDAO = $factory->getProductDAO();
 
 
 // Controllo i filtri che sono stati passati
-$name = isset($_GET["name"]) ? $_GET["name"] : null;
-$category_id = isset($_GET["category_id"]) ? (int) $_GET["category_id"] : null;
-$sex_id = isset($_GET["sex_id"]) ? (int) $_GET["sex_id"] : null;
-$size_id = isset($_GET["size_id"]) ? (int) $_GET["size_id"] : null;
-$productor_id = isset($_GET["productor_id"]) ? (int) $_GET["productor_id"] : null;
-$color_id = isset($_GET["color_id"]) ? (int) $_GET["color_id"] : null;
-$min_price = isset($_GET["min_price"]) ? (float) $_GET["min_price"] : null;
-$max_price = isset($_GET["max_price"]) ? (float) $_GET["max_price"] : null;
+
+$name = isset($_REQUEST["name"]) && !empty($_REQUEST["name"])? $_REQUEST["name"] : null;
+
+$category_id = isset($_REQUEST["category_id"]) && $_REQUEST["category_id"] > 0 ? (int) $_REQUEST["category_id"] : null;
+
+$sex_id = isset($_REQUEST["sex_id"]) && $_REQUEST["sex_id"] > 0 ? (int) $_REQUEST["sex_id"] : null;
+
+$size_id = isset($_REQUEST["size_id"]) && $_REQUEST["size_id"] > 0 ? (int) $_REQUEST["size_id"] : null;
+
+$productor_id = isset($_REQUEST["productor_id"]) && $_REQUEST["productor_id"] > 0 ? (int) $_REQUEST["productor_id"] : null;
+
+$color_id = isset($_REQUEST["color_id"]) && $_REQUEST["color_id"] > 0 ? $_REQUEST["color_id"] : null;
+
+$min_price = isset($_REQUEST["min_price"]) ? (float) $_REQUEST["min_price"] : null;
+
+$max_price = isset($_REQUEST["max_price"]) ? (float) $_REQUEST["max_price"] : null;
 
 
 // Costruisco la query string in base ai valori forniti
 $query_string_builder = new QueryStringBuilder("shop.php");
-if(isset($_GET["name"])) $query_string_builder->add("name", $_GET["name"]);
-if(isset($_GET["category_id"])) $query_string_builder->add("category_id", $_GET["category_id"]);
-if(isset($_GET["sex_id"])) $query_string_builder->add("sex_id", $_GET["sex_id"]);
-if(isset($_GET["size_id"])) $query_string_builder->add("size_id", $_GET["size_id"]);
-if(isset($_GET["productor_id"])) $query_string_builder->add("productor_id", $_GET["productor_id"]);
-if(isset($_GET["color_id"])) $query_string_builder->add("color_id", $_GET["color_id"]);
-if(isset($_GET["min_price"])) $query_string_builder->add("min_price", $_GET["min_price"]);
-if(isset($_GET["max_price"])) $query_string_builder->add("max_price", $_GET["max_price"]);
+if($name != null) $query_string_builder->add("name", $_REQUEST["name"]);
+if($category_id != null) $query_string_builder->add("category_id", $_REQUEST["category_id"]);
+if($sex_id != null) $query_string_builder->add("sex_id", $_REQUEST["sex_id"]);
+if($size_id != null) $query_string_builder->add("size_id", $_REQUEST["size_id"]);
+if($productor_id != null) $query_string_builder->add("productor_id", $_REQUEST["productor_id"]);
+if($color_id != null) $query_string_builder->add("color_id", $_REQUEST["color_id"]);
+if($min_price != null) $query_string_builder->add("min_price", $_REQUEST["min_price"]);
+if($max_price != null) $query_string_builder->add("max_price", $_REQUEST["max_price"]);
 
 
 
@@ -175,14 +183,4 @@ else {
 }
 
 
-$isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-
-if ($isAjax) {
-    $ajax_response = new AjaxResponse("OK");
-    $ajax_response->add("content",$shop_pagination_page->get());
-    echo $ajax_response->build();
-    exit;
-}
-
-
+$shop_pagination_page->setContent("pagination", $buffer);

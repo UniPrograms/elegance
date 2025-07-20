@@ -5,7 +5,7 @@
     <select class="shop-filter-select" id="sex_id" name="sex_id">
       <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
-      <option value="<[sex_value]>" class="shop-filter-option"><[sex_name::strformatter type="title" library="utility"]></option>
+      <option value="<[sex_value]>" class="shop-filter-option" <[sex_selected]>><[sex_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
     </select>
   </div>
@@ -15,7 +15,7 @@
     <select class="shop-filter-select" id="category_id" name="category_id">
       <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
-      <option value="<[category_value]>" class="shop-filter-option"><[category_name::strformatter type="title" library="utility"]></option>
+      <option value="<[category_value]>" class="shop-filter-option" <[category_selected]>><[category_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
     </select>
   </div>
@@ -25,7 +25,7 @@
     <select class="shop-filter-select" id="productor_id" name="productor_id">
       <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
-      <option value="<[productor_value]>" class="shop-filter-option"><[productor_name::strformatter type="title" library="utility"]></option>
+      <option value="<[productor_value]>" class="shop-filter-option" <[productor_selected]>><[productor_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
     </select>
   </div>
@@ -33,9 +33,9 @@
   <div>
     <label class="shop-filter-label">Price</label>
     <div class="shop-filter-price-row">
-      <input type="number" min="0" max="1000" step="1" id="min_price" name="min_price" value="0" class="shop-filter-price-box" placeholder="Min">
+      <input type="number" min="<[min_price_bound]>" max="<[max_price_bound]>" step="1" id="min_price" name="min_price" value="<[min_price_value]>" class="shop-filter-price-box" placeholder="Min">
       <span class="shop-filter-price-sep">-</span>
-      <input type="number" min="0" max="1000" step="1" id="max_price" name="max_price" value="1000" class="shop-filter-price-box" placeholder="Max">
+      <input type="number" min="<[min_price_bound]>" max="<[max_price_bound]>" step="1" id="max_price" name="max_price" value="<[max_price_value]>" class="shop-filter-price-box" placeholder="Max">
       <span class="shop-filter-price-currency">$</span>
     </div>
   </div>
@@ -45,11 +45,12 @@
     <div class="widget-desc">
       <ul class="shop-filter-color-grid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 6px;">
         <[foreach]>
-        <li><a href="#" class="color_shop color-item <[color_class]>" value=<[color_value]> name=<[color_name]>></a></li>
+        <li><a href="#" class="color_shop color-item <[color_selected]>" value=<[color_value]> color-name="<[color_name]>"></a></li>
         <[/foreach]>
       </ul>
     </div>
   </div>
+  <input type="hidden" name="color_id" value="<[product_color_value]>"></input>
   <input type="hidden" name="name" value="<[product_name]>"></input>
   <!-- Tasto Filter -->
   <div class="shop-filter-btn-row">

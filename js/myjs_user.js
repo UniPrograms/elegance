@@ -195,7 +195,41 @@ document.addEventListener('DOMContentLoaded', function() {
       el.style.borderRadius = '50%';
       el.style.border = '1px solid #ccc';
       el.style.margin = '2px';
+      el.style.cursor = 'pointer'; // Aggiunge il cursore pointer per indicare che è cliccabile
     }
+  });
+});
+
+// Gestione selezione colori nella shop sidebar
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.color_shop').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault(); // Previene la navigazione del link
+      
+      var colorValue = this.getAttribute('value');
+      var colorIdInput = document.querySelector('input[name="color_id"]');
+      
+      // Se il colore cliccato è già selezionato (stesso valore nel campo nascosto)
+      if (colorIdInput && colorValue && colorIdInput.value == colorValue) {
+        // Deseleziona il colore
+        this.classList.remove('selected');
+        // Metti 0 nel campo nascosto
+        colorIdInput.value = '0';
+      } else {
+        // Rimuovi la selezione da tutti gli altri colori
+        document.querySelectorAll('.color_shop').forEach(function(otherEl) {
+          otherEl.classList.remove('selected');
+        });
+        
+        // Seleziona il colore cliccato
+        this.classList.add('selected');
+        
+        // Aggiorna il campo nascosto con il valore del colore
+        if (colorIdInput && colorValue) {
+          colorIdInput.value = colorValue;
+        }
+      }
+    });
   });
 });
 

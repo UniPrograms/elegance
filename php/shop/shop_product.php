@@ -14,15 +14,26 @@ $limit = 9; // Item che voglio vedere per ogni pagina (rimane costante)
 $offset = $current_page * $limit; // Da che punto partire con la paginazione
 
 
+
+
+
 // Controllo i filtri che sono stati passati
-$name = isset($_GET["name"]) ? $_GET["name"] : null;
-$category_id = isset($_GET["category_id"]) ? (int) $_GET["category_id"] : null;
-$sex_id = isset($_GET["sex_id"]) ? (int) $_GET["sex_id"] : null;
-$size_id = isset($_GET["size_id"]) ? (int) $_GET["size_id"] : null;
-$productor_id = isset($_GET["productor_id"]) ? (int) $_GET["productor_id"] : null;
-$color_id = isset($_GET["color_id"]) ? (int) $_GET["color_id"] : null;
-$min_price = isset($_GET["min_price"]) ? (float) $_GET["min_price"] : null;
-$max_price = isset($_GET["max_price"]) ? (float) $_GET["max_price"] : null;
+
+$name = isset($_REQUEST["name"]) && !empty($_REQUEST["name"])? $_REQUEST["name"] : null;
+
+$category_id = isset($_REQUEST["category_id"]) && $_REQUEST["category_id"] > 0 ? (int) $_REQUEST["category_id"] : null;
+
+$sex_id = isset($_REQUEST["sex_id"]) && $_REQUEST["sex_id"] > 0 ? (int) $_REQUEST["sex_id"] : null;
+
+$size_id = isset($_REQUEST["size_id"]) && $_REQUEST["size_id"] > 0 ? (int) $_REQUEST["size_id"] : null;
+
+$productor_id = isset($_REQUEST["productor_id"]) && $_REQUEST["productor_id"] > 0 ? (int) $_REQUEST["productor_id"] : null;
+
+$color_id = isset($_REQUEST["color_id"]) && $_REQUEST["color_id"] > 0 ? $_REQUEST["color_id"] : null;
+
+$min_price = isset($_REQUEST["min_price"]) ? (float) $_REQUEST["min_price"] : null;
+
+$max_price = isset($_REQUEST["max_price"]) ? (float) $_REQUEST["max_price"] : null;
 
 
 // Inserisco il numero di prodotti totali trovati nella pagina
@@ -66,14 +77,3 @@ foreach ($paginatedproducts as $product) {
 }
 
 $shop_product_page->setContent("products_item",$buffer);
-
-$isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-          strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-
-if ($isAjax) {
-    $ajax_response = new AjaxResponse("OK");
-    $ajax_response->add("counter_products_found", count($products));
-    $ajax_response->add("content",$shop_product_page->get());
-    echo $ajax_response->build();
-    exit;
-}

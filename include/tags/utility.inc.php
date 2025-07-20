@@ -46,7 +46,6 @@ class utility extends TagLibrary
     }
 
 
-
     public function idformatter($name, $data, $pars){
         if(empty($data)){
             return "";
@@ -63,5 +62,22 @@ class utility extends TagLibrary
         return $formatted;
     }
 
-   
+    
+    public function priceformatter($name, $data, $pars){
+        // Converti in float per gestire qualsiasi input numerico
+        $price = floatval($data);
+        // Formatta sempre con 2 decimali usando il punto come separatore decimale
+        return number_format($price, 2, '.', '');
+    }
+
+    public function upperpriceformatter($name, $data, $pars){
+        // Prima formatta il prezzo correttamente usando priceformatter
+        $formattedPrice = $this->priceformatter($name, $data, $pars);
+        // Converti in float per i calcoli
+        $price = floatval($formattedPrice);
+        // Arrotonda per eccesso al multiplo di 100 più vicino
+        $upperPrice = ceil($price / 100) * 100;
+        // Ritorna come intero
+        return intval($upperPrice);
+    }
 }
