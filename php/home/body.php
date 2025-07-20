@@ -58,6 +58,7 @@ foreach($sexes as $current_sex){
         $body_page->setContent("product_copertina_hover",$product->getCopertina());
         $body_page->setContent("product_name",$product->getName());
         $body_page->setContent("product_price",$product->getPrice());
+        $body_page->setContent("product_brand",$product->getProductor()->getName());
 
         $query_string_builder = new QueryStringBuilder("product.php");
         $query_string_builder->add("product_id", $product->getId());
