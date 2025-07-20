@@ -8,7 +8,8 @@ require_once("include/model/Product.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    // Reindirizzamento di una pagina di errore o login
+    echo AjaxResponse::genericServerError("Errore di sessione in product_operation.php.")->build();
+    exit;
 }
 
 
@@ -28,7 +29,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     if(!(isset($_REQUEST["product_name"])  && isset($_REQUEST["product_price"]) && 
          isset($_REQUEST["product_description"]) && /*isset($_REQUEST["product_cover_img_file"]) && */
          isset($_REQUEST["brand_id"]) && isset($_REQUEST["category_id"]) && isset($_REQUEST["sex_id"]))){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in product_operation.php: store 1.")->build();
         exit;
     } 
 
@@ -50,7 +51,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     
     // Salvo prima il prodotto per ottenere l'ID
     if(($product = $productDAO->storeProduct($product)) == null){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in product_operation.php: store 2.")->build();
         exit;
     }
     
@@ -87,7 +88,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato passato l'id
     if(!isset($_REQUEST["product_id"])){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in product_operation.php: delete 1.")->build();
         exit;
     }
 
@@ -96,7 +97,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se qualcosa non ha funzionato
     if(!$result){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in product_operation.php: delete 2.")->build();
         exit;
     }
 
@@ -107,4 +108,6 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 }
 
 
+echo AjaxResponse::genericServerError("Nessuna operazione selezionata in product_operation.php.")->build();
+exit;
 ?>

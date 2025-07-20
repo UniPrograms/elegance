@@ -8,7 +8,7 @@ require_once("include/model/CartItem.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError()->build();
+    echo AjaxResponse::genericServerError("Errore di sessione in cart_operation.php.")->build();
     exit;
 }
 
@@ -27,10 +27,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
     // Se non è stato l'id di un articolo
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Errore del server");
-        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in cart_operation.php: store 1.")->build();
         exit;
     }
 
@@ -43,10 +40,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
     // Se la store è fallita
     if($new_cart_item == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Errore del server");
-        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in cart_operation.php: store 2.")->build();
         exit;
     }
     
@@ -71,29 +65,25 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato l'id di un articolo
     if(!isset($_REQUEST["cart_item_id"])){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Errore del server.");
-        $ajax_response->add("text_message","Non è stato possibile eliminare il prodotto.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in cart_operation.php: delete 1.")->build();
         exit;
     }
 
     // Prendo il prodotto e lo elimino dal db
     $current_cart_item = $cartItemDAO->getCartItemById($_REQUEST["cart_item_id"]);
 
-    // Se è andata a buon fine
-    if($result = $cartItemDAO->deleteItem($current_cart_item)){
-        $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
-        $ajax_response = new AjaxResponse("OK");
-        $ajax_response->add("counter", (string)$cart->getSize());
-        $ajax_response->add("total_price", (string)$cart->getPrice());
-    }
-    else{   // Se l'operazione non è andata a buon fine
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message","Errore del server.");
-        $ajax_response->add("text_message","Non è stato possibile eliminare il prodotto.");
+    // Se l'operazione non è andata a buon fine
+    if(!($result = $cartItemDAO->deleteItem($current_cart_item))){
+        echo AjaxResponse::genericServerError("Errore in cart_operation.php: delete 2.")->build();
+        exit;
     }
 
+    // Se è andata a buon fine
+    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
+
+    $ajax_response = new AjaxResponse("OK");
+    $ajax_response->add("counter", (string)$cart->getSize());
+    $ajax_response->add("total_price", (string)$cart->getPrice());
     echo $ajax_response->build();
     exit;
 }
@@ -105,8 +95,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
     $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
     
     if($cart == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in cart_operation.php: count.")->build();
         exit;
     }
 
@@ -123,10 +112,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 // se rimandare ad una pagina di errore.
 // Nel frattempo inserisco una stampa per capire
 // Se si entra in questo campo
-$ajax_response = new AjaxResponse("ERROR");
-$ajax_response->add("title_message","Operazione non valida");
-$ajax_response->add("text_message", "Il server non ha potuto elaborare la richiesta.");
-echo $ajax_response->build();
+echo AjaxResponse::genericServerError("Nessuna operazione selezionata ina cart_operation.php")->build();
 exit;
 
 ?>

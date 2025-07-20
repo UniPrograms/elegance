@@ -32,10 +32,10 @@ class AjaxResponse {
         $this->cleanParams();
     }
 
-    public static function genericServerError(): AjaxResponse{
+    public static function genericServerError(?string $message = null): AjaxResponse{
         $ajax_response = new AjaxResponse("ERROR");
         $ajax_response->add("title_message","Operazione non valida");
-        $ajax_response->add("text_message","Il server non ha potuto elaborare la richiesta.");
+        $ajax_response->add("text_message", $message ??  "Il server non ha potuto elaborare la richiesta.");
         return $ajax_response;
     }
 

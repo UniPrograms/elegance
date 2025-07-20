@@ -9,7 +9,8 @@ require_once("include/utility/ImagePathManager.php");
 
 // Se la sessione non è attiva
 if(!isset($_SESSION["auth"])){
-    // Reindirizzamento di una pagina di errore o login
+    echo AjaxResponse::genericServerError("Errore di sessione in user_operation.php.")->build();
+    exit;
 }
 
 
@@ -84,10 +85,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se non è stato passato l'id
     if(!isset($_REQUEST["user_id"])){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message", "Errore del server.");
-        $ajax_response->add("text_message","Non è stato possibile eliminare l'utente.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: delete 1.")->build();
         exit;
     }
 
@@ -96,10 +94,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se non è andata a buon fine
     if(!$result){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("title_message", "Errore del server.");
-        $ajax_response->add("text_message","Non è stato possibile eliminare l'utente.");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: delete 2.")->build();
         exit;
     }
 
