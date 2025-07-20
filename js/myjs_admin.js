@@ -709,6 +709,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
+
 // Modifica la logica di upload per usare la stessa funzione di rimozione
 // Gestione upload immagini prodotto in admin_viewproduct.html (versione con + su ogni placeholder e X per cancellare)
 document.addEventListener('DOMContentLoaded', function () {
