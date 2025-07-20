@@ -2,6 +2,7 @@
 
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
+require_once("include/utility/AuthManager.php");
 
 
 $factory = new DataLayer(new DB_Connection());
@@ -33,7 +34,7 @@ if (
     $user->setName($_POST["firstname"]);
     $user->setSurname($_POST["lastname"]);
     $user->setEmail($_POST["email"]);
-    $user->setPassword($_POST["password"]);
+    $user->setPassword(AuthManager::encryptPasswordSHA($_POST["password"]));
     $user->setRole(isset($_POST["role"]) ? $_POST["role"] : "UTENTE");
 
 
@@ -47,6 +48,7 @@ if (
         $_SESSION["cognome"] = $newUser->getSurname();
         $_SESSION["email"] = $newUser->getEmail();        
         $_SESSION["ruolo"] = $newUser->getRole();
+        $_SESSION["is_admin"] = strtoupper($user->getRole()) == "AMMINISTRATORE";  
 
         // Se è un nuovo utente
         if($newUser->getRole() == "UTENTE"){

@@ -8,6 +8,7 @@ require_once("include/template2.inc.php");
 require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
+require_once("include/utility/AuthManager.php");
 
 
 // DAO
@@ -22,7 +23,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     $user = $userDAO->getUserByEmail($_POST["email"]);
 
     // Autentico l'utente
-    if ($user != null && (strtolower($user->getPassword()) == strtolower($_POST["password"]))) {
+    if ($user != null && (AuthManager::verifyPasswordSHA($_POST["password"], $user->getPassword()))) {
         $_SESSION["auth"] = true;
         $_SESSION["id"] = $user->getId();
         $_SESSION["nome"] = $user->getName();
