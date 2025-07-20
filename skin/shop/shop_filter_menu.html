@@ -1,9 +1,9 @@
-<form method="get" action="shop.php" class="shop-filter-form">
+<form method="POST" action="shop.php" class="shop-filter-form">
   <!-- Sesso -->
   <div>
     <label for="sex_id" class="shop-filter-label">Sex</label>
     <select class="shop-filter-select" id="sex_id" name="sex_id">
-      <option value="" class="shop-filter-option">All</option>
+      <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
       <option value="<[sex_value]>" class="shop-filter-option"><[sex_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
@@ -13,7 +13,7 @@
   <div>
     <label for="category_id" class="shop-filter-label">Category</label>
     <select class="shop-filter-select" id="category_id" name="category_id">
-      <option value="" class="shop-filter-option">All</option>
+      <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
       <option value="<[category_value]>" class="shop-filter-option"><[category_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
@@ -23,7 +23,7 @@
   <div>
     <label for="productor_id" class="shop-filter-label">Brand</label>
     <select class="shop-filter-select" id="productor_id" name="productor_id">
-      <option value="" class="shop-filter-option">All</option>
+      <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
       <option value="<[productor_value]>" class="shop-filter-option"><[productor_name::strformatter type="title" library="utility"]></option>
       <[/foreach]>
