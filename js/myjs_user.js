@@ -719,3 +719,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
+// Autoselezione colore nella shop sidebar in base al value dell'input nascosto
+// (deve essere dopo che i colori sono stati renderizzati)
+document.addEventListener('DOMContentLoaded', function() {
+  var colorIdInput = document.querySelector('input[name="color_id"]');
+  if (colorIdInput && colorIdInput.value && colorIdInput.value !== '0') {
+    document.querySelectorAll('.color_shop').forEach(function(el) {
+      if (el.getAttribute('value') === colorIdInput.value) {
+        el.classList.add('selected');
+      } else {
+        el.classList.remove('selected');
+      }
+    });
+  }
+});
+

@@ -1602,3 +1602,10 @@
     font-size: 0.97em;
   }
 }
+
+/* Evidenzia il colore selezionato nella shop sidebar */
+.color_shop.selected,
+.color-item.selected {
+  border: 1px solid #0315ff !important;
+  box-shadow: 0 0 6px 2px #000;
+}
