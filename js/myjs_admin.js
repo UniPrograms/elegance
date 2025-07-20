@@ -691,11 +691,32 @@ document.addEventListener('DOMContentLoaded', function(){
 function removeUploadedImg(btn) {
   var wrapper = btn.closest('.img-uploaded-wrapper');
   if (wrapper && wrapper.parentNode) {
-    var placeholder = wrapper.parentNode;
-    // Riappare il placeholder con il +
-    placeholder.style.display = 'flex';
-    wrapper.remove();
-    alert('Immagine rimossa');
+    var imgTag = wrapper.querySelector('img');
+    if (!imgTag) return;
+    var imageId = imgTag.getAttribute('value');
+    if (!imageId) {
+      alert('ID immagine non trovato!');
+      return;
+    }
+
+    // Chiamata AJAX per eliminare l'immagine
+    $.ajax({
+      url: 'image_operation.php',
+      type: 'POST',
+      data: {
+        operation: 'delete',
+        image_id: imageId
+      },
+      dataType: 'json'
+    }).done(function(response){
+      if(response.status == "OK"){
+        location.reload(true);
+      } else {
+        alert('Errore eliminazione: ' + response.text_message);
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      console.error("Errore AJAX:", textStatus, errorThrown, jqXHR.responseText);
+    });
   }
 }
 
@@ -734,7 +755,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!files.length || !currentTargetPlaceholder) return;
       var file = files[0];
 
-      // Recupera product_id dalla query string
       var urlParams = new URLSearchParams(window.location.search);
       var productId = urlParams.get('product_id');
       if (!productId) {
@@ -742,20 +762,24 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // Passa solo il path (nome file) come image_url
+      // Usa FormData per inviare anche il file
+      var formData = new FormData();
+      formData.append('operation', 'store');
+      formData.append('product_id', productId);
+      formData.append('image_url', file.name); // opzionale, se vuoi anche il nome
+      formData.append('image', file); // qui invii il file vero e proprio
+
       $.ajax({
         url: 'image_operation.php',
         type: 'POST',
-        data: {
-          operation: 'store',
-          product_id: productId,
-          image_url: file.name
-        },
+        data: formData,
+        processData: false,
+        contentType: false,
         dataType: 'json'
       }).done(function(response){
         if(response.status == "OK"){
-          alert("ciccia");
           location.reload(true);
+
         } else {
           alert('Error: ' + response.text_message); 
         }

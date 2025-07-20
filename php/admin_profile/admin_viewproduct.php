@@ -95,7 +95,7 @@ if(isset($product)){
     for($i = 0; $i < $images_size; $i++){
         $buffer .= '<div class="img-placeholder-upload">';
         $buffer .= '<div class="img-uploaded-wrapper">';
-        $buffer .= '<img src="'.$images[$i]->getPath().'" alt="Immagine prodotto" />';
+        $buffer .= '<img src="'.$images[$i]->getPath().'" value="'.$images[$i]->getId().'" alt="Immagine prodotto" />';
         $buffer .= '<button class="delete-img-btn" title="Rimuovi immagine">✖</button>';
         $buffer .= '</div>';
         $buffer .= '</div>';

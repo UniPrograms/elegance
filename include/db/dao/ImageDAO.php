@@ -20,11 +20,11 @@ class ImageDAO extends DAO{
 
     // Inizializzazione degli statement
     public function init(): void {
-        $this->stmtGetImageById = $this->conn->prepare("SELECT * FROM IMMAGINE WHERE ID = ?;");
-        $this->stmtGetAllImage = $this->conn->prepare("SELECT * FROM IMMAGINE;");
-        $this->stmtGetImageByProduct = $this->conn->prepare("SELECT * FROM IMMAGINE WHERE ID_PRODOTTO = ?;");
-        $this->stmtInsertImage = $this->conn->prepare("INSERT INTO IMMAGINE(NOME,PATH,ID_PRODOTTO) VALUES (?,?,?);");
-        $this->stmtUpdateImage = $this->conn->prepare("UPDATE IMMAGINE SET NOME = ?, PATH = ?, ID_PRODOTTO = ? WHERE ID = ?;");
+        $this->stmtGetImageById = $this->conn->prepare("SELECT * FROM IMMAGINE_COMPLETA WHERE ID = ?;");
+        $this->stmtGetAllImage = $this->conn->prepare("SELECT * FROM IMMAGINE_COMPLETA;");
+        $this->stmtGetImageByProduct = $this->conn->prepare("SELECT * FROM IMMAGINE_COMPLETA WHERE ID_PRODOTTO = ?;");
+        $this->stmtInsertImage = $this->conn->prepare("INSERT INTO IMMAGINE(PATH, ID_PRODOTTO) VALUES (?,?);");
+        $this->stmtUpdateImage = $this->conn->prepare("UPDATE IMMAGINE SET PATH = ?, ID_PRODOTTO = ? WHERE ID = ?;");
         $this->stmtDeleteImage = $this->conn->prepare("DELETE FROM IMMAGINE WHERE ID = ?;");
     }
 
@@ -86,20 +86,23 @@ class ImageDAO extends DAO{
      * 
      * 
      */
-    public function storeImage(Image $image, Product $product): bool {
+    public function storeImage(Image $image, Product $product): ?Image {
         if ($image->getId() !== null) { // Aggiorno la categoria
-            $this->stmtUpdateImage->bindValue(1, $image->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateImage->bindValue(2, $image->getPath(), PDO::PARAM_STR);
-            $this->stmtUpdateImage->bindValue(3, $product->getId(), PDO::PARAM_INT);
-            $this->stmtUpdateImage->bindValue(4, $image->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateImage->bindValue(1, $image->getPath(), PDO::PARAM_STR);
+            $this->stmtUpdateImage->bindValue(2, $product->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateImage->bindValue(3, $image->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateImage->execute();
+            if($this->stmtUpdateImage->execute()){
+                return $image;
+            }
         } else {   // Inserisco la categoria
-            $this->stmtInsertImage->bindValue(1, $image->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateImage->bindValue(2, $image->getPath(), PDO::PARAM_STR);
-            $this->stmtUpdateImage->bindValue(3, $product->getId(), PDO::PARAM_INT);
-            return $this->stmtInsertImage->execute();
+            $this->stmtInsertImage->bindValue(1, $image->getPath(), PDO::PARAM_STR);
+            $this->stmtInsertImage->bindValue(2, $product->getId(), PDO::PARAM_INT);
+            if($this->stmtInsertImage->execute()){
+                return $this->getImageById($this->conn->lastInsertId());
+            }
         }
+        return null;
     }
     /**
      * 
@@ -112,6 +115,17 @@ class ImageDAO extends DAO{
         $this->stmtDeleteImage->bindValue(1, $Image->getId(), PDO::PARAM_INT);
         return $this->stmtDeleteImage->execute();
     }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteImageById(int $id): bool {
+        $this->stmtDeleteImage->bindValue(1, $id, PDO::PARAM_INT);
+        return $this->stmtDeleteImage->execute();
+    }
 
 
 
@@ -121,6 +135,7 @@ class ImageDAO extends DAO{
         $image = new ImageProxy($this->dataLayer);
         $image->setId($rs['ID']);
         $image->setPath($rs['PATH']);
+        $image->setProductId($rs["ID_PRODOTTO"]);
         return $image;
     }
 
