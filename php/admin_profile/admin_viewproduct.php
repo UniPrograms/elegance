@@ -38,6 +38,10 @@ if(isset($_REQUEST["product_id"])){
     // Valore del prodotto per andare nella pagina degli articoli
     $admin_viewproduct_page->setContent("product_value", $product->getId());
 }else{
+
+    // Se il prodotto non è stato passato come parametro
+    $admin_viewproduct_page->setContent("product_copertina", "path_della_copertina_di_default");
+
     // Titolo della pagina
     $admin_viewproduct_page->setContent("product_title", "new product");
     // Valore del prodotto per andare nella pagina degli articoli
