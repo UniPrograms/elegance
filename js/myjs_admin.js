@@ -719,70 +719,49 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentTargetPlaceholder = null;
 
   if (imgInput && imgPanel) {
-    // Collega ogni + al file input
     imgPanel.querySelectorAll('.add-img-btn').forEach(function(btn) {
+      btn.onclick = null;
       btn.addEventListener('click', function (e) {
         currentTargetPlaceholder = btn.parentNode;
+        imgInput.value = '';
         imgInput.click();
       });
     });
 
+    imgInput.onchange = null;
     imgInput.addEventListener('change', function (e) {
       var files = Array.from(e.target.files);
       if (!files.length || !currentTargetPlaceholder) return;
       var file = files[0];
-      var reader = new FileReader();
-      reader.onload = function (evt) {
-        // Crea l'elemento img
-        var img = document.createElement('img');
-        img.src = evt.target.result;
-        img.style.width = '120px';
-        img.style.height = '213px'; // 120*16/9
-        img.style.objectFit = 'cover';
-        img.style.borderRadius = '10px';
-        img.style.display = 'block';
-        img.style.border = '2px solid #bbb';
-        img.style.position = 'relative';
-        // Wrapper per posizionare la X sopra l'immagine
-        var wrapper = document.createElement('div');
-        wrapper.className = 'img-uploaded-wrapper';
-        wrapper.style.position = 'relative';
-        wrapper.style.display = 'inline-block';
-        wrapper._placeholder = currentTargetPlaceholder;
-        // Crea la X di cancellazione
-        var delBtn = document.createElement('button');
-        delBtn.className = 'delete-img-btn';
-        delBtn.title = 'Rimuovi immagine';
-        delBtn.innerHTML = '✖';
-        delBtn.style.position = 'absolute';
-        delBtn.style.top = '6px';
-        delBtn.style.right = '6px';
-        delBtn.style.background = 'rgba(220,53,69,0.92)';
-        delBtn.style.color = '#fff';
-        delBtn.style.border = 'none';
-        delBtn.style.borderRadius = '50%';
-        delBtn.style.width = '28px';
-        delBtn.style.height = '28px';
-        delBtn.style.fontSize = '1.2em';
-        delBtn.style.cursor = 'pointer';
-        delBtn.style.zIndex = '2';
-        delBtn.style.display = 'flex';
-        delBtn.style.alignItems = 'center';
-        delBtn.style.justifyContent = 'center';
-        delBtn.addEventListener('click', function(ev) {
-          ev.stopPropagation();
-          removeUploadedImg(this);
-        });
-        wrapper.appendChild(img);
-        wrapper.appendChild(delBtn);
-        // Nascondi il placeholder e il +
-        currentTargetPlaceholder.style.display = 'none';
-        currentTargetPlaceholder.parentNode.insertBefore(wrapper, currentTargetPlaceholder);
-        alert('Immagine caricata con successo');
-        currentTargetPlaceholder = null;
-      };
-      reader.readAsDataURL(file);
-      // Pulisci il file input per permettere nuovo upload
+
+      // Recupera product_id dalla query string
+      var urlParams = new URLSearchParams(window.location.search);
+      var productId = urlParams.get('product_id');
+      if (!productId) {
+        alert('ID prodotto non trovato!');
+        return;
+      }
+
+      // Passa solo il path (nome file) come image_url
+      $.ajax({
+        url: 'image_operation.php',
+        type: 'POST',
+        data: {
+          operation: 'store',
+          product_id: productId,
+          image_url: file.name
+        },
+        dataType: 'json'
+      }).done(function(response){
+        if(response.status == "OK"){
+          alert("ciccia");
+          location.reload(true);
+        } else {
+          alert('Error: ' + response.text_message); 
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown){
+        console.error("Errore AJAX:", textStatus, errorThrown, jqXHR.responseText);
+      });
       imgInput.value = '';
     });
   }

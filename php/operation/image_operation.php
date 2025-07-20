@@ -15,10 +15,29 @@ if(!isset($_SESSION["auth"])){
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
+$imageDAO = $factory->getImageDAO();
+
+
+
+if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store' ){
+
+    // Controllo che siano stati inviati tutti i parametri necessari
+    if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["image_url"]))){
+        echo AjaxResponse::genericServerError("Errore in image_operation.php: store 1.")->build();
+        exit;
+    }
+
+
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+
+
+}
+
 
 
 
 echo AjaxResponse::genericServerError("Nessuna operazione selezionata image_operation.php.")->build();
-    exit;
+exit;
 
 ?>
