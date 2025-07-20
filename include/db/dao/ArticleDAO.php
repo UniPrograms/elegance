@@ -8,8 +8,11 @@ class ArticleDAO extends DAO{
 
 
     private PDOStatement $stmtGetArticleById;
+    private PDOStatement $stmtGetArticleByIdFullQuantity;
     private PDOStatement $stmtGetAllArticles;
+    private PDOStatement $stmtGetAllArticlesFullQuantity;
     private PDOStatement $stmtGetAllArticleByProductId;
+    private PDOStatement $stmtGetAllArticlesFullQuantityByProductId;
     private PDOStatement $stmtGetArticleByName;
     private PDOStatement $stmtGetArticleByNameInRange;
     private PDOStatement $stmtGetArticleByCategory;
@@ -18,6 +21,7 @@ class ArticleDAO extends DAO{
     private PDOStatement $stmtGetArticleByProductorInRange;
     private PDOStatement $stmtGetArticleByProductSizeColor;
     private PDOStatement $stmtGetArticleTotalQuantity;
+    private PDOStatement $stmtGetArticleQuantityInCarts;
     private PDOStatement $stmtInsertArticle;
     private PDOStatement $stmtUpdateArticle;
     private PDOStatement $stmtDeleteArticle;
@@ -33,7 +37,10 @@ class ArticleDAO extends DAO{
     // Inizializzazione degli Statement
     public function init(): void {
         $this->stmtGetArticleById = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_ARTICOLO = ?;");
+        $this->stmtGetArticleByIdFullQuantity = $this->conn->prepare("SELECT * FROM ARTICOLO_COMPLETO_FULL_QUANTITY WHERE ID_ARTICOLO = ?;");
         $this->stmtGetAllArticles = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO;");
+        $this->stmtGetAllArticlesFullQuantity = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO_FULL_QUANTITY;");
+        $this->stmtGetAllArticlesFullQuantityByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO_FULL_QUANTITY WHERE ID_PRODOTTO = ?;");
         $this->stmtGetAllArticleByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ?;");
         $this->stmtGetArticleByName = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ?;");
         $this->stmtGetArticleByNameInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? LIMIT ? OFFSET ?;");
@@ -43,6 +50,7 @@ class ArticleDAO extends DAO{
         $this->stmtGetArticleByProductorInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODUTTORE = ? LIMIT ? OFFSET ?;");
         $this->stmtGetArticleByProductSizeColor = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ? AND ID_TAGLIA = ? AND ID_COLORE = ?;");
         $this->stmtGetArticleTotalQuantity = $this->conn->prepare("SELECT SUM(QUANTITA) AS TOTAL FROM ARTICOLO_COMPLETO;");
+        $this->stmtGetArticleQuantityInCarts = $this->conn->prepare("SELECT COUNT(*) AS TOTAL FROM ITEM_CARRELLO WHERE ID_ARTICOLO = ?;");
         $this->stmtInsertArticle = $this->conn->prepare("INSERT INTO ARTICOLO (ID_PRODOTTO, ID_TAGLIA, ID_COLORE, QUANTITA) VALUES (?, ?, ?, ?);");
         $this->stmtUpdateArticle = $this->conn->prepare("UPDATE ARTICOLO SET ID_PRODOTTO = ?, ID_TAGLIA = ?, ID_COLORE = ?, QUANTITA = ? WHERE ID = ?;");
         $this->stmtDeleteArticle = $this->conn->prepare("DELETE FROM ARTICOLO WHERE ID = ?;");
@@ -56,6 +64,21 @@ class ArticleDAO extends DAO{
         $this->stmtGetArticleById->execute();
 
         $rs = $this->stmtGetArticleById->fetch(PDO::FETCH_ASSOC);
+
+        return $rs ? $this->createArticle($rs) : null;
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getArticleByIdFullQuantity(int $id): ?Article {
+        $this->stmtGetArticleByIdFullQuantity->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetArticleByIdFullQuantity->execute();
+
+        $rs = $this->stmtGetArticleByIdFullQuantity->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createArticle($rs) : null;
     }
@@ -83,6 +106,23 @@ class ArticleDAO extends DAO{
     * 
     * 
     */
+    public function getAllArticleFullQuantity(): array{
+        $this->stmtGetAllArticlesFullQuantity->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllArticlesFullQuantity->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createArticle($rs);
+        }
+        return $result;
+
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
     public function getAllArticleByProductId(int $id): array {
         $this->stmtGetAllArticleByProductId->bindValue(1, $id, PDO::PARAM_INT);
         $this->stmtGetAllArticleByProductId->execute();
@@ -92,6 +132,26 @@ class ArticleDAO extends DAO{
             $article_id = $rs["ID_ARTICOLO"];
             if($article_id != null){
                $result[] = $this->getArticleById($rs["ID_ARTICOLO"]); 
+            }
+        }
+        return $result;
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
+    public function getAllArticleByFullQuantityProductId(int $id): array {
+        $this->stmtGetAllArticlesFullQuantityByProductId->bindValue(1, $id, PDO::PARAM_INT);
+        $this->stmtGetAllArticlesFullQuantityByProductId->execute();
+
+        $result = [];
+        while ($rs = $this->stmtGetAllArticlesFullQuantityByProductId->fetch(PDO::FETCH_ASSOC)) {
+            $article_id = $rs["ID_ARTICOLO"];
+            if($article_id != null){
+               $result[] = $this->getArticleByIdFullQuantity($rs["ID_ARTICOLO"]); 
             }
         }
         return $result;
@@ -218,6 +278,22 @@ class ArticleDAO extends DAO{
     * 
     * 
     */
+    public function getArticleQuantityInCarts(int $article_id): ?int {
+        $this->stmtGetArticleQuantityInCarts->bindValue(1, $article_id, PDO::PARAM_INT);
+        $this->stmtGetArticleQuantityInCarts->execute();
+
+        $rs = $this->stmtGetArticleQuantityInCarts->fetch(PDO::FETCH_ASSOC);
+
+        return $rs["TOTAL"];
+       
+    }
+    /**
+    * 
+    * 
+    * 
+    * 
+    * 
+    */
     public function storeArticle(Article $article): ?Article {
         if ($article->getId() !== null) { // Aggiorno l'articolo
             $this->stmtUpdateArticle->bindValue(1, $article->getProduct()->getId(), PDO::PARAM_INT);
@@ -277,6 +353,7 @@ class ArticleDAO extends DAO{
 
 
     }
+
 
 
 

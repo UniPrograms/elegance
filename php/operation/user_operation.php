@@ -116,7 +116,7 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
 
     // Se l'utente non esiste
     if($user == null){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: user-info 1.")->build();
         exit;
     }
 
@@ -136,7 +136,7 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
 
     if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && 
          isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]))){
-            echo AjaxResponse::genericServerError()->build();
+            echo AjaxResponse::genericServerError("Errore in user_operation.php: admin-update 1.")->build();
             exit;
         }
 
@@ -153,7 +153,7 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
 
     // Se qualcosa è andato storto
     if($user == null){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: admin-update 2.")->build();
         exit;
     }
 
@@ -167,17 +167,13 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
 // Upload dell'immagine utente
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image'){
     if(!isset($_REQUEST['image_url'])){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("text_message", "Errore nel passaggio dell'immagine");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 1.")->build();
         exit;
     }
 
     $user = $userDAO->getUserById($_SESSION["id"]);
     if($user == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("text_message", "Utente non trovato");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 2.")->build();
         exit;
     }
 
@@ -190,17 +186,13 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image
     $final_path = $image_path->moveBase64();
 
     if($final_path == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("text_message", "Errore nella creazione del path (base64)");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 3.")->build();
         exit;
     }
 
     $user->setUrlImage($final_path);
     if(($userDAO->storeUser($user)) == null){
-        $ajax_response = new AjaxResponse("ERROR");
-        $ajax_response->add("text_message", "Errore nella scrittura nel db");
-        echo $ajax_response->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 4.")->build();
         exit;
     }
 
@@ -215,7 +207,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se non è stato fornito l'id dell'utente
     if(!isset($_REQUEST["user_id"])){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: get-info 1.")->build();
         exit;
     }
 
@@ -225,7 +217,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se l'utente' non è stato trovato
     if($user == null){
-        echo AjaxResponse::genericServerError()->build();
+        echo AjaxResponse::genericServerError("Errore in user_operation.php: get-info 2.")->build();
         exit;
     }
 
@@ -243,4 +235,8 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
     
 
 }
+
+
+echo AjaxResponse::genericServerError("Nessuna operazione selezionata in user_operation.php.")->build();
+exit;
 ?>

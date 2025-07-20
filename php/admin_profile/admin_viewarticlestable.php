@@ -19,7 +19,7 @@ $articleDAO = $factory->getArticleDAO();
 
 // Ottieni gli articoli solo se product_id è valido
 if (isset($_REQUEST["product_id"]) && is_numeric($_REQUEST["product_id"]) && $_REQUEST["product_id"] > 0) {
-    $articles = $articleDAO->getAllArticleByProductId((int)$_REQUEST["product_id"]);
+    $articles = $articleDAO->getAllArticleByFullQuantityProductId((int)$_REQUEST["product_id"]);
 } else {
     $articles = [];
 }

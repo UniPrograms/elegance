@@ -12,7 +12,8 @@ $admin_updatearticle_page = new Template("skin/admin_profile/admin_updatearticle
 $factory = new DataLayer(new DB_Connection);
 $articleDAO = $factory->getArticleDAO();
 
-$article = $articleDAO->getArticleById($_REQUEST["article_id"]);
+$article = $articleDAO->getArticleByIdFullQuantity($_REQUEST["article_id"]);
+$min_quantity = $articleDAO->getArticleQuantityInCarts($article->getId());
 
 $admin_updatearticle_page->setContent("article_product_name", $article->getProduct()->getName());
 $admin_updatearticle_page->setContent("size_name", $article->getSize()->getSize());
@@ -21,6 +22,7 @@ $admin_updatearticle_page->setContent("color_name", $article->getColor()->getCol
 $admin_updatearticle_page->setContent("color_id", $article->getColor()->getId());
 $admin_updatearticle_page->setContent("article_quantity", $article->getQuantity());
 $admin_updatearticle_page->setContent("product_value", $_REQUEST["product_id"]);
+$admin_updatearticle_page->setContent("article_min_quantity", $min_quantity);
 
 
 
