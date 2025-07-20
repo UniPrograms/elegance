@@ -162,35 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Gestione apertura/chiusura menu categorie in base a category_id da URL
-document.addEventListener('DOMContentLoaded', function() {
-  // Funzione per ottenere il parametro category_id dalla query string
-  function getCategoryIdFromUrl() {
-    var params = new URLSearchParams(window.location.search);
-    return params.get('category_id');
-  }
-  var categoryId = getCategoryIdFromUrl();
-  // Seleziona tutti i link delle categorie principali (sesso)
-  var sexLinks = document.querySelectorAll('.catagories-menu > ul > li > a[value]');
-  sexLinks.forEach(function(link) {
-    var value = link.getAttribute('value');
-    var li = link.closest('li');
-    var submenu = li ? li.querySelector('.sub-menu') : null;
-    if (!categoryId) {
-      // Nessun category_id: chiudi tutti i menu
-      if (submenu) submenu.classList.remove('show');
-    } else {
-      // Se il value corrisponde al category_id, apri solo quel menu
-      if (value === categoryId) {
-        if (submenu) submenu.classList.add('show');
-      } else {
-        if (submenu) submenu.classList.remove('show');
-      }
-    }
-  });
-});
-
-
 // Colora i quadrati dei colori nella shop sidebar in base all'attributo name
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.color_shop').forEach(function(el) {
