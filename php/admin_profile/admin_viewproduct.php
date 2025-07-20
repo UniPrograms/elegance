@@ -40,7 +40,7 @@ if(isset($_REQUEST["product_id"])){
 }else{
 
     // Se il prodotto non è stato passato come parametro
-    $admin_viewproduct_page->setContent("product_copertina", "path_della_copertina_di_default");
+    $admin_viewproduct_page->setContent("product_copertina", "img\my_img\core\PLACEHOLDER.jpg");
 
     // Titolo della pagina
     $admin_viewproduct_page->setContent("product_title", "new product");

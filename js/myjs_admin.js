@@ -792,6 +792,48 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Solo anteprima immagine copertina, nessun salvataggio
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.pathname.includes('admin_viewproduct.php')) {
+    const fileInput = document.getElementById('product-cover-img-file');
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            // Aggiorna solo l'anteprima dell'immagine di copertina
+            const img = document.querySelector('.img-placeholder-upload img');
+            if (img) img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+  }
+});
+
+
+// Disabilita i bottoni per aggiungere foto se la query string è vuota in admin_viewproduct.php
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.pathname.includes('admin_viewproduct.php')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product_id');
+    if (!productId) {
+      // Disabilita solo i bottoni per aggiungere altre immagini
+      document.querySelectorAll('.add-img-btn').forEach(function(btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+        btn.title = 'Seleziona prima un prodotto';
+      });
+    }
+  }
+});
+
+
 
 
 
