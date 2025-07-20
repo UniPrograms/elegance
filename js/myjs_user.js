@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Colora i quadrati dei colori nella shop sidebar in base all'attributo name
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.color_shop').forEach(function(el) {
-    var colorName = el.getAttribute('name');
+    var colorName = el.getAttribute('color-name');
     if (colorName) {
       // Gestione nomi standardizzati (case insensitive)
       var cssColor = colorName.toLowerCase();
