@@ -687,6 +687,106 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
+// Funzione per rimuovere un'immagine caricata o già esistente
+function removeUploadedImg(btn) {
+  var wrapper = btn.closest('.img-uploaded-wrapper');
+  if (wrapper && wrapper.parentNode) {
+    var placeholder = wrapper.parentNode;
+    // Riappare il placeholder con il +
+    placeholder.style.display = 'flex';
+    wrapper.remove();
+    alert('Immagine rimossa');
+  }
+}
+
+// Collega la X rossa anche alle immagini già presenti (inserite da PHP)
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.img-uploaded-wrapper .delete-img-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(ev) {
+      ev.stopPropagation();
+      removeUploadedImg(this);
+    });
+  });
+});
+
+// Modifica la logica di upload per usare la stessa funzione di rimozione
+// Gestione upload immagini prodotto in admin_viewproduct.html (versione con + su ogni placeholder e X per cancellare)
+document.addEventListener('DOMContentLoaded', function () {
+  var imgInput = document.getElementById('product-images-input');
+  var imgPanel = document.querySelector('.product-image-panel > div');
+  var currentTargetPlaceholder = null;
+
+  if (imgInput && imgPanel) {
+    // Collega ogni + al file input
+    imgPanel.querySelectorAll('.add-img-btn').forEach(function(btn) {
+      btn.addEventListener('click', function (e) {
+        currentTargetPlaceholder = btn.parentNode;
+        imgInput.click();
+      });
+    });
+
+    imgInput.addEventListener('change', function (e) {
+      var files = Array.from(e.target.files);
+      if (!files.length || !currentTargetPlaceholder) return;
+      var file = files[0];
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        // Crea l'elemento img
+        var img = document.createElement('img');
+        img.src = evt.target.result;
+        img.style.width = '120px';
+        img.style.height = '213px'; // 120*16/9
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '10px';
+        img.style.display = 'block';
+        img.style.border = '2px solid #bbb';
+        img.style.position = 'relative';
+        // Wrapper per posizionare la X sopra l'immagine
+        var wrapper = document.createElement('div');
+        wrapper.className = 'img-uploaded-wrapper';
+        wrapper.style.position = 'relative';
+        wrapper.style.display = 'inline-block';
+        wrapper._placeholder = currentTargetPlaceholder;
+        // Crea la X di cancellazione
+        var delBtn = document.createElement('button');
+        delBtn.className = 'delete-img-btn';
+        delBtn.title = 'Rimuovi immagine';
+        delBtn.innerHTML = '✖';
+        delBtn.style.position = 'absolute';
+        delBtn.style.top = '6px';
+        delBtn.style.right = '6px';
+        delBtn.style.background = 'rgba(220,53,69,0.92)';
+        delBtn.style.color = '#fff';
+        delBtn.style.border = 'none';
+        delBtn.style.borderRadius = '50%';
+        delBtn.style.width = '28px';
+        delBtn.style.height = '28px';
+        delBtn.style.fontSize = '1.2em';
+        delBtn.style.cursor = 'pointer';
+        delBtn.style.zIndex = '2';
+        delBtn.style.display = 'flex';
+        delBtn.style.alignItems = 'center';
+        delBtn.style.justifyContent = 'center';
+        delBtn.addEventListener('click', function(ev) {
+          ev.stopPropagation();
+          removeUploadedImg(this);
+        });
+        wrapper.appendChild(img);
+        wrapper.appendChild(delBtn);
+        // Nascondi il placeholder e il +
+        currentTargetPlaceholder.style.display = 'none';
+        currentTargetPlaceholder.parentNode.insertBefore(wrapper, currentTargetPlaceholder);
+        alert('Immagine caricata con successo');
+        currentTargetPlaceholder = null;
+      };
+      reader.readAsDataURL(file);
+      // Pulisci il file input per permettere nuovo upload
+      imgInput.value = '';
+    });
+  }
+});
+
+
 
 
 

@@ -49,14 +49,39 @@
   </div>
   <div class="product-image-panel" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:2rem 2rem 1.5rem 2rem; border:1px solid #e0e0e0;">
     <div style="width:100%; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:1.5rem; align-items:center; justify-items:center; flex:1;">
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
-      <div style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb;"></div>
+      <!-- ESEMPIO: Sostituisci con ciclo PHP per immagini già esistenti -->
+      <!--
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <div class="img-uploaded-wrapper" style="position:relative; display:inline-block;">
+          <img src="PERCORSO/ALL/IMMAGINE.jpg" data-img-path="PERCORSO/ALL/IMMAGINE.jpg" style="width:120px; height:213px; object-fit:cover; border-radius:10px; display:block; border:2px solid #bbb; position:relative;">
+          <button class="delete-img-btn" title="Rimuovi immagine" style="position:absolute; top:6px; right:6px; background:rgba(220,53,69,0.92); color:#fff; border:none; border-radius:50%; width:28px; height:28px; font-size:1.2em; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center;">✖</button>
+        </div>
+      </div>
+      -->
+      <!-- Placeholder vuoto (default) -->
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
+      <div class="img-placeholder-upload" style="width:120px; aspect-ratio:9/16; background:#e0e0e0; border-radius:10px; border:2px dashed #bbb; position:relative; display:flex; align-items:center; justify-content:center;">
+        <button class="add-img-btn" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:2.5em; background:none; border:none; color:#888; cursor:pointer;">+</button>
+      </div>
     </div>
     <input type="file" id="product-images-input" accept="image/*" multiple style="display:none;" />
-    <button class="edit-image-button" id="admin-add-product-images" type="button">Aggiungi foto prodotto</button>
+    <!-- bottone rimosso: <button class="edit-image-button" id="admin-add-product-images" type="button">Aggiungi foto prodotto</button> -->
   </div>
 </div>
+<!-- JS inclusi per funzionalità admin -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<script src="js/myjs_admin.js"></script>
