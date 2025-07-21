@@ -6,10 +6,12 @@ require_once("include/utility/AjaxResponse.php");
 require_once("include/model/WishlistItem.php");
 
 // Se la sessione non è attiva
+/*
 if(!isset($_SESSION["auth"])){
     echo AjaxResponse::genericServerError("Errore di sessione in wishlist_operation.php.")->build();
     exit;
 }
+*/
 
 
 //DAO 
@@ -29,8 +31,13 @@ if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'move'){
 
     header("Content-Type: application/json;");
 
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
     if(!isset($_REQUEST["item_id"])){
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: move 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -52,14 +59,15 @@ if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'move'){
             $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
             $wishlist = $wishlistDAO->getWishlistByUserId($_SESSION["id"]);
             
-            $ajax_response = new AjaxResponse("OK");
+            $ajax_response = AjaxResponse::okNoContent();
             $ajax_response->add("cart_item_size", $cart->getSize());
             $ajax_response->add("wishlist_item_size", $wishlist->getSize());
 
             echo $ajax_response->build();
             exit;
         }
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: move 2.")->build();
+
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 }
@@ -68,6 +76,13 @@ if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'move'){
 // Elimina un articolo dalla wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
     
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
     if(isset($_REQUEST["item_id"])){
         $result = $wishlistItemDAO->deleteItemById($_REQUEST["item_id"]);
     }
@@ -77,20 +92,20 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
         $result = $wishlistItemDAO->deleteItemById($wishlist_item->getId());
     }
     else{
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
     
     // Se l'eliminazione NON è andata a buon fine
     if(!$result){
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
     
     // Se l'eliminazione è andata a buon fine
     $wishlist = $wishlistDAO->getWishlistByUserId($_SESSION["id"]);
 
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("wishlist_item_size", $wishlist->getSize());
     echo $ajax_response->build();
     exit;
@@ -100,9 +115,16 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
 // Inserisco un articolo nella wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
 
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
     // Se non sono stati passati i parametri giusti
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: store 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -116,19 +138,26 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
 
     // Se la store è fallita
     if($new_wishlist_item == null){
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php: store 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
     
     // Se tutto è andato a buon fine
-    $ajax_response = new AjaxResponse("OK");
-    echo $ajax_response->build();
+    echo AjaxResponse::okNoContent()->build();
     exit;
 }
 
 
 // Controlla se un articolo è all'interno della wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'is_present'){
+
+
+
+    // Controlla se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
 
     // Ricerca wishlist_item tramite l'id
     if(isset($_REQUEST["item_id"])){
@@ -140,18 +169,18 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'is_present')
         $wishlist_item = $wishlistItemDAO->getWishlistItemByArticleId($article->getId(), $wishlistDAO->getWishlistByUserId($_SESSION["id"])->getId());
     }
     else{
-        echo AjaxResponse::genericServerError("Errore in wishlist_operation.php:is_present 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Se non è stato trovato nessun item corrispondente
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("is_present", $wishlist_item == null ? "false" : "true");
     echo $ajax_response->build();
     exit;
 }
 
 
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata in wishlist_operation.php.")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 ?>

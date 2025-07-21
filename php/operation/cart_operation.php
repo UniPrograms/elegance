@@ -6,12 +6,6 @@ require_once("include/utility/QueryStringBuilder.php");
 require_once("include/utility/AjaxResponse.php");
 require_once("include/model/CartItem.php");
 
-// Se la sessione non è attiva
-if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError("Errore di sessione in cart_operation.php.")->build();
-    exit;
-}
-
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
@@ -25,9 +19,17 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
     header("ContentType: application/json");
 
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
+
     // Se non è stato l'id di un articolo
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
-        echo AjaxResponse::genericServerError("Errore in cart_operation.php: store 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -36,24 +38,25 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     $new_cart_item->setArticle($articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"] ));
     $new_cart_item->setCart($cartDAO->getCartByUserId($_SESSION["id"]));
 
-    $new_cart_item = $cartItemDAO->storeItem($new_cart_item); // Lo inserisco nel db
+    // Eseguo l'inserimento nel db
+    $new_cart_item = $cartItemDAO->storeItem($new_cart_item);
 
-    // Se la store è fallita
+    // Se l'operazione è fallita
     if($new_cart_item == null){
-        echo AjaxResponse::genericServerError("Errore in cart_operation.php: store 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
     
-    // Se è andato tutto bene
+    // Se è andato tutto bene, prendo le informazioni del carrello
     $current_article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"] );
     $current_cart = $cartDAO->getCartByUserId($_SESSION["id"]);
     $article_qty = $current_article->getQuantity();
     $cart_qty = $current_cart->getSize();
 
-    $ajax_response = new AjaxResponse("OK");
+    // Costruisco la risposta AJAX
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("cart_item_size",(string) $cart_qty);
     $ajax_response->add("article_qty",(string) $article_qty);
-
     echo $ajax_response->build();
     exit;
 
@@ -62,10 +65,18 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
 // Rimozione di un articolo all'interno del carrello
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
+
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     
     // Se non è stato l'id di un articolo
     if(!isset($_REQUEST["cart_item_id"])){
-        echo AjaxResponse::genericServerError("Errore in cart_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -74,14 +85,14 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se l'operazione non è andata a buon fine
     if(!($result = $cartItemDAO->deleteItem($current_cart_item))){
-        echo AjaxResponse::genericServerError("Errore in cart_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Se è andata a buon fine
     $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
 
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("counter", (string)$cart->getSize());
     $ajax_response->add("total_price", (string)$cart->getPrice());
     echo $ajax_response->build();
@@ -92,14 +103,23 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 // Conta il numero di elementi all'interno del carrello
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 
-    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
-    
-    if($cart == null){
-        echo AjaxResponse::genericServerError("Errore in cart_operation.php: count.")->build();
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
         exit;
     }
 
-    $ajax_response = new AjaxResponse("OK");
+    // Prendo il carrello
+    $cart = $cartDAO->getCartByUserId($_SESSION["id"]);
+    
+    // Se il carrello non è stato trovato
+    if($cart == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Se è andato tutto bene, prendo le informazioni del carrello
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("counter", (string)$cart->getSize());
     $ajax_response->add("total_price", (string)$cart->getPrice());
     echo $ajax_response->build();
@@ -107,12 +127,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
 }
 
 
-// Se non viene inserita una parola per capire 
-// l'operazione da effettuare, bisogna decidere
-// se rimandare ad una pagina di errore.
-// Nel frattempo inserisco una stampa per capire
-// Se si entra in questo campo
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata ina cart_operation.php")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 
 ?>

@@ -6,12 +6,6 @@ require_once("include/utility/AjaxResponse.php");
 require_once("include/utility/ImagePathManager.php");
 require_once("include/model/Product.php");
 
-// Se la sessione non è attiva
-if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError("Errore di sessione in product_operation.php.")->build();
-    exit;
-}
-
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
@@ -29,7 +23,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     if(!(isset($_REQUEST["product_name"])  && isset($_REQUEST["product_price"]) && 
          isset($_REQUEST["product_description"]) && /*isset($_REQUEST["product_cover_img_file"]) && */
          isset($_REQUEST["brand_id"]) && isset($_REQUEST["category_id"]) && isset($_REQUEST["sex_id"]))){
-        echo AjaxResponse::genericServerError("Errore in product_operation.php: store 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     } 
 
@@ -51,7 +45,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     
     // Salvo prima il prodotto per ottenere l'ID
     if(($product = $productDAO->storeProduct($product)) == null){
-        echo AjaxResponse::genericServerError("Errore in product_operation.php: store 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
     
@@ -75,7 +69,7 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         }
     }
 
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("product_id", $product->getId());
     echo $ajax_response->build();
     exit;
@@ -88,7 +82,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato passato l'id
     if(!isset($_REQUEST["product_id"])){
-        echo AjaxResponse::genericServerError("Errore in product_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -97,10 +91,9 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se qualcosa non ha funzionato
     if(!$result){
-        echo AjaxResponse::genericServerError("Errore in product_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
-
 
     // Se è andato tutto bene
     echo AjaxResponse::okNoContent()->build();
@@ -108,6 +101,6 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 }
 
 
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata in product_operation.php.")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 ?>

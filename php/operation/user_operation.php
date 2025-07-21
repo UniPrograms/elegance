@@ -7,12 +7,6 @@ require_once("include/model/User.php");
 require_once("include/utility/ImagePathManager.php");
 
 
-// Se la sessione non è attiva
-if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError("Errore di sessione in user_operation.php.")->build();
-    exit;
-}
-
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
@@ -23,6 +17,13 @@ $userDAO = $factory->getUserDAO();
 // Aggiornamento di un utente (info personali)
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "personal-info"){
 
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        header("Location: error.php");
+        exit;
+    }
+
+
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
 
@@ -30,25 +31,31 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "personal-info"){
     if(isset($_REQUEST["user_name"]) && !empty($_REQUEST["user_name"])){ $user->setName($_REQUEST["user_name"]);}
     if(isset($_REQUEST["user_surname"]) && !empty($_REQUEST["user_surname"])) { $user->setSurname($_REQUEST["user_surname"]);}
     if(isset($_REQUEST["user_phone"])){ $user->setPhoneNumber($_REQUEST["user_phone"]);}
-    // Manca qui il controllo dell'immagine
-    
+     
+
     // Aggiorno l'utente
     $updatedUser = $userDAO->storeUser($user);
     
     // Rimando alla pagina opportuna
-    if($updatedUser != null){
-        header("Location: personal_info.php");
-    }else{
-        // Bisogna rimandare ad una pagina di errore o gestire il caso
+    if($updatedUser == null){
+        header("Location: error.php");
+        exit;
     }
-
-
+    header("Location: personal_info.php");
+    exit;
 }
 
 
 
 // Aggiornamento utente (password)
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-password"){
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        header("Location: error.php");
+        exit; 
+    }
+
 
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
@@ -69,11 +76,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-passw
     $updatedUser = $userDAO->storeUser($user);
 
     // Rimando alla pagina opportuna
-    if($updatedUser != null){
-        header("Location: change_password.php");
-    }else{
-        // Bisogna rimandare ad una pagina di errore o gestire il caso
+    if($updatedUser == null){
+        header("Location: error.php");
+        exit;    
     }
+    
+    header("Location: change_password.php");
 }
 
 
@@ -85,7 +93,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se non è stato passato l'id
     if(!isset($_REQUEST["user_id"])){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -94,14 +102,13 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     // Se non è andata a buon fine
     if(!$result){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
 
     // Se è andato tutto bene
-    $ajax_response = new AjaxResponse("OK");
-    echo $ajax_response->build();
+    echo AjaxResponse::okNoContent()->build();
     exit;
 }
 
@@ -111,17 +118,24 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
     
     header("Content-Type: application/json;");
 
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
+
     // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
 
     // Se l'utente non esiste
     if($user == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: user-info 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Restituisco le informazioni dell'utente
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("user_role", $user->getRole());
     $ajax_response->add("user_name", $user->getName());
     $ajax_response->add("user_surname", $user->getSurname());
@@ -130,15 +144,16 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
     exit;
 }
 
+
 // Aggiornamento di un utente da parte dell'amministratore
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
     
 
     if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && 
          isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]))){
-            echo AjaxResponse::genericServerError("Errore in user_operation.php: admin-update 1.")->build();
+            echo AjaxResponse::genericServerError()->build();
             exit;
-        }
+    }
 
     // Costruisco l'utente
     $user = $userDAO->getUserById($_REQUEST["user_id"]);
@@ -153,7 +168,7 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
 
     // Se qualcosa è andato storto
     if($user == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: admin-update 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -164,16 +179,26 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
     
 }
 
+
 // Upload dell'immagine utente
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image'){
-    if(!isset($_REQUEST['image_url'])){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 1.")->build();
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
         exit;
     }
 
+    // Controllo se è stato fornito l'url dell'immagine
+    if(!isset($_REQUEST['image_url'])){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Prendo l'utente loggato
     $user = $userDAO->getUserById($_SESSION["id"]);
     if($user == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -181,33 +206,32 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image
     $new_image_name = "img_" . $user->getId() . ".jpg";
 
     // Gestione base64
-    require_once("include/utility/ImagePathManager.php");
     $image_path = ImagePathManager::fromBase64($_REQUEST["image_url"], $new_path, $new_image_name);
     $final_path = $image_path->moveBase64();
 
     if($final_path == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 3.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     $user->setUrlImage($final_path);
     if(($userDAO->storeUser($user)) == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: upload-image 4.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
-    $ajax_response = new AjaxResponse("OK");
-    $ajax_response->add("content", "Immagine salvata correttamente!");
-    echo $ajax_response->build();
+
+    echo AjaxResponse::okNoContent()->build();
     exit;
 }
+
 
 // Informazioni di un utente
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se non è stato fornito l'id dell'utente
     if(!isset($_REQUEST["user_id"])){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: get-info 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -217,13 +241,13 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se l'utente' non è stato trovato
     if($user == null){
-        echo AjaxResponse::genericServerError("Errore in user_operation.php: get-info 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
 
     // Ritorno tutte le informazioni necessarie
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent("OK");
 
     $ajax_response->add("user_id",$user->getId());
     $ajax_response->add("user_name",$user->getName());
@@ -237,6 +261,6 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 }
 
 
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata in user_operation.php.")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 ?>

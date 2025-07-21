@@ -6,12 +6,6 @@ require_once("include/utility/QueryStringBuilder.php");
 require_once("include/utility/AjaxResponse.php");
 require_once("include/model/Article.php");
 
-// Se la sessione non è attiva
-if(!isset($_SESSION["auth"])){
-    echo AjaxResponse::genericServerError("Errore di sessione in article_operation.php.")->build();
-    exit;
-}
-
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
@@ -35,12 +29,12 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "count"){
         $article = $articleDAO->getArticleByProductSizeColor($_REQUEST["product_id"], $_REQUEST["size_id"], $_REQUEST["color_id"]);
     }
     else{
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: count")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Se tutto è andato a buon fine
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("article_qty",$article->getQuantity());
     echo $ajax_response->build();
     exit;
@@ -53,7 +47,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
 
     // Se non è stato passato l'id dell'articolo
     if(!isset($_REQUEST["article_id"])){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: get_information 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -61,12 +55,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get_informat
 
     // Se non è stato trovato l'articolo (id sbagliato)
     if($article == null){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: get-information 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Se è andato tutto bene
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("size_id",$article->getSize()->getId());
     $ajax_response->add("color_id", $article->getColor()->getId());
     echo $ajax_response->build();
@@ -80,7 +74,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get"){
 
     // Se non è stato passato l'id dell'articolo
     if(!isset($_REQUEST["article_id"])){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: get 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -88,12 +82,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get"){
 
     // Se non è stato trovato l'articolo (id sbagliato)
     if($article == null){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: get 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Se è andato tutto bene
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent();
     $ajax_response->add("size_id",$article->getSize()->getId());
     $ajax_response->add("color_id", $article->getColor()->getId());
     echo $ajax_response->build();
@@ -104,7 +98,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get"){
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
     if(!isset($_REQUEST["article_id"])){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -112,7 +106,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     $result = $articleDAO->deleteArticleById($_REQUEST["article_id"]);
 
     if(!$result){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -120,12 +114,13 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     exit;
 }
 
+
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
 
     // Se qualche dato non è stato inviato
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: store 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -146,7 +141,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
     // Se qualcosa va storto
     if(($new_article = $articleDAO->storeArticle($new_article)) == null){
-        echo AjaxResponse::genericServerError("Errore in article_operation.php: store 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -155,7 +150,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 }
 
 // Nel caso non venga selezionata nessuna operazione
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata in article_operation.php.")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 
 ?>

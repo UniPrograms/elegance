@@ -7,11 +7,6 @@ require_once("include/utility/AjaxResponse.php");
 require_once("include/model/Order.php");
 require_once("include/model/OrderItem.php");
 
-// Se la sessione non è attiva
-if(!isset($_SESSION["auth"])){
-    // Reindirizzamento di una pagina di errore o login
-}
-
 
 //DAO 
 $factory = new DataLayer(new DB_Connection());
@@ -32,21 +27,27 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "admin-update-stat
 
     // Se non sono stati forniti i dati necessari
     if(!(isset($_REQUEST["order_id"]) && isset($_REQUEST["order_status"]))){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: admin-update-state 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Effettuo l'aggiornamento dell stato nel db
     $order = $orderDAO->getOrderById($_REQUEST["order_id"]);
 
+    // Se l'ordine non è stato trovato
+    if($order == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+    // Aggiorno lo stato dell'ordine e lo aggiorno nel db
     $order->setStatus($_REQUEST["order_status"]);
-
-
     $order = $orderDAO->storeOrder($order);
+
 
     // Se qualcosa è andato male
     if($order == null){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: admin-update-state 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -60,6 +61,13 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "admin-update-stat
 
 // Inserimento di un nuovo ordine da parte dell'utente
 else if(isset($_REQUEST["store"])){
+
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        header("Location: error.php");
+    }
+
 
     // Se i campi necessari non sono settati tutti, rimanda ad un errore
     if(!(isset($_REQUEST["firstname"]) && isset($_REQUEST["lastname"]) && isset($_REQUEST["email_address"]) &&
@@ -115,13 +123,13 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     // Se non è stato fornito l'id dell'ordine
     if(!isset($_REQUEST["order_id"])){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: delete 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
     // Effettuo la cancellazione dell'ordine
     if(($result = $orderDAO->deleteOrderById($_REQUEST["order_id"])) == null){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: delete 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -138,7 +146,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se non è stato fornito l'id dell'ordine
     if(!isset($_REQUEST["order_id"])){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: get-info 1.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
@@ -148,25 +156,22 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 
     // Se l'ordine non è stato trovato
     if($order == null){
-        echo AjaxResponse::genericServerError("Errore in order_operation.php: get-info 2.")->build();
+        echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
 
     // Ritorno tutte le informazioni necessarie
-    $ajax_response = new AjaxResponse("OK");
+    $ajax_response = AjaxResponse::okNoContent("OK");
     $ajax_response->add("order_id",$order->getId());
     $ajax_response->add("order_status",$order->getStatus());
-
     echo $ajax_response->build();
     exit;
-    
-
 }
 
 
 
-echo AjaxResponse::genericServerError("Nessuna operazione selezionata in order_operation.php.")->build();
+echo AjaxResponse::noOperationError()->build();
 exit;
 
 ?>

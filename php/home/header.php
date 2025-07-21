@@ -65,7 +65,7 @@ if ($userIsLogged) {
     $header_page->setContent("notification_page_link",  $query_string_builder->build());
 
     $query_string_builder->cleanParams();
-    $query_string_builder->addEncoded("reference", "profile.php");
+    $query_string_builder->addEncoded("reference", "index.php");
     $header_page->setContent("profile_page_link", $query_string_builder->build());
 
     $query_string_builder->cleanParams();

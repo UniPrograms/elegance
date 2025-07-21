@@ -43,13 +43,16 @@ document.addEventListener('DOMContentLoaded', function(){
           });
 
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
-      }).fail(function (jqXHR, textStatus, errorThrown) {
-  console.error("Errore AJAX:", textStatus, errorThrown);
-});
-
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+      });
     });
   });
 });
@@ -94,13 +97,16 @@ document.addEventListener('DOMContentLoaded', function(){
           });
 
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
-      }).fail(function (jqXHR, textStatus, errorThrown) {
-          console.error("Errore AJAX:", textStatus, errorThrown);
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
       });
-
     });
   });
 });
@@ -145,13 +151,16 @@ document.addEventListener('DOMContentLoaded', function(){
           });
 
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
-      }).fail(function (jqXHR, textStatus, errorThrown) {
-          console.error("Errore AJAX:", textStatus, errorThrown);
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
       });
-
     });
   });
 });
@@ -209,16 +218,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
           if(response.status == "OK"){
             window.location.href = "admin_viewuser.php?user_id=" + userId;
-          }else{
-            alert("Errore: " + response.text_message);
           }
-
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-          console.error("Errore AJAX:", textStatus, errorThrown);
+          else if (response.status == "SESSION_ERROR") {
+            alert("Errore: " +  response.text_message);
+          }
+          else if (response.status == "OPERATION_ERROR") {
+            alert("Errore: " +  response.text_message);
+          }
+          else if (response.status == "GENERIC_ERROR") { 
+            alert("Errore: " +  response.text_message);
+          }
       });
-      
     });
-
 });
 
 
@@ -250,12 +261,16 @@ document.addEventListener('DOMContentLoaded', function(){
                 
                 if(response.status == "OK"){
                     window.location.href = "admin_vieworder.php?order_id=" + orderId;
-                }else{
-                    alert("Errore: " + response.text_message);
                 }
-
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.error("Errore AJAX:", textStatus, errorThrown);
+                else if (response.status == "SESSION_ERROR") {
+                  alert("Errore: " +  response.text_message);
+                }
+                else if (response.status == "OPERATION_ERROR") {
+                  alert("Errore: " +  response.text_message);
+                }
+                else if (response.status == "GENERIC_ERROR") {  
+                  alert("Errore: " +  response.text_message);
+                }
             });
         });
     }
@@ -395,11 +410,15 @@ document.addEventListener('DOMContentLoaded', function(){
           });
 
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
-      }).fail(function (jqXHR, textStatus, errorThrown) {
-          console.error("Errore AJAX:", textStatus, errorThrown);
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
       });
 
     });
@@ -455,12 +474,15 @@ document.addEventListener('DOMContentLoaded', function () {
             if(response.status == "OK"){
               window.location.href = "admin_viewarticlestable.php?product_id="+productId;
             }
-            else{
-              alert("Errore: " + response.text_message);
+            else if (response.status == "SESSION_ERROR") {
+              alert("Errore: " +  response.text_message);
             }
-
-        }).fail(function(){
-          alert("Errore, qualcosa è andato storto");
+            else if (response.status == "OPERATION_ERROR") {
+              alert("Errore: " +  response.text_message);
+            }
+            else if (response.status == "GENERIC_ERROR") {
+              alert("Errore: " +  response.text_message);
+            }
         });
     });
 });
@@ -497,18 +519,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if(response.status == "OK"){
                     window.location.href = "admin_viewarticlestable.php?product_id="+productId;
                 }
-                else{
-                    alert("Errore: " + response.text_message);
+                else if (response.status == "SESSION_ERROR") {
+                  alert("Errore: " +  response.text_message);
                 }
-            }).fail(function(jqXHR, textStatus, errorThrown){
-                console.error("Errore AJAX (update article):", {
-                    status: jqXHR.status,
-                    statusText: jqXHR.statusText,
-                    responseText: jqXHR.responseText,
-                    textStatus: textStatus,
-                    errorThrown: errorThrown
-                });
-                alert("Errore AJAX: " + textStatus + " - " + errorThrown);
+                else if (response.status == "OPERATION_ERROR") {
+                  alert("Errore: " +  response.text_message);
+                }
+                else if (response.status == "GENERIC_ERROR") {
+                  alert("Errore: " +  response.text_message);
+                }
             });
         });
     }
@@ -560,6 +579,9 @@ document.addEventListener('DOMContentLoaded', function(){
     // Aggiungi il file se è stato selezionato
     if(selectedFile){
       formData.append("product_image", selectedFile);
+      console.log("[DEBUG] File selezionato:", selectedFile);
+    } else {
+      console.log("[DEBUG] Nessun file selezionato per la copertina");
     }
 
     $.ajax({
@@ -578,22 +600,17 @@ document.addEventListener('DOMContentLoaded', function(){
           var baseUrl = coverImg.src.split('?')[0];
           coverImg.src = baseUrl + '?t=' + new Date().getTime();
         }
-        location.reload();
-      }else{
-        alert("Errore: " + response.text_message);
-      }
-    }).fail(function(jqXHR, textStatus, errorThrown){
-      console.error("Errore AJAX completo:", {
-        status: jqXHR.status,
-        statusText: jqXHR.statusText,
-        responseText: jqXHR.responseText,
-        responseJSON: jqXHR.responseJSON,
-        textStatus: textStatus,
-        errorThrown: errorThrown,
-        readyState: jqXHR.readyState,
-        url: jqXHR.responseURL
-      });
-      alert("Errore AJAX completo:\nStatus: " + jqXHR.status + "\nStatusText: " + jqXHR.statusText + "\nResponseText: " + jqXHR.responseText + "\nTextStatus: " + textStatus + "\nErrorThrown: " + errorThrown);
+        window.location.href = "admin_viewproduct.php?product_id=" + response.product_id;
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
     });
   });
 });
@@ -718,11 +735,16 @@ function removeUploadedImg(btn) {
     }).done(function(response){
       if(response.status == "OK"){
         location.reload(true);
-      } else {
-        alert('Errore eliminazione: ' + response.text_message);
       }
-    }).fail(function(jqXHR, textStatus, errorThrown){
-      console.error("Errore AJAX:", textStatus, errorThrown, jqXHR.responseText);
+      else if (response.status == "SESSION_ERROR") {
+        alert("Errore: " +  response.text_message);
+      }
+      else if (response.status == "OPERATION_ERROR") {
+        alert("Errore: " +  response.text_message);
+      }
+      else if (response.status == "GENERIC_ERROR") {
+        alert("Errore: " +  response.text_message);
+      }
     });
   }
 }
@@ -786,12 +808,16 @@ document.addEventListener('DOMContentLoaded', function () {
       }).done(function(response){
         if(response.status == "OK"){
           location.reload(true);
-
-        } else {
-          alert('Error: ' + response.text_message); 
+        } 
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
-      }).fail(function(jqXHR, textStatus, errorThrown){
-        console.error("Errore AJAX:", textStatus, errorThrown, jqXHR.responseText);
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
       });
       imgInput.value = '';
     });
@@ -800,7 +826,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Solo anteprima immagine copertina, nessun salvataggio
-
 document.addEventListener('DOMContentLoaded', function() {
   if (window.location.pathname.includes('admin_viewproduct.php')) {
     const fileInput = document.getElementById('product-cover-img-file');
@@ -823,7 +848,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Disabilita i bottoni per aggiungere foto se la query string è vuota in admin_viewproduct.php
-
 document.addEventListener('DOMContentLoaded', function() {
   if (window.location.pathname.includes('admin_viewproduct.php')) {
     const urlParams = new URLSearchParams(window.location.search);

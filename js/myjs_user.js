@@ -41,7 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
           }
-          else{
+          else if(response.status == "SESSION_ERROR"){
+            alert("Errore: " + response.text_message);
+          }
+          else if(response.status == "OPERATION_ERROR"){
+            alert("Errore: " + response.text_message);
+          }
+          else if(response.status == "GENERIC_ERROR"){
             alert("Errore: " + response.text_message);
           }
       });
@@ -152,11 +158,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
           }
 
-        } else if (response.status == "ERROR") {
+        } 
+        else if (response.status == "SESSION_ERROR") {
             alert("Errore: " +  response.text_message);
         }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
       });
-
     });
   });
 });
@@ -440,10 +452,16 @@ document.addEventListener('DOMContentLoaded', function() {
           buttonAddToCart.setAttribute("class","btn essence-btn disabled");   
         }
 
-      }
-      else{
-        alert("Errore: " + response.text_message);
-      }
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        } 
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
     });
   });
 });
@@ -486,11 +504,16 @@ document.addEventListener('DOMContentLoaded', function () {
             buttonAddToCart.setAttribute("class","btn essence-btn disabled");   
           }
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
     });
-
   }
 });
 
@@ -546,7 +569,14 @@ document.addEventListener('DOMContentLoaded', function() {
                   buttonAddToCart.setAttribute("class", "btn essence-btn");
                 }
               }
-            } else {
+            } 
+            else if(response.status == "SESSION_ERROR") {
+              alert("Errore: " + response.text_message);
+            }
+            else if(response.status == "OPERATION_ERROR") {
+              alert("Errore: " + response.text_message);
+            }
+            else if(response.status == "GENERIC_ERROR") {
               alert("Errore: " + response.text_message);
             }
           });
@@ -592,8 +622,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 favHeart.classList.add('heart-grey');
               }
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
     });
 
@@ -641,7 +677,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 favHeart.classList.remove('heart-red');
                 favHeart.classList.add('heart-grey');
               }
-            } else {
+            }
+            else if(response.status == "SESSION_ERROR") {
+              alert("Errore: " + response.text_message);
+            }
+            else if(response.status == "OPERATION_ERROR") {
+              alert("Errore: " + response.text_message);
+            }
+            else if(response.status == "GENERIC_ERROR") {
               alert("Errore: " + response.text_message);
             }
           });
@@ -691,8 +734,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 favHeart.classList.add('heart-grey');
               }
         }
-        else{
-          alert("Errore: " + response.text_message);
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
         }
       });
     });
