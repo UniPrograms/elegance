@@ -70,6 +70,7 @@ foreach($colorDAO->getAllColors() as $color){
     // Lo pre-imposto se era stato selezionato nella pagina precedente
     if(isset($_REQUEST["color_id"]) && $_REQUEST["color_id"] > 0 && $_REQUEST["color_id"] == $color->getId()){
         $shop_filter_menu_page->setContent("color_selected","selected");
+        $shop_filter_menu_page->setContent("product_color_value", $color->getId());
     }
     else{
         $shop_filter_menu_page->setContent("color_selected", "");

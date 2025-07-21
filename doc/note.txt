@@ -1,5 +1,7 @@
-1. Button per aggiungere un nuovo prodotto;
+1. Aggiungere il tasto per eliminare la foto dell'utente
 
-2. Aggiustare colonna nome e categoria nella tabella dei prodotti;
+2. In profile, persona-info, change_password aggiungere un po' di distanza dall'alto e fornire una lunghezza minima standard.
 
-3. 
+3. Bisogna gestire il fatto che se un prodotto non abbia articoli, allora non deve comparire nello shop (cambiare un left join all'interno dei dao)
+
+4. Capire come gestire le pagine di errore sia lato user che lato admin.
