@@ -9,6 +9,7 @@ $categoryDAO = $factory->getCategoryDAO();
 $sexDAO = $factory->getSexDAO();
 $productorDAO = $factory->getProductorDAO();
 $colorDAO = $factory->getColorDAO();
+$sizeDAO = $factory->getSizeDAO();
 
 
 // Controllo se è stato inserito un nome di un prodotto
@@ -61,6 +62,24 @@ foreach($productorDAO->getAllProductores() as $productor){
     }
 
 }
+
+
+// Setto le taglia
+foreach($sizeDAO->getAllSizes() as $size){
+    $shop_filter_menu_page->setContent("size_value", $size->getId());
+    $shop_filter_menu_page->setContent("size_name", $size->getSize());
+
+    // Lo pre-imposto se era stato selezionato nella pagina precedente
+    if(isset($_REQUEST["size_id"]) && $_REQUEST["size_id"] > 0 && $_REQUEST["size_id"] == $size->getId()){
+        $shop_filter_menu_page->setContent("size_selected","selected");
+    }
+    else{
+        $shop_filter_menu_page->setContent("size_selected", "");
+    }
+}
+
+
+
 
 // Setto i colori
 foreach($colorDAO->getAllColors() as $color){

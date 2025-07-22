@@ -35,7 +35,7 @@
     <select class="shop-filter-select" id="size_id" name="size_id">
       <option value="0" class="shop-filter-option">All</option>
       <[foreach]>
-      <option value="<[size_value]>" class="shop-filter-option" <[size_selected]>><[size_name::strformatter type="title" library="utility"]></option>
+      <option value="<[size_value]>" class="shop-filter-option" <[size_selected]>><[size_name::strformatter type="upper" library="utility"]></option>
       <[/foreach]>
     </select>
   </div>
