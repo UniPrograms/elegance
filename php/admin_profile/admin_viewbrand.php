@@ -25,11 +25,11 @@ if(isset($_REQUEST["productor_id"])){
     $admin_viewbrand_page->setContent("productor_name", $productor->getName());
     $admin_viewbrand_page->setContent("productor_logo", $productor->getLogo());
 
-    $admin_viewbrand_page->setContent("productor_title","productor:");
+    $admin_viewbrand_page->setContent("productor_title","brand:");
 }
 else{
     $admin_viewbrand_page->setContent("productor_logo", "img/my_img/core/placeholder-brand.jpg");
-    $admin_viewbrand_page->setContent("productor_title","new productor");
+    $admin_viewbrand_page->setContent("productor_title","new brand");
 }
 
 ?>

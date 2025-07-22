@@ -1,4 +1,9 @@
 1. Aggiungere il tasto per eliminare la foto dell'utente;
 
-4. Capire come gestire le pagine di errore sia lato user che lato admin;
+2. Capire come gestire le pagine di errore sia lato user che lato admin;
 
+3. Gestire le size nello shop_filter_menu
+
+4. Caricare dinamicamente il contenuto del footer
+
+5. Gestire l'immagine del brand, sia l'upload dell'immagine, sia il ridimensionamento della preview
