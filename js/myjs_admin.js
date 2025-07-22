@@ -1343,5 +1343,41 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 
+// Blocco salvataggio se i campi obbligatori sono vuoti in admin_viewuser
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.location.pathname.includes('admin_viewuser.php')) {
+    const saveBtn = document.getElementById('admin-update-user');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function(e) {
+        const userName = document.getElementById('user-name');
+        const userSurname = document.getElementById('user-surname');
+        const userRole = document.getElementById('user-role-input');
+        const userPhone = document.getElementById('user-phone');
+
+        if (!userName || !userName.value.trim()) {
+          e.preventDefault();
+          alert('Il nome non può essere vuoto!');
+          userName.focus();
+          return false;
+        }
+        if (!userSurname || !userSurname.value.trim()) {
+          e.preventDefault();
+          alert('Il cognome non può essere vuoto!');
+          userSurname.focus();
+          return false;
+        }
+        if (!userRole || !userRole.value.trim()) {
+          e.preventDefault();
+          alert('Il ruolo non può essere vuoto!');
+          userRole.focus();
+          return false;
+        }
+        // La logica per il telefono è già implementata altrove (deve essere vuoto o di 10 cifre)
+      });
+    }
+  }
+});
+
 
 
