@@ -40,15 +40,9 @@
                   <div class="col-12 mb-3">
                     <label for="country">Country <span>*</span></label>
                     <select class="w-100" id="country" name="country">
-                      <option value="italy">Italy</option>
-                      <option value="usa">United States</option>
-                      <option value="uk">United Kingdom</option>
-                      <option value="ger">Germany</option>
-                      <option value="fra">France</option>
-                      <option value="ind">India</option>
-                      <option value="aus">Australia</option>
-                      <option value="bra">Brazil</option>
-                      <option value="cana">Canada</option>
+                      <[foreach]>
+                      <option value="<[country_name]>"><[country_name::strformatter type="title" library="utility"]></option>
+                      <[/foreach]>
                     </select>
                   </div>
                   <div class="col-12 mb-3">

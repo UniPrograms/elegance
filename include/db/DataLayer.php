@@ -24,7 +24,7 @@ require_once("dao/SizeDAO.php");
 require_once("dao/ColorDAO.php");
 require_once("dao/ArticleDAO.php");
 require_once("dao/AddressDAO.php");
-
+require_once("dao/CountryDAO.php");
 
 
 class DataLayer{
@@ -57,6 +57,7 @@ class DataLayer{
     private ColorDAO $colorDAO;
     private ArticleDAO $articleDAO;
     private AddressDAO $addressDAO;
+    private CountryDAO $countryDAO;
 
 
 
@@ -100,6 +101,7 @@ class DataLayer{
         $this->colorDAO = new ColorDAO($this);
         $this->articleDAO = new ArticleDAO($this);
         $this->addressDAO = new AddressDAO($this);
+        $this->countryDAO = new CountryDAO($this);
 
     }
 
@@ -196,5 +198,8 @@ class DataLayer{
         return $this->addressDAO;
     }
 
+    public function getCountryDAO(): CountryDAO{
+        return $this->countryDAO;
+    }
 }
 ?>

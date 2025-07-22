@@ -1,0 +1,28 @@
+<section id="categories" class="active">
+    <div class="search-box" style="display: flex; justify-content: space-between; align-items: center;">
+        <input type="text" id="searchbar-order" placeholder="Search countries..." />
+        <button class="add-country-button" id="admin-add-new-country" type="button">Add</button>
+      </div>
+      <table id="countries-table">
+        <thead>
+          <tr>
+            <th>Country ID</th>
+            <th>Country Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <[foreach]>
+          <tr>
+            <td><[country_id::idformatter library="utility"]></td>
+            <td><[country_name::strformatter type="title" library="utility"]></td>
+            <td class="actions">
+              <button class="view admin-details-country" value=<[country_value]>>Edit</button>
+              <button class="delete admin-delete-country" value=<[country_value]>>Delete</button>
+            </td>
+          </tr>
+          <[/foreach]>
+        </tbody>
+      </table>
+    </section>
+    

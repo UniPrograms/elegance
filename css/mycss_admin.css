@@ -732,3 +732,21 @@ table th:last-child, table td.actions {
 .add-brand-button:hover {
   background-color: #0056b3;
 }
+
+
+.add-country-button, .remove-country-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background 0.2s;
+  margin-right: 0.5rem;
+}
+.add-country-button:hover {
+  background-color: #0056b3;
+}

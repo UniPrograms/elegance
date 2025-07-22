@@ -19,6 +19,7 @@ $factory = new DataLayer(new DB_Connection());
 $userDAO = $factory->getUserDAO();
 $cartDAO = $factory->getCartDAO();
 $paymentDAO = $factory->getPaymentDAO();
+$countryDAO = $factory->getCountryDAO();
 
 
 $checkout_page = new Template("skin/checkout/checkout.html");
@@ -49,5 +50,8 @@ foreach($payments as $payment){
     $checkout_page->setContent("payment_name", $payment->getName());
 }
 
-
+// Setto le nazioni
+foreach($countryDAO->getAllCountries() as $country){
+    $checkout_page->setContent("country_name",$country->getName());
+}
 ?>
