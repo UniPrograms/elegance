@@ -1,6 +1,6 @@
 <?php
 
-require_once("article.php");
+require_once("Article.php");
 
 class Cart{
 

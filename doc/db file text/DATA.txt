@@ -3,10 +3,10 @@ USE TDW_PROGETTO;
 /*--------------------- INSERIMENTO DATI ---------------------*/
 
 -- Inserimento utenti --
-INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("gabriele","pasqualone","gab@gmail.com","gab","utente");
-INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("lorenzo","feula","lor@gmail.com","lor","utente");
-INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("luigi","di sciascio","lui@gmail.com","lui","amministratore");
-INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("alessandro","casasanta","ale@gmail.com","ale","amministratore");
+INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("gabriele","pasqualone","gab@gmail.com","1c3f28b9d0988172ca778c8afa2b0746c7856d2e3dc6993135f0af1b6ee44705","utente");
+INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("lorenzo","feula","lor@gmail.com","280f3568fa9691086e4f18148cbe751463ed3eee57f3987ed22121741a49c1fd","utente");
+INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("luigi","di sciascio","lui@gmail.com","b66e2f869620e9d319eeae9bee98d875ac8bc691fb7007caf8c4d084a8b3b38f","amministratore");
+INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("alessandro","casasanta","ale@gmail.com","5c85bb36f3869809fb738a3ba6f990aedbfeca3df2dc1a997fa49c50d0eed8e6","amministratore");
 
 -- Inserimento pagamento --
 INSERT INTO PAGAMENTO(NOME) VALUES("paypal");

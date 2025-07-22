@@ -435,9 +435,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 70vh;
   background: none;
-  margin-top: 48px;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 .ct-profile-card {
   display: flex;
