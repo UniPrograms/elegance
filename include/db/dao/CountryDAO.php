@@ -9,6 +9,7 @@ class CountryDAO extends DAO{
     private PDOStatement $stmtGetCountryById;
     private PDOStatement $stmtGetAllCountries;
     private PDOStatement $stmtGetCountryByName;
+    private PDOStatement $stmtGetAllCountriesByGenericString;
     private PDOStatement $stmtInsertCountry;
     private PDOStatement $stmtUpdateCountry;
     private PDOStatement $stmtDeleteCountry;
@@ -27,6 +28,7 @@ class CountryDAO extends DAO{
         $this->stmtGetCountryById = $this->conn->prepare("SELECT * FROM NAZIONE WHERE ID = ?;");
         $this->stmtGetAllCountries = $this->conn->prepare("SELECT * FROM NAZIONE;");
         $this->stmtGetCountryByName = $this->conn->prepare("SELECT * FROM NAZIONE WHERE NOME LIKE ?;");
+        $this->stmtGetAllCountriesByGenericString = $this->conn->prepare("SELECT * FROM NAZIONE WHERE NOME LIKE ?;");
         $this->stmtInsertCountry = $this->conn->prepare("INSERT INTO NAZIONE (NOME) VALUES (?);");
         $this->stmtUpdateCountry = $this->conn->prepare("UPDATE NAZIONE SET NOME = ? WHERE ID = ?;");
         $this->stmtDeleteCountry = $this->conn->prepare("DELETE FROM NAZIONE WHERE ID = ?;");
@@ -79,6 +81,24 @@ class CountryDAO extends DAO{
         $rs = $this->stmtGetCountryByName->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createCountry($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getCategoriesByGenericString(string $string): array {
+        $this->stmtGetAllCountriesByGenericString->bindValue(1, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllCountriesByGenericString->execute();
+        $this->stmtGetAllCountriesByGenericString->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllCountriesByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createCountry($rs);
+        }
+        return $result;
     }
     /**
      * 

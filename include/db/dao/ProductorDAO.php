@@ -10,6 +10,7 @@ class ProductorDAO extends DAO {
     private PDOStatement $stmtGetAllProductores;
     private PDOStatement $stmtGetAllProductoresInRange;
     private PDOStatement $stmtGetProductorByName;
+    private PDOStatement $stmtGetAllProductorsByGenericString;
     private PDOStatement $stmtInsertProductor;
     private PDOStatement $stmtUpdateProductor;
     private PDOStatement $stmtDeleteProductor;
@@ -28,6 +29,7 @@ class ProductorDAO extends DAO {
         $this->stmtGetAllProductores = $this->conn->prepare("SELECT * FROM PRODUTTORE;");
         $this->stmtGetAllProductoresInRange = $this->conn->prepare("SELECT * FROM PRODUTTORE LIMIT ? OFFSET ?;");
         $this->stmtGetProductorByName = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NAME LIKE ?;");
+        $this->stmtGetAllProductorsByGenericString = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NOME LIKE ?;");
         $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME,LOGO_URL) VALUES (?,?);");
         $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ?, SET LOGO_URL = ? WHERE ID = ?;");
         $this->stmtDeleteProductor = $this->conn->prepare("DELETE FROM PRODUTTORE WHERE ID = ?;");
@@ -89,6 +91,24 @@ class ProductorDAO extends DAO {
         $rs = $this->stmtGetProductorByName->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createProductor($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getProductorsByGenericString(string $string): array {
+        $this->stmtGetAllProductorsByGenericString->bindValue(1, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllProductorsByGenericString->execute();
+        $this->stmtGetAllProductorsByGenericString->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllProductorsByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createProductor($rs);
+        }
+        return $result;
     }
      /**
      * 

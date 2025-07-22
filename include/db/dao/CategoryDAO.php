@@ -9,6 +9,7 @@ class CategoryDAO extends DAO{
     private PDOStatement $stmtGetCategoryById;
     private PDOStatement $stmtGetAllCategories;
     private PDOStatement $stmtGetCategoryByName;
+    private PDOStatement $stmtGetAllCategoriesByGenericString;
     private PDOStatement $stmtInsertCategory;
     private PDOStatement $stmtUpdateCategory;
     private PDOStatement $stmtDeleteCategory;
@@ -27,6 +28,7 @@ class CategoryDAO extends DAO{
         $this->stmtGetCategoryById = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE ID = ?;");
         $this->stmtGetAllCategories = $this->conn->prepare("SELECT * FROM CATEGORIA;");
         $this->stmtGetCategoryByName = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE NOME LIKE ?;");
+        $this->stmtGetAllCategoriesByGenericString = $this->conn->prepare("SELECT * FROM CATEGORIA WHERE NOME LIKE ?;");
         $this->stmtInsertCategory = $this->conn->prepare("INSERT INTO CATEGORIA (NOME) VALUES (?);");
         $this->stmtUpdateCategory = $this->conn->prepare("UPDATE CATEGORIA SET NOME = ? WHERE ID = ?;");
         $this->stmtDeleteCategory = $this->conn->prepare("DELETE FROM CATEGORIA WHERE ID = ?;");
@@ -79,6 +81,24 @@ class CategoryDAO extends DAO{
         $rs = $this->stmtGetCategoryByName->fetch(PDO::FETCH_ASSOC);
 
         return $rs ? $this->createCategory($rs) : null;
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function getCategoriesByGenericString(string $string): array {
+        $this->stmtGetAllCategoriesByGenericString->bindValue(1, '%'.$string.'%', PDO::PARAM_STR);
+        $this->stmtGetAllCategoriesByGenericString->execute();
+        $this->stmtGetAllCategoriesByGenericString->execute();
+        $result = [];
+
+        while ($rs = $this->stmtGetAllCategoriesByGenericString->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $this->createCategory($rs);
+        }
+        return $result;
     }
     /**
      * 
