@@ -1,0 +1,3 @@
+1. Check del cambio password (fixare)
+
+2. Implementazione button per rimuovere la foto profilo in personal_info
