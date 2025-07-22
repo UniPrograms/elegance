@@ -1,1 +1,17 @@
-
+<div class="order-admin-flexbox" style="display:flex; gap:2rem; align-items:stretch;">
+  <!-- Box ordine -->
+  <div class="user-profile" id="user-profile-main-container">
+    <div class="header">
+      <div>
+        <h2 id="category-id">Category: <[category_id::idformatter library="utility"]></h2>
+      </div>
+    </div>
+    <ul class="info-list">
+      <li style="display:none;"><span class="label" >ID:</span> <input type="text" id="category-id-input" value="<[category_id]>" readonly/></li>
+      
+      <li><span class="label">Name:</span> <input type="text" id="category-name" value="<[category_name::strformatter type="title" library="utility"]>"/></li>
+      <li class="last-element"><button class="save-button" id="admin-update-category">Save</button></li>
+    </ul>
+  </div>
+  
+</div>
