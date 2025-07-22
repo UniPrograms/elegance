@@ -16,8 +16,16 @@ $admin_countries_page = new Template("skin/admin_profile/admin_countries.html");
 $factory = new DataLayer(new DB_Connection);
 $countryDAO = $factory->getCountryDAO();
 
+if(!isset($_REQUEST["filter_string"])){
+    $countries = $countryDAO->getAllCountries();
+}
+else{
+    $countries = $countryDAO->getCategoriesByGenericString($_REQUEST['filter_string']);
+}
 
-foreach($countryDAO->getAllCountries() as $country){
+
+
+foreach($countries as $country){
 
     $admin_countries_page->setContent("country_id", $country->getId());
     $admin_countries_page->setContent("country_name",$country->getName());

@@ -24,6 +24,11 @@ if(isset($_REQUEST["category_id"])){
     $admin_viewcategory_page->setContent("category_id", $category->getId());
     $admin_viewcategory_page->setContent("category_name", $category->getName());
 
+    $admin_viewcategory_page->setContent("category_title","category:");
+}
+else{
+
+    $admin_viewcategory_page->setContent("category_title","new category");
 }
 
 ?>

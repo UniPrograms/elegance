@@ -16,8 +16,16 @@ $admin_categories_page = new Template("skin/admin_profile/admin_categories.html"
 $factory = new DataLayer(new DB_Connection);
 $categoryDAO = $factory->getCategoryDAO();
 
+if(!isset($_REQUEST["filter_string"])){
+    $categories = $categoryDAO->getAllCategories();
+}
+else{
+    $categories = $categoryDAO->getCategoriesByGenericString($_REQUEST['filter_string']);
+}
 
-foreach($categoryDAO->getAllCategories() as $category){
+
+
+foreach($categories as $category){
 
     $admin_categories_page->setContent("category_id", $category->getId());
     $admin_categories_page->setContent("category_name",$category->getName());

@@ -13,7 +13,18 @@ $factory = new DataLayer(new DB_Connection);
 $productorDAO = $factory->getProductorDAO();
 
 
-foreach($productorDAO->getAllProductores() as $productor){
+if(!isset($_REQUEST["filter_string"])){
+    $productors = $productorDAO->getAllProductores();
+}
+else{
+    $productors = $productorDAO->getProductorsByGenericString($_REQUEST['filter_string']);
+}
+
+
+
+
+
+foreach($productors as $productor){
 
     $admin_brands_page->setContent("brand_id", $productor->getId());
     $admin_brands_page->setContent("brand_name",$productor->getName());

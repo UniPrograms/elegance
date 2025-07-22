@@ -24,9 +24,12 @@ if(isset($_REQUEST["productor_id"])){
     $admin_viewbrand_page->setContent("productor_id", $productor->getId());
     $admin_viewbrand_page->setContent("productor_name", $productor->getName());
     $admin_viewbrand_page->setContent("productor_logo", $productor->getLogo());
+
+    $admin_viewbrand_page->setContent("producotor_title","productor:");
 }
 else{
     $admin_viewbrand_page->setContent("productor_logo", "");
+    $admin_viewbrand_page->setContent("productor_title","new_productor");
 }
 
 ?>

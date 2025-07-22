@@ -933,6 +933,23 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
+// Aggiornamento table delle categorie tramite search bar categorie
+document.addEventListener('DOMContentLoaded', function(){
+
+  const searchBar = document.getElementById('searchbar-category');
+
+    searchBar.addEventListener('keydown',  function(e) {
+      if (e.key === 'Enter') {
+        const value = e.target.value;
+        window.location.href = "admin_categories.php?filter_string="+value;
+      }
+    });
+
+});
+
+
+// ############ PRODUTTORE ############
+
 
 // Reindirizzamento alla pagina per aggiornare un produttore
 document.addEventListener('DOMContentLoaded', function () {  
@@ -999,20 +1016,6 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
-// Aggiornamento table delle categorie tramite search bar categorie
-document.addEventListener('DOMContentLoaded', function(){
-
-  const searchBar = document.getElementById('searchbar-category');
-
-    searchBar.addEventListener('keydown',  function(e) {
-      if (e.key === 'Enter') {
-        const value = e.target.value;
-        window.location.href = "admin_categories.php?filter_string="+value;
-      }
-    });
-
-});
-
 // Aggiornamento table dei produttori tramite search bar produttore
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -1025,6 +1028,75 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
 
+});
+
+
+
+// ############ NAZIONE ############
+
+// Reindirizzamento alla pagina per aggiornare una nazione
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-country').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var countryId = this.getAttribute("value");
+      window.location.href = "admin_viewcountry.php?country_id="+countryId;
+      
+    });
+  });
+});
+
+
+
+// Reindirizzamento alla pagina per aggiungere una nuova nazione
+document.addEventListener('DOMContentLoaded', function(){
+
+  const addNewProductBtn = document.getElementById('admin-add-new-country');
+
+  addNewProductBtn.addEventListener("click", function(btn){
+    window.location.href = "admin_viewcountry.php";
+  });
+
+});
+
+
+// Controllo delete eliminazione nazione
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-country').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var countryId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "country_operation.php",
+        data: {
+          country_id: countryId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+      });
+    });
+  });
 });
 
 
