@@ -1306,5 +1306,42 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 
+// Blocco salvataggio se il nome categoria è vuoto in admin_viewcategory
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.location.pathname.includes('admin_viewcategory.php')) {
+    const saveBtn = document.getElementById('admin-update-category');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function(e) {
+        const categoryName = document.getElementById('category-name');
+        if (!categoryName || !categoryName.value.trim()) {
+          e.preventDefault();
+          alert('Il nome della categoria non può essere vuoto!');
+          categoryName.focus();
+          return false;
+        }
+      });
+    }
+  }
+});
+
+// Blocco salvataggio se il nome country è vuoto in admin_viewcountry
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.location.pathname.includes('admin_viewcountry.php')) {
+    const saveBtn = document.getElementById('admin-update-country');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function(e) {
+        const countryName = document.getElementById('country-name');
+        if (!countryName || !countryName.value.trim()) {
+          e.preventDefault();
+          alert('Il nome del paese non può essere vuoto!');
+          countryName.focus();
+          return false;
+        }
+      });
+    }
+  }
+});
+
 
 
