@@ -30,8 +30,8 @@ class ProductorDAO extends DAO {
         $this->stmtGetAllProductoresInRange = $this->conn->prepare("SELECT * FROM PRODUTTORE LIMIT ? OFFSET ?;");
         $this->stmtGetProductorByName = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NAME LIKE ?;");
         $this->stmtGetAllProductorsByGenericString = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NOME LIKE ?;");
-        $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME,LOGO_URL) VALUES (?,?);");
-        $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ?, SET LOGO_URL = ? WHERE ID = ?;");
+        $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME) VALUES (?);");
+        $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ? WHERE ID = ?;");
         $this->stmtDeleteProductor = $this->conn->prepare("DELETE FROM PRODUTTORE WHERE ID = ?;");
     }
 
@@ -117,19 +117,23 @@ class ProductorDAO extends DAO {
      * 
      * 
      */
-    public function storeProductor(Productor $productor): bool {
+    public function storeProductor(Productor $productor): ?Productor {
         if ($productor->getId() !== null) { // Aggiorno il produttore
             $this->stmtUpdateProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateProductor->bindValue(2, $productor->getLogo(), PDO::PARAM_STR);
-            $this->stmtUpdateProductor->bindValue(3, $productor->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateProductor->bindValue(2, $productor->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateProductor->execute();
+            if($this->stmtUpdateProductor->execute()){
+                return $productor;
+            }
         } else {   // Inserisco il produttore
             $this->stmtInsertProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
-            $this->stmtInsertProductor->bindValue(2, $productor->getLogo(), PDO::PARAM_STR);
 
-            return $this->stmtInsertProductor->execute();
+            if($this->stmtInsertProductor->execute()){
+                $productor->setId($this->conn->lastInsertId());
+                return $productor;
+            }
         }
+        return null;
     }
      /**
      * 

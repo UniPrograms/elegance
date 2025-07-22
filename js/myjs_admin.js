@@ -1211,3 +1211,100 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
 });
+
+
+// Gestione selezione immagine in admin_viewbrand (admin_viewproductor)
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.location.pathname.includes('admin_viewbrand.php')) {
+    const chooseFileBtn = document.getElementById('choose-cover-img-btn');
+    const fileInput = document.getElementById('brand-cover-img-file');
+    const pathInput = document.getElementById('cover-img-file-path');
+    const imgPreview = document.getElementById('brand-cover-img');
+
+    if (chooseFileBtn && fileInput) {
+      // Click su "Scegli il file"
+      chooseFileBtn.addEventListener('click', function() {
+        fileInput.click();
+      });
+
+      // Selezione file
+      fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+          // Mostra il nome file nell'input
+          if (pathInput) {
+            pathInput.value = file.name;
+          }
+          // Mostra anteprima immagine
+          if (imgPreview) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              imgPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        } else {
+          if (pathInput) pathInput.value = '';
+          if (imgPreview) imgPreview.src = '';
+        }
+      });
+    }
+  }
+});
+
+
+// Gestione salvataggio brand (admin_viewbrand) - parametri come nel PHP e blocco done/fail
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.location.pathname.includes('admin_viewbrand.php')) {
+    const saveBtn = document.getElementById('admin-update-brand');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const brandName = document.getElementById('brand-name-input').value;
+        const brandIdInput = document.getElementById('brand-id');
+        const brandId = brandIdInput && brandIdInput.value ? brandIdInput.value : '';
+        const fileInput = document.getElementById('brand-cover-img-file');
+        const selectedFile = fileInput && fileInput.files.length > 0 ? fileInput.files[0] : null;
+
+        var formData = new FormData();
+        formData.append('productor_name', brandName);
+        if (selectedFile) {
+          formData.append('productor_logo', selectedFile);
+        }
+        formData.append('productor_id', brandId);
+        formData.append('operation', 'store');
+
+        $.ajax({
+          type: 'POST',
+          url: 'productor_operation.php',
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: 'json',
+        }).done(function(response) {
+          if(response.status == 'OK') {
+            window.location.href = 'admin_viewbrand.php?productor_id=' + response.productor_id;
+          } else if (response.status == 'SESSION_ERROR') {
+            alert('Errore: ' + response.text_message);
+          } else if (response.status == 'OPERATION_ERROR') {
+            alert('Errore: ' + response.text_message);
+          } else if (response.status == 'GENERIC_ERROR') {
+            alert('Errore: ' + response.text_message);
+            console.error('Errore AJAX brand:', response);
+          }
+        }).fail(function(xhr, status, error) {
+          console.error('[AJAX FAIL] Errore nella richiesta di salvataggio brand:', {
+            xhr: xhr,
+            status: status,
+            error: error,
+            responseText: xhr && xhr.responseText ? xhr.responseText : null
+          });
+          alert('Errore di comunicazione col server. Controlla la console per dettagli.');
+        });
+      });
+    }
+  }
+});
+
+
+
