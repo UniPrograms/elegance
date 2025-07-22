@@ -87,19 +87,25 @@ class CategoryDAO extends DAO{
      * 
      * 
      */
-    public function storeCategory(Category $category): bool {
+    public function storeCategory(Category $category): ?Category {
         if ($category->getId() !== null) { 
             $this->stmtUpdateCategory->bindValue(1, $category->getName(), PDO::PARAM_STR);
             $this->stmtUpdateCategory->bindValue(5, $category->getId(), PDO::PARAM_INT);
             
-            return $this->stmtUpdateCategory->execute();
+            if($this->stmtUpdateCategory->execute()){
+                return $category;
+            }
         } else { 
             $this->stmtInsertCategory->bindValue(1, $category->getName(), PDO::PARAM_STR);
 
-            return $this->stmtInsertCategory->execute();
+            if($this->stmtInsertCategory->execute()){
+                $category->setId($this->conn->lastInsertId());
+                return $category;
+            }
         }
+        return null;
     }
-    /**
+    /*
      * 
      * 
      * 
@@ -108,6 +114,17 @@ class CategoryDAO extends DAO{
      */
     public function deleteCategory(Category $category): bool {
         $this->stmtDeleteCategory->bindValue(1, $category->getId(), PDO::PARAM_INT);
+        return $this->stmtDeleteCategory->execute();
+    }
+    /*
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteCategoryById(int $id): bool {
+        $this->stmtDeleteCategory->bindValue(1, $id, PDO::PARAM_INT);
         return $this->stmtDeleteCategory->execute();
     }
 

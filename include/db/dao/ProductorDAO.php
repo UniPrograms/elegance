@@ -28,8 +28,8 @@ class ProductorDAO extends DAO {
         $this->stmtGetAllProductores = $this->conn->prepare("SELECT * FROM PRODUTTORE;");
         $this->stmtGetAllProductoresInRange = $this->conn->prepare("SELECT * FROM PRODUTTORE LIMIT ? OFFSET ?;");
         $this->stmtGetProductorByName = $this->conn->prepare("SELECT * FROM PRODUTTORE WHERE NAME LIKE ?;");
-        $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME) VALUES (?);");
-        $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ? WHERE ID = ?;");
+        $this->stmtInsertProductor = $this->conn->prepare("INSERT INTO PRODUTTORE (NOME,LOGO_URL) VALUES (?,?);");
+        $this->stmtUpdateProductor = $this->conn->prepare("UPDATE PRODUTTORE SET NOME = ?, SET LOGO_URL = ? WHERE ID = ?;");
         $this->stmtDeleteProductor = $this->conn->prepare("DELETE FROM PRODUTTORE WHERE ID = ?;");
     }
 
@@ -100,11 +100,13 @@ class ProductorDAO extends DAO {
     public function storeProductor(Productor $productor): bool {
         if ($productor->getId() !== null) { // Aggiorno il produttore
             $this->stmtUpdateProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateProductor->bindValue(5, $productor->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateProductor->bindValue(2, $productor->getLogo(), PDO::PARAM_STR);
+            $this->stmtUpdateProductor->bindValue(3, $productor->getId(), PDO::PARAM_INT);
             
             return $this->stmtUpdateProductor->execute();
         } else {   // Inserisco il produttore
             $this->stmtInsertProductor->bindValue(1, $productor->getName(), PDO::PARAM_STR);
+            $this->stmtInsertProductor->bindValue(2, $productor->getLogo(), PDO::PARAM_STR);
 
             return $this->stmtInsertProductor->execute();
         }
@@ -118,6 +120,17 @@ class ProductorDAO extends DAO {
      */
     public function deleteProductor(Productor $productor): bool {
         $this->stmtDeleteProductor->bindValue(1, $productor->getId(), PDO::PARAM_INT);
+        return $this->stmtDeleteProductor->execute();
+    }
+    /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    public function deleteProductorById(int $id): bool {
+        $this->stmtDeleteProductor->bindValue(1, $id, PDO::PARAM_INT);
         return $this->stmtDeleteProductor->execute();
     }
 

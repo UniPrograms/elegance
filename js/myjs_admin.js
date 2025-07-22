@@ -760,7 +760,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 // Modifica la logica di upload per usare la stessa funzione di rimozione
 // Gestione upload immagini prodotto in admin_viewproduct.html (versione con + su ogni placeholder e X per cancellare)
 document.addEventListener('DOMContentLoaded', function () {
@@ -866,12 +865,134 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// Reindirizzamento alla pagina per aggiornare una categoria
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-categories').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var categoryId = this.getAttribute("value");
+      window.location.href = "admin_viewcategory.php?category_id="+categoryId;
+      
+    });
+  });
+});
+
+
+
+// Reindirizzamento alla pagina per aggiungere una nuova categoria
+document.addEventListener('DOMContentLoaded', function(){
+
+  const addNewProductBtn = document.getElementById('admin-add-new-category');
+
+  addNewProductBtn.addEventListener("click", function(btn){
+    window.location.href = "admin_viewcategory.php";
+  });
+
+});
+
+
+// Controllo delete eliminazione categoria
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-categories').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var categoryId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "category_operation.php",
+        data: {
+          category_id: categoryId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+      });
+    });
+  });
+});
 
 
 
 
+// Reindirizzamento alla pagina per aggiornare un produttore
+document.addEventListener('DOMContentLoaded', function () {  
+
+  document.querySelectorAll('.admin-details-brands').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+
+      var productorId = this.getAttribute("value");
+      window.location.href = "admin_viewbrand.php?productor_id="+productorId;
+      
+    });
+  });
+});
 
 
+// Reindirizzamento alla pagina per aggiungere una nuovo produttore
+document.addEventListener('DOMContentLoaded', function(){
+
+  const addNewProductBtn = document.getElementById('admin-add-new-brand');
+
+  addNewProductBtn.addEventListener("click", function(btn){
+    window.location.href = "admin_viewbrand.php";
+  });
+
+});
 
 
+// Controllo delete eliminazione produttore
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.admin-delete-brands').forEach(function(btn) {
+    btn.addEventListener('click', function() {
 
+      var productorId = this.getAttribute("value");
+      var row = this.closest("tr");
+      $.ajax({
+        type: "POST",
+        url: "productor_operation.php",
+        data: {
+          productor_id: productorId,
+          operation: "delete",
+        },
+        dataType: "json",
+      }).done(function(response){
+
+        if(response.status == "OK"){
+          
+          $(row).fadeOut(400, function() {
+            $(this).remove();
+          });
+
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+      });
+    });
+  });
+});

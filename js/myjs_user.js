@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
               } else {
                 // Se quantità > 0, eventualmente ripristina lo stato attivo
                 if (labelAvailable) {
-                  labelAvailable.setAttribute("class", ""); // O la classe originale
+                  labelAvailable.setAttribute("class", "alert alert-danger font-weight-bold product-ended-alert-hidden"); // O la classe originale
                 }
                 if (buttonAddToCart) {
                   buttonAddToCart.setAttribute("class", "btn essence-btn");

@@ -1,0 +1,28 @@
+<section id="categories" class="active">
+  <div class="search-box" style="display: flex; justify-content: space-between; align-items: center;">
+      <input type="text" id="searchbar-order" placeholder="Search categories..." />
+      <button class="add-category-button" id="admin-add-new-category" type="button">Add</button>
+    </div>
+    <table id="categories-table">
+      <thead>
+        <tr>
+          <th>Category ID</th>
+          <th>Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <[foreach]>
+        <tr>
+          <td><[category_id::idformatter library="utility"]></td>
+          <td><[category_name::strformatter type="title" library="utility"]></td>
+          <td class="actions">
+            <button class="view admin-details-categories" value=<[category_value]>>Edit</button>
+            <button class="delete admin-delete-categories" value=<[category_value]>>Delete</button>
+          </td>
+        </tr>
+        <[/foreach]>
+      </tbody>
+    </table>
+  </section>
+  
