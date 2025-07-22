@@ -110,7 +110,7 @@ class CountryDAO extends DAO{
     public function storeCountry(Country $country): ?Country {
         if ($country->getId() !== null) { 
             $this->stmtUpdateCountry->bindValue(1, $country->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateCountry->bindValue(5, $country->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateCountry->bindValue(2, $country->getId(), PDO::PARAM_INT);
             
             if($this->stmtUpdateCountry->execute()){
                 return $country;

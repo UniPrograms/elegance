@@ -42,28 +42,39 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
-
+    // Controllo se l'utente è autenticato
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::sessionError()->build();
         exit;
     }
 
-
+    // Controllo se il nome della nazione è stato passato
     if(!isset($_REQUEST["country_name"])){
         echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
-    // Se qualche dato non è stato inviato
-    if(isset($_REQUEST["country_id"])){
+    
+    // controllo se la nazione esiste già
+    if(isset($_REQUEST["country_id"]) && $_REQUEST["country_id"] != null){
         $country = $countryDAO->getCountryById($_REQUEST["country_id"]);
-    }else{
-        $country = new Country();
     }
 
+    
 
+
+    // Controllo se la nazione è stata trovata
+    if(!isset($country) || $country == null){
+        $country = new Country();
+    }
+   
+    
+    
     // Aggionro i dati/creo la nuova categoria
     $country->setName($_REQUEST["country_name"]);
+
+    
+
 
     // Se qualcosa va storto
     if(($country = $countryDAO->storeCountry($country)) == null){
@@ -71,7 +82,10 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         exit;
     }
 
-    echo AjaxResponse::okNoContent()->build();
+
+    $ajax_response = AjaxResponse::okNoContent();
+    $ajax_response->add("country_id", $country->getId());
+    echo $ajax_response->build();
     exit;
 }
 

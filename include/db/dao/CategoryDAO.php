@@ -110,7 +110,7 @@ class CategoryDAO extends DAO{
     public function storeCategory(Category $category): ?Category {
         if ($category->getId() !== null) { 
             $this->stmtUpdateCategory->bindValue(1, $category->getName(), PDO::PARAM_STR);
-            $this->stmtUpdateCategory->bindValue(5, $category->getId(), PDO::PARAM_INT);
+            $this->stmtUpdateCategory->bindValue(2, $category->getId(), PDO::PARAM_INT);
             
             if($this->stmtUpdateCategory->execute()){
                 return $category;

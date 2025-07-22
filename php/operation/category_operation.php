@@ -49,30 +49,42 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         exit;
     }
 
-
+    // Controllo se il nome della categoria è stato passato
     if(!isset($_REQUEST["category_name"])){
         echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
-    // Se qualche dato non è stato inviato
-    if(isset($_REQUEST["category_id"])){
+    
+    // controllo se la categoria esiste già
+    if(isset($_REQUEST["category_id"]) && $_REQUEST["category_id"] != null){
         $category = $categoryDAO->getCategoryById($_REQUEST["category_id"]);
-    }else{
+    }
+
+
+    // Controllo se la categoria è stata trovata
+    if(!isset($category) || $category == null){
         $category = new Category();
     }
 
+
+ 
 
     // Aggionro i dati/creo la nuova categoria
     $category->setName($_REQUEST["category_name"]);
 
     // Se qualcosa va storto
-    if(($category= $categoryDAO->storeCategory($category)) == null){
+    if(($category = $categoryDAO->storeCategory($category)) == null){
         echo AjaxResponse::genericServerError()->build();
         exit;
     }
 
-    echo AjaxResponse::okNoContent()->build();
+
+    
+
+    $ajax_response = AjaxResponse::okNoContent();
+    $ajax_response->add("category_id",$category->getId());
+    echo $ajax_response->build();
     exit;
 }
 

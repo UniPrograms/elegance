@@ -894,6 +894,51 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
+
+// Aggiornamento dati categoria
+document.addEventListener('DOMContentLoaded', function(){
+
+  const updateBtn = document.getElementById("admin-update-category");
+  
+  updateBtn.addEventListener("click", function(btn){
+
+    const categoryName = document.getElementById("category-name").value;
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get("category_id");
+
+    if(categoryId == null){
+      data = { category_name: categoryName, operation: "store"};
+    }
+    else{
+      data = {category_id: categoryId, category_name: categoryName, operation: "store"};
+    }
+
+
+     $.ajax({
+      type: "POST",
+      url: "category_operation.php",
+      data: data,
+      dataType: "json",
+    }).done(function (response) { 
+
+        if(response.status == "OK"){
+          window.location.href = "admin_viewcategory.php?category_id=" + response.category_id;
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") { 
+          alert("Errore: " +  response.text_message);
+        }
+    });
+  });
+});
+
+
+
 // Controllo delete eliminazione categoria
 document.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('.admin-delete-categories').forEach(function(btn) {
@@ -1059,6 +1104,59 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
 });
+
+
+// Aggiornamento dati categoria
+document.addEventListener('DOMContentLoaded', function(){
+
+  const updateBtn = document.getElementById("admin-update-country");
+  
+  updateBtn.addEventListener("click", function(btn){
+
+    const countryName = document.getElementById("country-name").value;
+    const params = new URLSearchParams(window.location.search);
+    const countryId = params.get("country_id");
+
+    if(countryId == null){
+      data = { country_name: countryName, operation: "store"};
+    }
+    else{
+      data = {country_id: countryId, country_name: countryName, operation: "store"};
+    }
+
+
+     $.ajax({
+      type: "POST",
+      url: "country_operation.php",
+      data: data,
+      dataType: "json",
+    }).done(function (response) { 
+
+        if(response.status == "OK"){
+          window.location.href = "admin_viewcountry.php?country_id=" + response.country_id;
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") { 
+          alert("Errore: " +  response.text_message);
+        }
+    }).fail(function(xhr, status, error) {
+        console.error("[AJAX FAIL] Errore nella richiesta di salvataggio country:", {
+          xhr: xhr,
+          status: status,
+          error: error,
+          responseText: xhr && xhr.responseText ? xhr.responseText : null
+        });
+        alert("Errore di comunicazione col server. Controlla la console per dettagli.");
+    });
+  });
+});
+
+
 
 
 // Controllo delete eliminazione nazione
