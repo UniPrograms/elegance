@@ -1,0 +1,22 @@
+<div class="user-profile">
+    <div class="header">
+      <img src="<[user_image]>" alt="User Image" id="user-image">
+      <div style="text-align: right;">
+        <h2 id="user-fullname"><[user_name::strformatter type="title" library="utility"]> <[user_surname::strformatter type="title" library="utility"]></h2>
+        <h4 id="user-role"><[user_role::strformatter type="title" library="utility"]>: <[user_id::idformatter library="utility"]></h4>
+      </div>
+    </div>
+    <ul class="info-list">
+      <li style="display: none;"><span class="label">ID:</span> <input type="text" id="user-id" value="<[user_id]>" readonly /></li>
+      <li><span class="label">Name:</span> <input type="text" id="user-name" value="<[user_name::strformatter type="title" library="utility"]>"/></li>
+      <li><span class="label">Surname:</span> <input type="text" id="user-surname" value="<[user_surname::strformatter type="title" library="utility"]>" /></li>
+      <li><span class="label">Email:</span> <input type="text" id="user-email" value="<[user_email]>" readonly /></li>
+      <li><span class="label">Role:</span> <input type="text" id="user-role" value="<[user_role::strformatter type="title" library="utility"]>" readonly /></li>
+      <li><span class="label">Phone:</span> <input type="tel" id="user-phone" pattern="[0-9+ ]*" maxlength="10" value="<[user_phone::strformatter type="phone" library="utility"]>"/></li>
+      <li><span class="label">Registration Date:</span> <input type="text" id="user-date" value="<[user_registration_date]>" readonly /></li>
+      <li class="last-element" style="display: flex; justify-content: flex-end; align-items: center;">
+        <button class="save-button" id="admin-update-admin">Save</button>
+      </li>
+    </ul>
+    
+  </div>

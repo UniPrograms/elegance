@@ -261,6 +261,43 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 }
 
 
+// Aggiornamento del proprio account amministratore 
+else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update-self'){
+    
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
+
+    if(!(isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && isset($_REQUEST["user_phone_number"]))){
+            echo AjaxResponse::genericServerError()->build();
+            exit;
+    }
+
+    // Costruisco l'utente
+    $user = $userDAO->getUserById($_SESSION["id"]);
+
+    $user->setName($_REQUEST["user_name"]);
+    $user->setSurname($_REQUEST["user_surname"]);
+    $user->setPhoneNumber($_REQUEST["user_phone_number"]);
+
+    // Eseguo l'operazione sul db
+    $user = $userDAO->storeUser($user);
+
+    // Se qualcosa è andato storto
+    if($user == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    // Se è andato tutto bene
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+    
+}
+
 echo AjaxResponse::noOperationError()->build();
 exit;
 ?>

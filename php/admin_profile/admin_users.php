@@ -31,15 +31,15 @@ else{
 
 foreach($users as $user){
 
-    $admin_users_page->setContent("user_id",$user->getId());
-    $admin_users_page->setContent("user_name",$user->toString());
-    $admin_users_page->setContent("user_email",$user->getEmail());
-    $admin_users_page->setContent("user_role",$user->getRole());
-    $admin_users_page->setContent("user_registration_date",$user->getRegistrationDate());
-
-
-    $admin_users_page->setContent("user_value", $user->getId());
-
+    if($user->getId() != $_SESSION["id"]){
+        $admin_users_page->setContent("user_id",$user->getId());
+        $admin_users_page->setContent("user_name",$user->toString());
+        $admin_users_page->setContent("user_email",$user->getEmail());
+        $admin_users_page->setContent("user_role",$user->getRole());
+        $admin_users_page->setContent("user_registration_date",$user->getRegistrationDate());
+    
+        $admin_users_page->setContent("user_value", $user->getId());
+    }
 }
 
 ?>

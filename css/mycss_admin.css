@@ -750,3 +750,29 @@ table th:last-child, table td.actions {
 .add-country-button:hover {
   background-color: #0056b3;
 }
+
+
+
+.sidebar #my-admin-user-profile{
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+  display: block;
+  text-align: center;
+}
+.admin-profile-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1em;
+  transition: color 0.2s;
+}
+.admin-profile-link:hover {
+  color: black;
+  cursor: pointer;
+  text-decoration: underline;
+  transform: scale(1.08);
+}

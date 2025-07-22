@@ -1252,6 +1252,11 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 
+// ############################################################################################################################
+// ############################################################################################################################
+
+
+
 
 // Gestione salvataggio brand (admin_viewbrand) - parametri come nel PHP e blocco done/fail
 document.addEventListener('DOMContentLoaded', function(){
@@ -1306,78 +1311,62 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-// Blocco salvataggio se il nome categoria è vuoto in admin_viewcategory
+
+
+
+// ############################################################################################################################
+// ############################################################################################################################
+
+
+// Aggiornamento dati utente admin (admin_viewself)
 document.addEventListener('DOMContentLoaded', function(){
-  if (window.location.pathname.includes('admin_viewcategory.php')) {
-    const saveBtn = document.getElementById('admin-update-category');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function(e) {
-        const categoryName = document.getElementById('category-name');
-        if (!categoryName || !categoryName.value.trim()) {
-          e.preventDefault();
-          alert('Il nome della categoria non può essere vuoto!');
-          categoryName.focus();
-          return false;
-        }
-      });
+
+  const updateBtn = document.getElementById("admin-update-admin");
+  
+  updateBtn.addEventListener("click", function(btn){
+
+    
+
+    const userId = document.getElementById("user-id").value;
+    const userName = document.getElementById("user-name").value;
+    const userSurname = document.getElementById("user-surname").value;
+    const userPhone = document.getElementById("user-phone").value;
+
+    // Validazione numero di telefono (deve essere 0 o 10 cifre)
+    if (userPhone && userPhone.trim() !== '') {
+      var phoneValue = userPhone.replace(/\s/g, ''); // Rimuovi spazi
+      if (phoneValue.length !== 10) {
+        alert('Il numero di telefono deve essere di 10 cifre o lasciato vuoto.');
+        return false;
+      }
     }
-  }
+
+
+     $.ajax({
+      type: "POST",
+      url: "user_operation.php",
+      data: {
+        user_id: userId,
+        user_name: userName,
+        user_surname: userSurname,
+        user_phone_number: userPhone,
+        operation: "admin-update-self",
+      },
+      dataType: "json",
+    }).done(function (response) { 
+
+        if(response.status == "OK"){
+          window.location.href = "admin_viewself.php";
+        }
+        else if (response.status == "SESSION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "OPERATION_ERROR") {
+          alert("Errore: " +  response.text_message);
+        }
+        else if (response.status == "GENERIC_ERROR") { 
+          alert("Errore: " +  response.text_message);
+        }
+    });
+  });
 });
-
-// Blocco salvataggio se il nome country è vuoto in admin_viewcountry
-
-document.addEventListener('DOMContentLoaded', function(){
-  if (window.location.pathname.includes('admin_viewcountry.php')) {
-    const saveBtn = document.getElementById('admin-update-country');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function(e) {
-        const countryName = document.getElementById('country-name');
-        if (!countryName || !countryName.value.trim()) {
-          e.preventDefault();
-          alert('Il nome del paese non può essere vuoto!');
-          countryName.focus();
-          return false;
-        }
-      });
-    }
-  }
-});
-
-// Blocco salvataggio se i campi obbligatori sono vuoti in admin_viewuser
-
-document.addEventListener('DOMContentLoaded', function(){
-  if (window.location.pathname.includes('admin_viewuser.php')) {
-    const saveBtn = document.getElementById('admin-update-user');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function(e) {
-        const userName = document.getElementById('user-name');
-        const userSurname = document.getElementById('user-surname');
-        const userRole = document.getElementById('user-role-input');
-        const userPhone = document.getElementById('user-phone');
-
-        if (!userName || !userName.value.trim()) {
-          e.preventDefault();
-          alert('Il nome non può essere vuoto!');
-          userName.focus();
-          return false;
-        }
-        if (!userSurname || !userSurname.value.trim()) {
-          e.preventDefault();
-          alert('Il cognome non può essere vuoto!');
-          userSurname.focus();
-          return false;
-        }
-        if (!userRole || !userRole.value.trim()) {
-          e.preventDefault();
-          alert('Il ruolo non può essere vuoto!');
-          userRole.focus();
-          return false;
-        }
-        // La logica per il telefono è già implementata altrove (deve essere vuoto o di 10 cifre)
-      });
-    }
-  }
-});
-
-
-

@@ -1,6 +1,8 @@
 <aside class="sidebar">
     <img src=<[user_image]> alt="User Profile" class="profile-img">
-    <div class="user-name"><[user_name::strformatter type="title" library="utility"]></div>
+    <div class="user-name" id="my-admin-user-profile">
+      <a href="admin_viewself.php" class="admin-profile-link"><[user_name::strformatter type="title" library="utility"]></a>
+    </div>
     <ul>
       <li name-field="admin_dashboard" class=""><a href="admin_dashboard.php" style="all: unset; cursor: pointer; display: block;"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
       <li name-field="admin_products" class=""><a href="admin_products.php" style="all: unset; cursor: pointer; display: block;"><i class="fas fa-box-open"></i> Products</a></li>
