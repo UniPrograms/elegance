@@ -8,15 +8,13 @@ INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("lorenzo","feula","
 INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("luigi","di sciascio","lui@gmail.com","b66e2f869620e9d319eeae9bee98d875ac8bc691fb7007caf8c4d084a8b3b38f","amministratore");
 INSERT INTO UTENTE(NOME,COGNOME,EMAIL,PASSWORD,RUOLO) VALUES("alessandro","casasanta","ale@gmail.com","5c85bb36f3869809fb738a3ba6f990aedbfeca3df2dc1a997fa49c50d0eed8e6","amministratore");
 
+
 -- Inserimento pagamento --
 INSERT INTO PAGAMENTO(NOME) VALUES("paypal");
 INSERT INTO PAGAMENTO(NOME) VALUES("mastercard");
 INSERT INTO PAGAMENTO(NOME) VALUES("Cash on delivery");
 INSERT INTO PAGAMENTO(NOME) VALUES("bank transfer");
 
--- Inserimento spedizione --
-INSERT INTO SPEDIZIONE(NOME, PREZZO) VALUES("CORRIERE 1",0.0);
-INSERT INTO SPEDIZIONE(NOME, PREZZO) VALUES("CORRIERE 2",0.50);
 
 -- Inserimento categoria --
 INSERT INTO CATEGORIA(NOME) VALUES ("T-SHIRT");
@@ -68,6 +66,18 @@ INSERT INTO PRODUTTORE(NOME,LOGO_URL) VALUES ("Zara","img/core-img/brand3.png");
 INSERT INTO PRODUTTORE(NOME,LOGO_URL) VALUES ("Bershka","img/core-img/brand4.png");
 INSERT INTO PRODUTTORE(NOME,LOGO_URL) VALUES ("Asos","img/core-img/brand5.png");
 INSERT INTO PRODUTTORE(NOME,LOGO_URL) VALUES ("River Island","img/core-img/brand6.png");
+
+
+INSERT INTO NAZIONE(NOME) VALUES ("italy");
+INSERT INTO NAZIONE(NOME) VALUES ("united states");
+INSERT INTO NAZIONE(NOME) VALUES ("united kingdom");
+INSERT INTO NAZIONE(NOME) VALUES ("germany");
+INSERT INTO NAZIONE(NOME) VALUES ("france");
+INSERT INTO NAZIONE(NOME) VALUES ("india");
+INSERT INTO NAZIONE(NOME) VALUES ("australia");
+INSERT INTO NAZIONE(NOME) VALUES ("brazil");
+INSERT INTO NAZIONE(NOME) VALUES ("canada");
+
 
 
 -- Inserimento prodotto --
@@ -488,4 +498,3 @@ INSERT INTO IMMAGINE(PATH, ID_PRODOTTO) VALUES ("img/my_img/woman/Accessories/Pr
 INSERT INTO IMMAGINE(PATH, ID_PRODOTTO) VALUES ("img/my_img/woman/Accessories/Prodotto2/Rosso.jpg",1);
 
 */
-
