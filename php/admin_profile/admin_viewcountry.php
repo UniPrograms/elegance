@@ -24,12 +24,12 @@ if(isset($_REQUEST["country_id"])){
     $admin_viewcountry_page->setContent("country_id", $country->getId());
     $admin_viewcountry_page->setContent("country_name", $country->getName());
 
-    $admin_viewcountry_page->setContent("coutry_title","country:");
+    $admin_viewcountry_page->setContent("country_title","country:");
 
 }
 else{
 
-    $admin_viewcountry_page->setContent("coutry_title","new country");
+    $admin_viewcountry_page->setContent("country_title","new country");
 }
 
 ?>

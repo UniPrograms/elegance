@@ -2,12 +2,12 @@
     <div class="user-profile" style="flex:1; min-width:340px; max-width:700px; min-height:540px; display:flex; flex-direction:column; justify-content:flex-start;">
       <div class="header" style="display: flex; align-items: flex-start;">
         <div style="flex:1; text-align:left;">
-          <h2 style="margin:0; font-size:1.4em; font-weight:600;"><[brand_title::strformatter type="title" library="utility"]> <[brand_id::idformatter library="utility"]></h2>
+          <h2 style="margin:0; font-size:1.4em; font-weight:600;"><[productor_title::strformatter type="title" library="utility"]> <[productor_id::idformatter library="utility"]></h2>
         </div>
       </div>
       <ul class="info-list">
-        <li style="display: none;"><span class="label">ID:</span> <input type="text" id="brand-id" value="<[brand_id]>" readonly /></li>
-        <li><span class="label">Nome:</span> <input type="text" id="brand-name-input" value="<[brand_name::strformatter type="title" library="utility"]>" /></li>
+        <li style="display: none;"><span class="label">ID:</span> <input type="text" id="brand-id" value="<[productor_id]>" readonly /></li>
+        <li><span class="label">Nome:</span> <input type="text" id="brand-name-input" value="<[productor_name::strformatter type="title" library="utility"]>" /></li>
         <li style="display: flex; align-items: center;">
           <span class="label" style="flex:1;">Carica Immagine:</span>
           <div style="flex:2; display:flex; gap:0.5rem; align-items:center;">
@@ -16,7 +16,7 @@
             <button type="button" class="choose-file-btn" id="choose-cover-img-btn">Scegli il file</button>
           </div>
         </li>
-        <img id="brand-cover-img" src="img/my_img/core/placeholder-brand.jpg" alt="Immagine brand" style="display:block; margin: 2rem auto 2rem auto; width: 320px; height: 180px; object-fit:cover; border-radius: 6px; border: 2px solid #ccc; background:#f8f8f8;" />
+        <img id="brand-cover-img" src="<[productor_logo]>" alt="Immagine brand" style="display:block; margin: 2rem auto 2rem auto; width: 320px; height: 180px; object-fit:cover; border-radius: 6px; border: 2px solid #ccc; background:#f8f8f8;" />
   
         <li class="last-element info-list-actions">
           <div style="display: flex; justify-content: right; align-items: center; width: 100%;">
