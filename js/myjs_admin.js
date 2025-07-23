@@ -569,12 +569,15 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
     // Controllo che tutti i dai siano presenti
-    if(productId.length == 0 || productName.length == 0 || productPrice.length == 0 || productDescription.length == 0 || productBrandId.length == 0 || productCategoryId.length == 0 || productSexId.length == 0){
+    if(productName.length == 0 || productPrice.length == 0 || productBrandId.length == 0 || productCategoryId.length == 0 || productSexId.length == 0){
       alert("Si prega di compilare tutti i campi");
-      window.location.reload();
       return;
     }
 
+    if((productId == null || productId.trim() == "") && selectedFile == null){
+      alert("Devi selezionare un file per il prodotto");
+      return;
+   }
     // Crea FormData per inviare il file
     const formData = new FormData();
     
