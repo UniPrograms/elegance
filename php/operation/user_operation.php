@@ -298,6 +298,41 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
     
 }
 
+
+// Rimozione immagine profilo utente
+else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "remove-image"){
+    
+    header("Content-Type: application/json;");
+    
+    // Controllo sessione
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+    // Prendo l'utente loggato
+    $user = $userDAO->getUserById($_SESSION["id"]);
+    if($user == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+
+
+    $imgPath = $user->getUrlImage();
+    if($imgPath && strlen($imgPath) > 0){
+        // Cancella il file dal filesystem (richiede metodo statico deleteImageFile in ImagePathManager)
+        ImagePathManager::deleteImageFile($imgPath);
+    }
+
+
+    $user->setUrlImage(null);
+    if(($userDAO->storeUser($user)) == null){
+        echo AjaxResponse::genericServerError()->build();
+        exit;
+    }
+    echo AjaxResponse::okNoContent()->build();
+    exit;
+}
+
 echo AjaxResponse::noOperationError()->build();
 exit;
 ?>

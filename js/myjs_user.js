@@ -784,3 +784,53 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+
+// Gestione rimozione immagine profilo utente
+// (richiede una operation 'remove-image' lato server)
+document.addEventListener('DOMContentLoaded', function(){
+  var removeImageProfileBtn = document.getElementById('remove-image-profile-btn');
+  if(removeImageProfileBtn){
+    removeImageProfileBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      if(!confirm('Sei sicuro di voler rimuovere la foto profilo?')) return;
+      $.ajax({
+        type: 'POST',
+        url: 'user_operation.php',
+        data: {
+          operation: 'remove-image'
+        },
+        dataType: 'json',
+      }).done(function(response){
+        if(response.status == 'OK'){
+          window.location.reload();
+        }
+        else if(response.status == 'SESSION_ERROR'){
+          alert('Errore: ' + response.text_message);
+        }
+        else if(response.status == 'OPERATION_ERROR'){
+          alert('Errore: ' + response.text_message);
+        }
+        else if(response.status == 'GENERIC_ERROR'){
+          alert('Errore: ' + response.text_message);
+        }
+      });
+    });
+  }
+});
+
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  var removeImageProfileBtn = document.getElementById('remove-image-profile-btn');
+  
+  if(removeImageProfileBtn){
+    removeImageProfileBtn.addEventListener('click', function(){
+
+    
+
+
+
+    });
+  }
+
+});

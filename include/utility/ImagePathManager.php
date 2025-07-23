@@ -63,6 +63,15 @@ class ImagePathManager {
         }
         return $destinationPath;
     }
+
+    // Metodo statico per cancellare un file immagine dato il path relativo
+    public static function deleteImageFile(string $relativePath): bool {
+        $fullPath = self::BASE_PATH . ltrim($relativePath, "/");
+        if (file_exists($fullPath)) {
+            return unlink($fullPath);
+        }
+        return false;
+    }
 }
 
 ?>

@@ -33,8 +33,10 @@ $personal_info_page->setContent("user_phone",$user->getPhoneNumber());
 // Controllo dell'immagine
 if($user->getUrlImage() == null || strlen($user->getUrlImage()) == 0){
     $personal_info_page->setContent("user_image","img/core-img/user.svg");
+    $personal_info_page->setContent("remove_image_class","remove-image-btn-hidden");
 }else{
     $personal_info_page->setContent("user_image",$user->getUrlImage());
+    $personal_info_page->setContent("remove_image_class","remove-image-btn");
 }
 
 
