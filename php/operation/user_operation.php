@@ -39,7 +39,10 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "personal-info"){
     
     // Rimando alla pagina opportuna
     if($updatedUser == null){
-        header("Location: error.php");
+        $query_string_builder = new QueryStringBuilder("error.php");
+        $query_string_builder->add("title_message","Errore del server");
+        $query_string_buider->add("text_message","Il server non ha potuto elaborare la richiesta.");
+        header("Location: ".$query_string_builder->build());
         exit;
     }
     header("Location: personal_info.php");
@@ -53,7 +56,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-passw
 
     // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
-        header("Location: error.php");
+        header("Location: login.php");
         exit; 
     }
 
@@ -78,8 +81,11 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-passw
 
     // Rimando alla pagina opportuna
     if($updatedUser == null){
-        header("Location: error.php");
-        exit;    
+        $query_string_builder = new QueryStringBuilder("error.php");
+        $query_string_builder->add("title_message","Errore del server");
+        $query_string_buider->add("text_message","Il server non ha potuto elaborare la richiesta.");
+        header("Location: ".$query_string_builder->build());
+        exit; 
     }
     
     header("Location: change_password.php");

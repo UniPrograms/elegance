@@ -74,7 +74,11 @@ else if(isset($_REQUEST["store"])){
         isset($_REQUEST["country"]) && isset($_REQUEST["street_address"]) && isset($_REQUEST["postcode"]) &&
         isset($_REQUEST["city"]) && isset($_REQUEST["state"]) && isset($_REQUEST["payment_method"]) &&
         isset($_REQUEST["total_items"]) && isset($_REQUEST["total_price"]) )){
-        header("Location: error.php");
+            $query_string_builder = new QueryStringBuilder("error.php");
+            $query_string_builder->add("title_message","Errore.");
+            $query_string_buider->add("text_message","Si è verificato un errore durante la preparazione dell'ordine. Si prega di riprovare.");
+            header("Location: ".$query_string_builder->build());
+            exit;
     }
 
 
@@ -93,8 +97,15 @@ else if(isset($_REQUEST["store"])){
 
 
     $new_address = $addressDAO->storeAddress($new_address); // Inserisco nel db
-
-    if($new_address === null || $new_address->getId() === null){ header("Location: error.php"); } // Se non è avvenuto l'inserimento
+    
+    // Se non è avvenuto l'inserimento
+    if($new_address === null || $new_address->getId() === null){ 
+        $query_string_builder = new QueryStringBuilder("error.php");
+        $query_string_builder->add("title_message","Errore.");
+        $query_string_buider->add("text_message","Si è verificato un errore durante la preparazione dell'ordine. Si prega di riprovare.");
+        header("Location: ".$query_string_builder->build());
+        exit; 
+    } 
 
 
 
@@ -106,7 +117,14 @@ else if(isset($_REQUEST["store"])){
 
     $new_order = $orderDAO->storeOrder($new_order); // Inserisco nel db
 
-    if($new_order === null || $new_order->getId() === null){ header("Location: error.php"); } // Se non è avvenuto l'inserimento
+    // Se non è avvenuto l'inserimento
+    if($new_order === null || $new_order->getId() === null){ 
+        $query_string_builder = new QueryStringBuilder("error.php");
+        $query_string_builder->add("title_message","Errore.");
+        $query_string_buider->add("text_message","Si è verificato un errore durante la preparazione dell'ordine. Si prega di riprovare.");
+        header("Location: ".$query_string_builder->build());
+        exit;  
+    } 
     
 
     // Se è andato tutto bene, allora ritorno alla schermata dei dettagli dell'ordine
