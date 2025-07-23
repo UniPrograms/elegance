@@ -464,7 +464,7 @@ table th:last-child, table td.actions {
   min-width: 80px;
   box-sizing: border-box;
 }
-.actions .edit { background-color: #ffc107; color: #fff; }
+.actions .edit { background-color: #007bff; color: #fff; }
 .actions .delete { background-color: #dc3545; color: #fff; }
 .actions .view { background-color: #007bff; color: #fff; }
 
