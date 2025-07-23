@@ -44,6 +44,7 @@ foreach($wishlist_items as $item){
     $wishlist_page->setContent("product_size", $article->getSize()->getSize());
     $wishlist_page->setContent("product_color", $article->getColor()->getColor());
     $wishlist_page->setContent("product_price", $product->getPrice());
+    $wishlist_page->setContent("color_name", $article->getColor()->getColor());
     
 
     // Consente di andare alla pagina specifica del prodotto

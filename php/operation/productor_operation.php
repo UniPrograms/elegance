@@ -62,8 +62,10 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     
     // Controllo se l'immagine del produttore è stata inviata
     if(!(isset($_FILES["productor_logo"]) && $_FILES["productor_logo"]["error"] == 0)){
-        echo AjaxResponse::genericServerError()->build();
-        exit;
+        if(!isset($_REQUEST["productor_id"]) || $_REQUEST["productor_id"] == null){
+            echo AjaxResponse::genericServerError()->build();
+            exit;
+        }
     }
 
     
@@ -85,6 +87,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
         echo AjaxResponse::genericServerError()->build();
         exit;
     }
+
 
     // Aggiungo l'immagine del produttore
     $new_path = "brand/";

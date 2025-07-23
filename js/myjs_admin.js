@@ -193,11 +193,24 @@ document.addEventListener('DOMContentLoaded', function(){
       const userRole = document.getElementById("user-role-input").value;
       const userPhone = document.getElementById("user-phone").value;
 
+   
+      if(userName == null || userName.trim() == ""){
+        alert("Il nome non può essere vuoto");
+        window.location.reload();
+        return false;
+      }
+      if(userSurname == null || userSurname.trim() == ""){
+        alert("Il cognome non può essere vuoto");
+        window.location.reload();
+        return false;
+      }
+
       // Validazione numero di telefono (deve essere 0 o 10 cifre)
       if (userPhone && userPhone.trim() !== '') {
         var phoneValue = userPhone.replace(/\s/g, ''); // Rimuovi spazi
         if (phoneValue.length !== 10) {
           alert('Il numero di telefono deve essere di 10 cifre o lasciato vuoto.');
+          window.location.reload();
           return false;
         }
       }
@@ -906,6 +919,12 @@ document.addEventListener('DOMContentLoaded', function(){
     const params = new URLSearchParams(window.location.search);
     const categoryId = params.get("category_id");
 
+    if(categoryName == null || categoryName.trim() == ""){
+      alert("Il nome della categoria non può essere vuoto");
+      window.location.reload();
+      return false;
+    }
+
     if(categoryId == null){
       data = { category_name: categoryName, operation: "store"};
     }
@@ -1117,6 +1136,12 @@ document.addEventListener('DOMContentLoaded', function(){
     const params = new URLSearchParams(window.location.search);
     const countryId = params.get("country_id");
 
+    if(countryName == null || countryName.trim() == ""){
+      alert("Il nome della nazione non può essere vuoto");
+      window.location.reload();
+      return false;
+    }
+
     if(countryId == null){
       data = { country_name: countryName, operation: "store"};
     }
@@ -1270,6 +1295,20 @@ document.addEventListener('DOMContentLoaded', function(){
         const brandId = brandIdInput && brandIdInput.value ? brandIdInput.value : '';
         const fileInput = document.getElementById('brand-cover-img-file');
         const selectedFile = fileInput && fileInput.files.length > 0 ? fileInput.files[0] : null;
+
+
+        if(brandName == null || brandName.trim() == ""){
+          alert("Il nome del brand non può essere vuoto");
+          window.location.reload();
+          return false;
+        }
+
+        if((brandId == null || brandId.trim() == "") && selectedFile == null){
+           alert("Devi selezionare un file per il brand");
+           window.location.reload();
+           return false;
+        }
+        
 
         var formData = new FormData();
         formData.append('productor_name', brandName);

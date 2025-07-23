@@ -834,3 +834,38 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
 });
+
+// Colora le palline colore nel carrello in base al value
+// (classe .cart-color-box, colore preso da attribute value)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.cart-color-box').forEach(function(el) {
+    var colorName = el.getAttribute('value');
+    if (colorName) {
+      // Mappa nomi comuni se serve (opzionale)
+      var colorMap = {
+        'black': 'black',
+        'white': 'white',
+        'red': 'red',
+        'blue': 'blue',
+        'pink': 'pink',
+        'yellow': 'yellow',
+        'orange': 'orange',
+        'green': 'green',
+        'purple': 'purple',
+        'brown': 'brown',
+        'gray': 'gray',
+        'beige': 'beige',
+        // aggiungi altri se servono
+      };
+      var cssColor = colorMap[colorName.toLowerCase()] || colorName;
+      el.style.backgroundColor = cssColor;
+      el.style.display = 'inline-block';
+      el.style.width = '22px';
+      el.style.height = '22px';
+      el.style.borderRadius = '50%';
+      el.style.border = '1px solid #ccc';
+      el.style.margin = '2px';
+      el.style.verticalAlign = 'middle';
+    }
+  });
+});
