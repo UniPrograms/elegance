@@ -5,6 +5,7 @@ require_once("include/db/DataLayer.php");
 require_once("include/utility/AjaxResponse.php");
 require_once("include/model/User.php");
 require_once("include/utility/ImagePathManager.php");
+require_once("include/utility/AuthManager.php");
 
 
 
@@ -61,12 +62,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "change-passw
     $user = $userDAO->getUserById($_SESSION["id"]);
 
     // Controllo se la password corrente è stata inserita correttamente
-    if((isset($_REQUEST["current_password"]) && !empty($_REQUEST["current_password"])) && (strtolower($_REQUEST["current_password"]) == strtolower($user->getPassword()))){
+    if((isset($_REQUEST["current_password"]) && !empty($_REQUEST["current_password"])) && AuthManager::verifyPasswordSHA($_REQUEST["current_password"], $user->getPassword())){
         // Controllo se la nuova password e la sua conferma sono state inserite
         if((isset($_REQUEST["new_password"]) && !empty($_REQUEST["new_password"])) && (isset($_REQUEST["confirm_password"]) && !empty($_REQUEST["confirm_password"]))) {
             // Controllo se la nuova password e la sua conferma sono uguali
             if(strtolower($_REQUEST["new_password"]) == strtolower($_REQUEST["confirm_password"])){
-                $user->setPassword($_REQUEST["new_password"]);
+                $user->setPassword(AuthManager::encryptPasswordSHA($_REQUEST["new_password"]));
 
             }
         }

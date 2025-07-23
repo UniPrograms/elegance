@@ -40,7 +40,7 @@ class ArticleDAO extends DAO{
         $this->stmtGetArticleByIdFullQuantity = $this->conn->prepare("SELECT * FROM ARTICOLO_COMPLETO_FULL_QUANTITY WHERE ID_ARTICOLO = ?;");
         $this->stmtGetAllArticles = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO;");
         $this->stmtGetAllArticlesFullQuantity = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO_FULL_QUANTITY;");
-        $this->stmtGetAllArticlesFullQuantityByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO_FULL_QUANTITY WHERE ID_PRODOTTO = ?;");
+        $this->stmtGetAllArticlesFullQuantityByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO_FULL_QUANTITY WHERE ID_PRODOTTO = ? ORDER BY ID_TAGLIA,ID_COLORE;");
         $this->stmtGetAllArticleByProductId = $this->conn->prepare("SELECT ID_ARTICOLO FROM ARTICOLO_PRODOTTO_COMPLETO WHERE ID_PRODOTTO = ?;");
         $this->stmtGetArticleByName = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ?;");
         $this->stmtGetArticleByNameInRange = $this->conn->prepare("SELECT * FROM ARTICOLO_PRODOTTO_COMPLETO WHERE NOME_PRODOTTO LIKE ? LIMIT ? OFFSET ?;");
