@@ -567,6 +567,14 @@ document.addEventListener('DOMContentLoaded', function(){
     const fileInput = document.getElementById("product-cover-img-file");
     const selectedFile = fileInput.files[0];
 
+
+    // Controllo che tutti i dai siano presenti
+    if(productId.length == 0 || productName.length == 0 || productPrice.length == 0 || productDescription.length == 0 || productBrandId.length == 0 || productCategoryId.length == 0 || productSexId.length == 0){
+      alert("Si prega di compilare tutti i campi");
+      window.location.reload();
+      return;
+    }
+
     // Crea FormData per inviare il file
     const formData = new FormData();
     
