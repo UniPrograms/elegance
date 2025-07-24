@@ -72,3 +72,9 @@ if ($userIsLogged) {
     $query_string_builder->addEncoded("reference", "cart.php");
     $header_page->setContent("cart_popup_page_link",  $query_string_builder->build());
 }
+
+
+// Inserisco il nome nella del prodotto cercato
+if(isset($_REQUEST["name"]) && !empty($_REQUEST["name"])){
+    $header_page->setContent("product_name", $_REQUEST["name"]);
+}
