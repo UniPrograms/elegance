@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -99,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -153,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -234,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function(){
           }
           else if (response.status == "SESSION_ERROR") {
             alert("Errore: " +  response.text_message);
+            window.location.href = "login.php";
           }
           else if (response.status == "OPERATION_ERROR") {
             alert("Errore: " +  response.text_message);
@@ -277,6 +281,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
                 else if (response.status == "SESSION_ERROR") {
                   alert("Errore: " +  response.text_message);
+                  window.location.href = "login.php";
                 }
                 else if (response.status == "OPERATION_ERROR") {
                   alert("Errore: " +  response.text_message);
@@ -425,6 +430,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -489,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             else if (response.status == "SESSION_ERROR") {
               alert("Errore: " +  response.text_message);
+              window.location.href = "login.php";
             }
             else if (response.status == "OPERATION_ERROR") {
               alert("Errore: " +  response.text_message);
@@ -534,6 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 else if (response.status == "SESSION_ERROR") {
                   alert("Errore: " +  response.text_message);
+                  window.location.href = "login.php";
                 }
                 else if (response.status == "OPERATION_ERROR") {
                   alert("Errore: " +  response.text_message);
@@ -628,6 +636,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -762,6 +771,7 @@ function removeUploadedImg(btn) {
       }
       else if (response.status == "SESSION_ERROR") {
         alert("Errore: " +  response.text_message);
+        window.location.href = "login.php";
       }
       else if (response.status == "OPERATION_ERROR") {
         alert("Errore: " +  response.text_message);
@@ -834,6 +844,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } 
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -956,6 +967,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -995,6 +1007,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -1078,6 +1091,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -1173,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -1221,6 +1236,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);
@@ -1341,6 +1357,7 @@ document.addEventListener('DOMContentLoaded', function(){
             window.location.href = 'admin_viewbrand.php?productor_id=' + response.productor_id;
           } else if (response.status == 'SESSION_ERROR') {
             alert('Errore: ' + response.text_message);
+            window.location.href = "login.php";
           } else if (response.status == 'OPERATION_ERROR') {
             alert('Errore: ' + response.text_message);
           } else if (response.status == 'GENERIC_ERROR') {
@@ -1410,6 +1427,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else if (response.status == "SESSION_ERROR") {
           alert("Errore: " +  response.text_message);
+          window.location.href = "login.php";
         }
         else if (response.status == "OPERATION_ERROR") {
           alert("Errore: " +  response.text_message);

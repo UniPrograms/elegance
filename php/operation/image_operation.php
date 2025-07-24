@@ -16,6 +16,15 @@ $imageDAO = $factory->getImageDAO();
 
 
 if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store' ){
+    
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     // 1. Controllo parametri
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["image_url"]) && isset($_FILES['image']) && $_FILES['image']['error'] == 0)){
         echo AjaxResponse::genericServerError()->build();
@@ -61,6 +70,13 @@ if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store' ){
 
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
 
     if(!(isset($_REQUEST["image_id"]))){
         echo AjaxResponse::genericServerError()->build();

@@ -23,16 +23,19 @@ $query_string_builder = new QueryStringBuilder("shop.php");
 $query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHIRT")->getId());
 $query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
 $body_page->setContent("shirt_link", $query_string_builder->build());
+$body_page->setContent("shirt_image", "img/bg-img/bg-2.jpg");
 
 $query_string_builder->cleanParams();
-$query_string_builder->add("category_id", $categoryDAO->getCategoryByName("SHOES")->getId());
+$query_string_builder->add("category_id", $categoryDAO->getCategoryByName("JEANS")->getId());
 $query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
-$body_page->setContent("shoes_link", $query_string_builder->build());
+$body_page->setContent("jeans_link", $query_string_builder->build());
+$body_page->setContent("jeans_image", "img/bg-img/bg-3.jpg");
 
 $query_string_builder->cleanParams();
-$query_string_builder->add("category_id", $categoryDAO->getCategoryByName("ACCESSORIES")->getId());
+$query_string_builder->add("category_id", $categoryDAO->getCategoryByName("JACKET")->getId());
 $query_string_builder->add("sex_id", $sexDAO->getSexByName("WOMAN")->getId());
-$body_page->setContent("shoes_link", $query_string_builder->build());
+$body_page->setContent("jacket_link", $query_string_builder->build());
+$body_page->setContent("jacket_image", "img/bg-img/bg-4.jpg");
 
 
 // Logo dei brand (Produttori) alla fine della pagina

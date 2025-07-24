@@ -16,7 +16,9 @@ $countryDAO = $factory->getCountryDAO();
 // Rimozione di un paese
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
-
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::sessionError()->build();
         exit;
@@ -41,6 +43,9 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
 
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
+
+    header("Content-Type: application/json");
+    
 
     // Controllo se l'utente è autenticato
     if(!isset($_SESSION["auth"])){

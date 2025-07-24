@@ -7,7 +7,8 @@ require_once("include/utility/QueryStringBuilder.php");
 
 
 if(!isset($_SESSION["auth"])){
-    // Si rimanda ad una nuova pagina di errore
+    header("Location: login.php");
+    exit;
 }
 
 // Template

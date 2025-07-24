@@ -397,6 +397,7 @@ if(upload && preview) {
         });
       };
       reader.readAsDataURL(upload.files[0]);
+      location.reload();
     }
   });
 }

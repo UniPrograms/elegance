@@ -25,6 +25,14 @@ $cartItemDAO = $factory->getCartItemDAO();
 // Modifica dello stato dell'ordine da parte dell'admin
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "admin-update-state"){
 
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     // Se non sono stati forniti i dati necessari
     if(!(isset($_REQUEST["order_id"]) && isset($_REQUEST["order_status"]))){
         echo AjaxResponse::genericServerError()->build();
@@ -139,6 +147,14 @@ else if(isset($_REQUEST["store"])){
 // Eliminazione di un ordine
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     // Se non è stato fornito l'id dell'ordine
     if(!isset($_REQUEST["order_id"])){
         echo AjaxResponse::genericServerError()->build();

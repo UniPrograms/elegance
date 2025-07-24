@@ -19,6 +19,14 @@ $sexDAO = $factory->getSexDAO();
 // Inserimento di un prodotto
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
     
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     // Se non sono stati passati tutti i parametri
     if(!(isset($_REQUEST["product_name"])  && isset($_REQUEST["product_price"]) && 
          isset($_REQUEST["product_description"]) && /*isset($_REQUEST["product_cover_img_file"]) && */
@@ -80,6 +88,14 @@ if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 // Eliminazione di un prodotto
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
     // Se non è stato passato l'id
     if(!isset($_REQUEST["product_id"])){
         echo AjaxResponse::genericServerError()->build();

@@ -4,7 +4,8 @@ require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
 
 if(!isset($_SESSION["auth"])){
-    // Si rimanda ad una nuova pagina di errore
+    header("Location: login.php");
+    exit;
 }
 
 $admin_updatearticle_page = new Template("skin/admin_profile/admin_updatearticle.html");

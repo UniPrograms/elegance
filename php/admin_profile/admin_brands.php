@@ -4,6 +4,10 @@ require_once("include/db/DB_Connection.php");
 require_once("include/db/DataLayer.php");
 require_once("include/utility/QueryStringBuilder.php");
 
+if(!isset($_SESSION["auth"])){
+    header("Location: login.php");
+    exit;
+}
 
 // Template
 $admin_brands_page = new Template("skin/admin_profile/admin_brands.html");

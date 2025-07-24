@@ -18,7 +18,9 @@ $productorDAO = $factory->getProductorDAO();
 // Rimozione di un articolo
 if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
+    header("Content-Type: application/json");
 
+    // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::sessionError()->build();
         exit;

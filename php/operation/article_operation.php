@@ -97,6 +97,20 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get"){
 // Rimozione di un articolo
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
+    header("ContentType: application/json");
+
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
+
+    $user = $_SESSION["user"];
+
+
+
     if(!isset($_REQUEST["article_id"])){
         echo AjaxResponse::genericServerError()->build();
         exit;
@@ -117,6 +131,13 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
 
 else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "store"){
 
+    header("ContentType: application/json");
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
 
     // Se qualche dato non è stato inviato
     if(!(isset($_REQUEST["product_id"]) && isset($_REQUEST["size_id"]) && isset($_REQUEST["color_id"]))){

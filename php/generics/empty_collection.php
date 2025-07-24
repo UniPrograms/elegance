@@ -1,5 +1,10 @@
 <?php
 
+if(!isset($_SESSION["auth"])){
+    header("Location: login.php");
+    exit;
+}
+
 $empty_collection_page = new Template("skin/generics/empty_collection.html");
 
 

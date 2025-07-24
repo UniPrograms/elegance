@@ -76,6 +76,8 @@ if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'move'){
 // Elimina un articolo dalla wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
     
+    header("Content-Type: application/json");
+    
     // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::genericServerError()->build();
@@ -115,6 +117,8 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'delete'){
 // Inserisco un articolo nella wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
 
+    header("Content-Type: application/json");
+    
     // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::genericServerError()->build();
@@ -151,7 +155,7 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'store'){
 // Controlla se un articolo è all'interno della wishlist
 else if(isset($_REQUEST["operation"]) && $_REQUEST['operation'] == 'is_present'){
 
-
+    header("Content-Type: application/json");
 
     // Controlla se la sessione è attiva
     if(!isset($_SESSION["auth"])){

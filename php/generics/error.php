@@ -1,5 +1,11 @@
 <?php
 
+if(!isset($_SESSION["auth"])){
+    header("Location: login.php");
+    exit;
+}
+
+
 $error_page = new Template("skin/generics/error.html");
 
 

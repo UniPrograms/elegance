@@ -97,6 +97,12 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "delete"){
     
     header("Content-Type: application/json;");
 
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
+
 
     // Se non è stato passato l'id
     if(!isset($_REQUEST["user_id"])){
@@ -155,6 +161,13 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'user-info'){
 // Aggiornamento di un utente da parte dell'amministratore
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update'){
     
+    header("Content-Type: application/json");
+
+    // Controllo se la sessione è attiva
+    if(!isset($_SESSION["auth"])){
+        echo AjaxResponse::sessionError()->build();
+        exit;
+    }
 
     if(!(isset($_REQUEST["user_id"]) && isset($_REQUEST["user_name"]) && isset($_REQUEST["user_surname"]) && 
          isset($_REQUEST["user_role"]) && isset($_REQUEST["user_phone_number"]))){
@@ -189,6 +202,8 @@ else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update
 
 // Upload dell'immagine utente
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'upload-image'){
+    
+    header("Content-Type: application/json");
     
     // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
@@ -271,6 +286,9 @@ else if(isset($_REQUEST["operation"]) && $_REQUEST["operation"] == "get-info"){
 // Aggiornamento del proprio account amministratore 
 else if(isset($_REQUEST['operation']) && $_REQUEST['operation'] == 'admin-update-self'){
     
+    header("Content-Type: application/json");
+    
+    // Controllo se la sessione è attiva
     if(!isset($_SESSION["auth"])){
         echo AjaxResponse::sessionError()->build();
         exit;
